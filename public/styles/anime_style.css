@@ -1,0 +1,12 @@
+ main,footer,.add-button,.teleport{
+opacity:0;
+}
+.animet.active {
+    width: 260px;
+    height: 260px;
+    animation: play 5s steps(16) infinite;
+    -webkit-animation: play 5s steps(16) infinite;
+    -moz-animation: play 5s steps(16) infinite;
+    -ms-animation: play 5s steps(16) infinite;
+    -o-animation: play 5s steps(16) infinite;
+}

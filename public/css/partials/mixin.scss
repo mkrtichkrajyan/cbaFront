@@ -1,0 +1,46 @@
+@import "public/styles/partials/variables";
+
+ @mixin font ( $color,$pading,$trans , $font-fem , $font-size  ){
+    color: $color;
+	padding: $pading; 
+	text-transform: $trans;
+  font: {
+    family: $font-fem ;
+    size: $font-size;
+  } 
+}
+@mixin aftbef ($display,$content,$height,$width){
+    display: $display;
+    content:$content ;
+	height:$height;
+    width:$width;
+}
+@mixin position ($position , $top,$botton, $left,$right,$margin ) {
+	position: $position;
+	top: $top;
+	bottom:$botton;
+	left: $left;
+    right: $right;
+	margin: $margin;
+}
+%trans {
+	-webkit-transition: all 0.15s linear;
+    -moz-transition: all 0.15s linear;
+    -ms-transition: all 0.15s linear;
+    -o-transition: all 0.15s linear;
+    transition: all 0.15s linear;
+  }
+%rotet90 {
+    -moz-transform:  rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -webkit-transform:  rotate(180deg);
+    -o-transform:rotate(180deg);
+    transform: rotate(180deg);
+}
+%rotet-90{
+    -moz-transform:  rotate(-90deg); /* Для Firefox */
+    -ms-transform:  rotate(-90deg); /* Для IE */
+    -webkit-transform:  rotate(-90deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(-90deg);/* Для Opera */
+    transform: rotate(-90deg);
+}

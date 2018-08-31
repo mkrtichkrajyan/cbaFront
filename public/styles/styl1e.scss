@@ -1,0 +1,1864 @@
+@import "public/styles/partials/mixin";
+@import "public/styles/partials/variables";
+
+@font-face {
+        font-family: "FedraSansArm-Bold";
+        src:url("../font/FedraSansArm-Bold.otf") ;
+}
+
+@font-face {
+        font-family: "FedraSansArm-Book";
+        src:url("../font/FedraSansArm-Book.otf");
+
+}
+
+@font-face {
+        font-family: "FedraSansArm-Light";
+        src:url("../font/FedraSansArm-Light.otf") ;
+
+}
+
+@font-face {
+        font-family: "FedraSansArm-Medium";
+        src:url("../font/FedraSansArm-Medium.otf") ;
+
+}
+
+@font-face {
+        font-family: "NoahTT-bold";
+        src: url("../font/NoahTT-bold.woff");
+
+}
+@font-face {
+    font-family: "NoahTT-reg";
+    src: url("../font/NoahTT-reg.woff");
+
+}
+@font-face {
+    font-family: "Tamoha-reg";
+    src: url("../font/tahomaA_0.ttf");
+
+}
+
+::-webkit-scrollbar { width: 0px; height: 0px;}
+::-webkit-scrollbar-button {  background-color: #fff; }
+::-webkit-scrollbar-track {  background-color: #fff;}
+::-webkit-scrollbar-track-piece { background-color: #fff;}
+::-webkit-scrollbar-thumb { height: 0px; background-color: #fff; border-radius: 0px;}
+::-webkit-scrollbar-corner { background-color: #fff;}
+::-webkit-resizer { background-color: #fff;}
+
+
+.hamburger-wrap {
+    display: none; 
+}
+#hamburger-icon {
+    width: 22px;
+    position: relative;
+    display: inline-block;
+    margin: 18px 20px 0 0;
+    z-index: 14;
+    transition: height 1s;
+    height: 25px;
+    -webkit-transition: height 1s;
+    -moz-transition: height 1s;
+}
+#hamburger-icon a {
+    text-decoration: none;
+    color: #95a5a6;
+    margin: 0.5em 1.5em;
+    display: inline-block;
+}
+ 
+    #hamburger-icon .line.line-1 {
+      top:2px;
+      
+    }
+ 
+    #hamburger-icon .line.line-3 {
+      top:14px;
+  }
+
+#hamburger-icon .line{ 
+    display:block;
+    background: #000;
+    width: 22px;
+    height:2px;
+    position:absolute;
+    left:0;
+    transition: all 0.4s;
+    -webkit-transition:all 0.4s;
+    -moz-transition: all 0.4s;
+}
+#hamburger-icon.active .line-2 {
+    opacity: 0;
+}
+
+#hamburger-icon .line.line-2 {
+    top: 8px;
+}
+
+#hamburger-icon.line:hover.line-3 {
+    transform: translateY(4px);
+    -webkit-transform: translateY(4px);
+    -moz-transform: translateY(4px);
+}
+
+#hamburger-icon a:hover,#hamburger-icon a:focus {
+    color: #000;
+}
+
+
+#hamburger-icon a {
+    text-decoration: none;
+    color: #000;
+    margin: 0.5em 1.5em;
+    display: inline-block;
+}
+
+#hamburger-icon.active .line-1 {
+    transform: translateY(6px) translateX(0) rotate(43deg);
+    -webkit-transform:  translateY(6px) translateX(0) rotate(43deg);
+    -moz-transform: translateY(6px) translateX(0) rotate(43deg);
+    background: #fff;
+}
+    
+#hamburger-icon.active .line-3 {
+    transform: translateY(-6px) translateX(0) rotate(-46deg);
+    -webkit-transform: translateY(-6px) translateX(0) rotate(-46deg);
+    -moz-transform: translateY(-6px) translateX(0) rotate(-46deg);
+    background: #fff;
+}
+.mob-menu {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image:url("../img/back-blue-fon.png");
+    z-index: 3;
+}
+.mob-menu>.listing-title{
+    height: 58px;
+    border-bottom: 1px solid #eee;
+    margin: 0 20px;
+
+}
+// .logo img{
+//     width: 140px;
+// }
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.icon-left{
+    margin-right:10px ;
+}
+
+.btn{
+    @include font ( $black,12px 20px,uppercase ,"FedraSansArm-Bold", 15px  );
+    border-radius: 50px;
+    display:flex;
+    cursor: pointer;
+    border: 0px;
+    background-color: #fff;
+    align-items: center;
+    @extend %trans;
+    min-width: 35px;
+    min-height: 35px;
+}
+
+/* 1 */
+
+.btn-blue {
+    background-color: #e5f0f3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s;
+    color: $blue;
+    margin: 0 0 0 20px;
+}
+.btn-text-blue {
+    background-color:initial;
+    box-shadow: 0 ;
+    transition: all 0.5s;
+    @include font ($blue,0px 30px,uppercase ,"FedraSansArm-Medium", 14px  );
+    display: flex;
+    align-items: center;
+}
+// .btn-text-blue span{
+//    margin: 0 0  0 5px;
+// }
+.more-info i{
+    font-size: 6px;
+    @extend %trans;
+}
+.more-info i.active {
+    @extend %rotet90;
+}
+.btn-blue:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-icon-blue {
+    font-size: 19px;
+    color: #333c84;
+    border-left: 1px solid $border-color;
+    padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+}
+.btn:active{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* 2 */
+
+.btn-white {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.5s;
+    position: relative;
+}
+
+// 3
+.btn-serch {
+    box-shadow: 0 8px 21px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    @include font ( #fff,20px 25px,uppercase ,"FedraSansArm-Bold", 20px  );
+    background-color: $red;
+    letter-spacing: 1.5px;
+    margin: auto;
+    margin-top: -30px;
+} 
+.btn-red{
+    @include font ( #fff,14px 20px,uppercase ,"FedraSansArm-Bold", 14px  );
+    background-color: $red;
+    margin: 18px;
+    letter-spacing: 1.5px;
+}
+
+.btn-more{
+    @include font ($blue,15px,uppercase ,"FedraSansArm-Bold", 14px  );
+    background-color: inherit;
+}
+
+.btn-pink{
+    @include font ($red,14px,uppercase ,"FedraSansArm-Light", 14px  );
+    background-color: #fce9ec;
+    margin: 20px;
+}
+.btn-pink>section {
+    font-family: "NoahTT-bold";
+    font-size: 14px;
+}
+.btn-pink i{
+    @extend %trans;
+    font-size: 6px;
+}
+.btn-pink i.active{
+    @extend %rotet90;
+}
+.btn:focus{
+    outline: none;
+}
+.icon {
+    font-size: inherit;
+    display: inline-flex;
+}
+.th.flex-wrapper>.btn-pink{
+    padding: 0px 10px 6px;
+    margin: 15px;
+    position: relative;
+    justify-content: center;
+}
+.th.flex-wrapper>.btn-pink>.icon-arrow-down {
+    position: absolute;
+    bottom: 7px;
+}
+// end
+footer{
+    background-image: url("../img/footer-fon.png");
+    margin-top: 70px;
+}
+.footer-logo,.zoom-icon{
+    display: flex;
+    margin: 25px 0;
+    justify-content: left;
+}
+.zoom-icon a{
+    margin-right: 20px;
+}
+
+i.icon.icon-pin{
+    color:$blue; 
+    padding: 5px;
+}
+.footer-menu,.All-rights-reserved{
+    display: flex;
+    justify-content: center;
+    margin: 12.5px 0;
+}
+.footer-menu  a{
+    @include font ( #fff,0px 12px,initial ,"NoahTT-reg", 15px  );
+    text-align: -webkit-center;
+}
+.footer-soc-icon,.zoom-logo {
+    display: flex;
+    justify-content: flex-end;
+}
+.footer-soc-icon a{
+    margin: 0px 0 0 20px;
+    color: #fff;
+    font-size: 20px;
+    line-height: normal;
+}
+.footer-soc-icon a:first-child{
+    margin: 0;
+}
+.All-rights-reserved{
+    @include font ( #fff,0px 12px,initial ,"NoahTT-reg", 13px  );
+    opacity: 0.5;
+}
+.bord:before{
+    @include aftbef (block,"",1px,100%);
+    background-color: $black-light;
+    margin: 0 15px;
+}
+main {
+    display: block;
+    position: relative;
+    margin-top: 90px;
+    padding-bottom: 30px;
+    overflow: hidden;
+}
+header{
+    height: 90px;
+    padding: 22px 15px;
+    display: flex;
+    align-items: center;
+    box-shadow:0px 0px 7.6px 0.4px rgba(0, 0, 0, 0.06), 0px 12px 30px 1.45px rgba(0, 0, 0, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+    z-index: 4;
+    right: 0;
+}
+.colum-flex {
+    flex: 2;
+}
+.logo-text{
+    margin-left: 10px;
+}
+a{
+    text-decoration: none;
+}
+.messeng-indicator{
+    width: 20px;
+    height: 20px;
+    @include font ( #fff, 0,initial ,"NoahTT-bold", 14px  );
+    border-radius: 50%;
+    background-color: $red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrapper.popup-menu {
+    display: none;
+    position: absolute;
+    top: 62px;
+    left: -50%;
+    right: -50%;
+    z-index: 1;
+    padding: 0 10px;
+    margin: auto;
+    width: fit-content;
+}
+.wrapper.popup-menu a{
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.wrapper.popup-menu a:last-child{
+    border-bottom: 0px;
+}
+.wrapper.popup-menu>.listing-title>.left> section{
+    @include font ( $blue, 0 10px,initial ,"FedraSansArm-Medium", 16px  );
+}
+.right>section>.messeng-indicator{
+    color: $red;
+    background-color: #fce9ec;
+}
+.btn-white>.messeng-indicator{
+    position: absolute;
+    top: -7px;
+    right: -5px;
+}
+.inform-link {
+    display: flex;
+}
+.inform-link a{
+    @include font ( $black,0px 35px 0 0,initial ,"FedraSansArm-Book", 16px  );
+    display: inline-flex;
+    align-items: center;
+}
+.inform-link a:last-child{
+    padding: 0;
+}
+.add-button {
+    display: flex;
+    justify-content: flex-end;
+}
+.piramid {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    box-shadow:0px 5px 55px -16px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+    top: -10px;
+    left: 0;
+    right: 0;
+    border-radius: 0 !important;
+    margin: auto;
+    -moz-transform:  rotate(45deg); /* Для Firefox */
+    -ms-transform:  rotate(45deg); /* Для IE */
+    -webkit-transform:  rotate(45deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(45deg);/* Для Opera */
+    transform: rotate(45deg);
+}
+.gradient{
+    display: none;
+}
+.listing-icon>.icon-car{
+    font-size: 45px;
+    color: #fff;
+}
+
+.back-fon {
+    width: 100%;
+    @include position (absolute , 0,0, 0,inherit,0 );
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    background-color: $grey;
+}
+.filter-title{
+    @include font ( #fff,0,initial ,"FedraSansArm-Book", 18px  );
+    text-align: -webkit-center;
+    margin: 50px 0 ;
+}
+.filter-title:before{
+    @include aftbef (block,"",2px,25px);
+    background-color: #fff;
+    opacity: 0.5;
+    margin-bottom: 10px;
+}
+.wrapper{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 7.6px 0.4px rgba(0, 0, 0, 0.2),0px 12px 27.55px 1.45px rgba(0, 0, 0, 0.13);
+      
+}
+.filter-home{
+    @include font ($black,37px 70px 70px 70px,initial ,"FedraSansArm-Book", 43px  );
+    line-height: 80px;
+}
+
+.filter-home>.one>.custom-select>.select-items{
+    column-count: 3;
+    padding: 15px;
+    align-items: center;
+    overflow: inherit;
+}
+
+.filter-home > .one > .custom-select > .select-items > div {
+    margin: 0;
+    width: max-content;
+    padding: 6px 20px 6px 6px;
+}
+
+
+
+
+.filter-home-atr{
+    font-family: "FedraSansArm-Medium";
+    cursor: pointer;
+    border-bottom: 4px dotted $black-light;
+    font-size: 40px;
+    line-height: 75px;
+}
+.filter-home-atr>.icon-dram{
+    font-size: 24px;
+    margin-top: 2px;
+}
+.filter-home-atr:hover{
+    color: #dc2341;
+    border-color: $red;
+    @extend %trans;
+}
+
+span#drop-down {
+    position: relative;
+}
+
+.drop-menu.wrapper {
+    display: none;
+}
+
+.drop-menu.wrapper.active{
+    @include position (absolute , 88px,inherit, -65%,-50%,auto );
+    display: flex;
+    width: max-content;
+    z-index: 1;
+    max-height: 280px;
+}
+
+.drop-menu-section {
+    flex: auto;
+    width: 320px;
+    padding: 25px;
+}
+.drop-menu-title {
+    @include font ($black-light,11px 0,uppercase ,"NoahTT-bold", 14px  );
+    line-height: 1;
+}
+.drop-menu-punkt {
+    @include font ($black,11px 0,inherit ,"NoahTT-reg", 18px  );
+    line-height: 1;
+}
+.drop-menu-punkt-section {
+    display: table;
+    line-height: 0;
+}
+.filter-home-atr input{
+    width: 160px;
+    border: 0px;
+    line-height: 75px;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+input:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+.best_offer_title{
+    @include font ($black,0px 0px 15px 0,initial ,"FedraSansArm-Medium", 30px  );
+    text-align: -webkit-center;
+    margin-top: 100px;
+}
+.best_offer_title:before{
+    @include aftbef (block,"",2px,25px);
+    background-color: $red;
+    margin-bottom: 15px;
+}
+.offer{
+    height: 175px;
+    border-radius: 9px;
+    border:2px solid $grey-light;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: $black;
+}
+.offer:hover{
+    border-color: #f1b9c2;
+    color:red;
+}
+.offert-title{
+    @include font (inherit,0px 20px,initial ,"NoahTT-bold", 18px  );
+    @include position (absolute , initial,-15px, 0,0,auto );
+    width: min-content;
+    background-color: #fff;
+}
+.wrapper.pading{
+    margin: 0px 0px 30px 0;
+}
+.margin-top {
+    margin-top: 40px;
+}
+.pading{
+    margin: 30px 0px;
+}
+.pading_left, .pading_center, .pading_right{
+    font-size:80px;
+    color: $blue;
+}
+.pading_left{
+    margin:30px 20px 30px 0;
+}
+.pading_center{
+    margin: 30px 10px;
+}
+.pading_right{
+    margin: 30px 0px 30px 20px;
+    
+}
+
+/*the container must be positioned relative:*/
+.custom-select {
+    position: relative;
+    display: inline-flex;
+  }
+  .custom-select select {
+    display: none; /*hide original SELECT element:*/
+  }
+  /*style the arrow inside the select element:*/
+.select-selected:after {
+    position: absolute;
+    content: "\f102";
+    font-family: iconfont !important;
+    top: 0;
+    font-size: 8px;
+    color: #9e9e9e;
+    right: 5px;
+    border: 6px solid transparent;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    @extend %trans;
+
+  }
+  .filter-home-atr>.custom-select>.select-selected:after {
+
+    font-size: 11px;
+
+    @extend %trans;
+
+  }
+  .custom-select.wrapper{
+    position: relative;
+    display: inline-flex;
+    width: 100%;
+    padding: 0px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    line-height: 40px;
+  }
+  /*point the arrow upwards when the select box is open (active):*/
+  .select-selected.select-arrow-active:after {
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  /*style the items (options), including the selected item:*/
+  .select-items div,.select-selected {
+    cursor: pointer;
+    padding-right: 45px;
+    width: 100%;
+  }
+  /*style items (options):*/
+  .select-items {
+    position: absolute;
+    background-color: #fff;
+    top: 104%;
+    color: $black;
+    z-index: 1;
+    min-width: max-content;
+    left: 0;
+    max-height: 185px;
+    overflow-y: scroll;
+    right: 0;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25),0px 3px 8px 0px rgba(0, 0, 0, 0.14);  
+    border-radius: 10px;
+    padding: 10px;
+  }
+  .select-items div{
+    width: 100%;
+    @include font ($black,0 0 0 10px,inherit ,"NoahTT-reg", 18px  );
+    line-height: 18px;
+    margin: 10px 0;
+    @extend %trans;
+  }
+  /*hide the items when the select box is closed:*/
+  .select-hide {
+    display: none;
+  }
+  .select-items div:hover {
+   font-family: "NoahTT-bold";
+   border-left: 3px solid $red;
+   padding-left: 8px;
+    @extend %trans;
+  }
+  .come-back {
+    letter-spacing: 1.5px;
+    display:flex;
+    align-items: center;
+    @include font (#fff,30px 0,initial ,"FedraSansArm-Bold", 18px  );
+}
+.open-more-button{
+    display: none;
+}
+.come-back span{
+    padding: 0 15px;
+}
+.listing-title {
+    display: flex;
+    @include font ($black-light,0,initial ,"NoahTT-reg", 16px  );
+}
+  .come-back-icon {
+    width: 37px;
+    height: 37px;
+    background:rgba(254, 254, 254, 0.2);
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+.title-map>.come-back-icon {
+    color:$blue;
+}
+.left{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex: 1;
+}
+.right{
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+    flex: 1;
+}
+.listing-icon {
+    display:flex;
+    justify-content: flex-end;
+    padding: 15px 0;
+}
+
+.read-more{
+    @include font ($blue,25px 20px 0,uppercase,"FedraSansArm-Bold", 15px  );
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding: 9px 0 9px 35px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #fff;
+    box-shadow: 0 3px 12px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: $red;
+    box-shadow:none;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "\f10f";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    content: "\f10f";
+    font-family: iconfont !important;
+    color: #fff;
+    font-size: 9px;
+}
+.check-drop-down,.check-box {
+    background-color: $grey;
+    @include font ($black,10px 18px ,initial ,"NoahTT-reg", 15px  );
+}
+.check-drop-down-wrapper:last-child .check-drop-down{
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.check-box:before{
+    border-top: 3px dotted $grey-light;
+    @include aftbef (block,"",2px,100%);
+    top: -10px;
+    position: relative;
+}
+.container:last-child{
+    margin-bottom: 0;
+}
+.check-drop-down-wrapper.active>.check-drop-down{
+    height: 0px;
+    overflow: hidden;
+    opacity: 1;
+    padding: 0;
+    @extend %trans;
+}
+.check-drop-title {
+    @include font ($black,20px ,initial ,"NoahTT-bold", 15px  );
+    cursor: pointer;
+}
+// end
+.category-title{
+    @include font ($black,25px ,initial ,"FedraSansArm-Bold", 17px  );
+}
+.category-logo {
+    padding: 25px;
+}
+
+// tablica
+.table {
+    background-color: #f1f1f1;
+    display: flex;
+    width: 100%;
+}
+.table-pise-wrapper {
+    display: flex;
+}
+.table-pise {
+    width: -webkit-fill-available;
+    padding: 15px 0;
+}
+.table-pise-text{
+    @include font ($black,0px 15px ,initial ,"NoahTT-bold", 17px  );
+    text-align: left;
+}
+.table-pise-title{
+    min-height: 38px;
+    @include font ($black,0 15px ,initial ,"NoahTT-reg", 13px  );
+}
+.table-pise-title i{
+    color: #a3a3a3;
+}
+span {
+    display: inline-flex;
+    align-items: center;
+}
+.min-pading {
+    margin: 0px 0 10px;
+    padding: 0 10px ;
+}
+.th.flex-wrapper:last-child {
+    justify-content: flex-end;
+}
+
+// end
+// warnind
+.warning{
+    position: relative;
+    @include font ($black-light,15px,initial ,"NoahTT-reg", 14px  );
+    border-radius: 5px;
+    display: flex;
+}
+.warning span{
+    padding: 0 30px 0 15px;
+}
+// end
+// slider
+
+.label{
+    @include font ($black-light,10px 5px ,initial ,"NoahTT-bold", 14px  );
+}
+.slid-wrapper input{
+    @include font ($black,15px 20px ,initial ,"NoahTT-bold", 20px  );
+    border: 0px;
+    border-radius: 5px;
+    background-color: $grey;
+    width: 100%;
+}
+.slid-wrapper {
+    padding: 35px 40px;
+    margin-bottom: 25px;
+}
+.ui-widget.ui-widget-content {
+    border: 0px;
+    top: -0.5px
+}
+.ui-slider-horizontal {
+    height: 3px;
+    width: 93%;
+}
+.ui-slider-horizontal .ui-slider-range {
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+}
+.ui-state-default, .ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default, .ui-button, html 
+.ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active{
+    border: 1px solid #ececec;
+    background: #fff;
+    margin-left:0;
+ }
+.ui-slider-horizontal .ui-slider-handle {
+    top: -10px;
+    background-image: url(../img/dots.svg) !important;
+    background-repeat: no-repeat;
+    background-position: center;
+
+}
+.ui-widget-header{
+    background-color: $red;
+}
+.rel{
+   position: relative;
+   margin-bottom: 10px;
+}
+.rel i {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 20px;
+    margin: auto;
+    height: max-content;
+    color: $black-light;
+}
+.chenge-time {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 20px;
+    margin: auto;
+    height: max-content;
+    @include font (#9a9a9a,10px 5px ,initial ,"NoahTT-bold", 14px  );
+}
+.chenge-time-active.active{
+    color: $red;
+}
+
+i.chenge{
+    margin: 0 10px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+i.icon-right{
+    margin-left: 7px;
+}
+i.chenge.active {
+    opacity: 1;
+}
+.icon-user {
+    margin-right: 10px;
+}
+.icon-list-tow{
+    margin-right: 10px;
+}
+.btn-pink >.icon-right {
+    @extend %trans;
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.add-result.pading {
+    margin: 10px 10px;
+    border: 2px dashed $border-color;
+    border-radius: 5px;
+    position: relative;
+}
+
+table tbody tr.hide-show {
+    box-shadow: 0px 15px 40px -16px rgba(0, 0, 0, 0.4);
+    border-bottom: 2px dashed $border-color;
+}
+
+i.icon.icon-down.icon-arrow-down {
+    font-size: 6px;
+}
+.flex-wrapper button.btn.btn-pink div{
+    min-width: 15px;
+    max-height: 15px;
+}
+.btn-pink span{
+    padding: 0 10px;
+}
+
+.change-format {
+    display: flex;
+    @extend .btn-blue;
+    background-color: initial;
+}
+.table-wrap {
+    border-top: 1px solid $border-color;
+    display: flex;
+}
+
+.add-function {
+    align-items: center;
+    display: flex;
+    margin-right: 16px;
+}
+.add-function a {
+    font-size: 19px;
+    margin: 0 10px;
+    color: #585858;
+    align-items: center;
+    display: flex;
+}
+.hide-show {
+    display: none;
+    padding-bottom: 1px;
+}
+.pad-not{
+    padding: 0;
+}
+.td{
+    @include font ($black-light,20px 20px 20px 0,initial ,"NoahTT-bold", 12px  );
+    width: 16.66666%;
+    cursor: pointer;
+}
+.table-wrapper {
+    display: flex;
+    width: 100%;
+}
+.th{
+    display: flex;
+    align-items: center;
+    width: 16.666%;
+    @include font ($black,15px 0px,initial ,"NoahTT-reg", 17px  );
+}
+.th img{
+    width: 80%;
+}
+.th.flex-wrapper>.btn.btm-more>.icon-right{
+    margin: 0;
+}
+.tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+.flex-wrapper span .come-back-icon{
+    background: rgba(173, 176, 205, 0.3);
+    height: 21px;
+    width: 21px;
+    @extend %rotet-90;
+}
+.flex-wrapper{
+    display: flex;
+}
+.td>.flex-wrapper{
+    color: blue;
+}
+.flex-wrapper > .btn {
+    margin: 0px 7px;
+    font-size: 15px;
+    display: flex;
+    padding: 10px 10px;
+    align-items: center;
+    justify-content: center;
+}
+.flex-wrapper >.btn-more{
+    border-left: 1px solid $border-color;
+    border-radius: 0;
+}
+
+
+.hide-show>.table-wrapper{
+    border-bottom: 1px dashed $border-color;
+}
+
+.hide-show>.table-wrapper:last-child{
+    border-bottom: 0;
+}
+// map
+.title-map{
+    color: $blue;
+}
+.title-map>.come-back-icon{
+    background: rgba(51, 60, 160, 0.29);
+   color: $blue;
+}
+.bank-informetion-wrapper {
+    padding:10px 20px;
+    margin-bottom: 25px;
+}
+.bank-informetion {
+    @include font ($black,10px 0 ,initial ,"Tamoha-reg", 14px  );
+    border-bottom: 1px solid $border-color;
+    display: flex
+}
+.bank-informetion i{
+    font-size: 20px;
+    color: $blue;
+    margin-right: 10px;
+}
+.bank-informetion:last-child{
+    border: 0px;
+}
+.map {
+    min-height: 340px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.map-chenge {
+    @include font ($black,20px 0 ,initial ,"FedraSansArm-Book", 16px  );
+    margin: 0px 30px;
+    cursor: pointer;
+}
+.map-chenge:nth-child(2){
+    margin:0px; 
+}
+.map-chenge.active{
+    border-bottom: 3px solid $red;
+    font-family: "FedraSansArm-Bold"
+}
+.listing-title.ATM_location_info {
+    background-color: #fff;
+    border-bottom: 1px solid $border-color;
+    border-top: 1px solid $border-color;
+    padding: 18px 35px;
+}
+.listing-title.ATM_location_info:last-child{
+    border: 0px;
+}
+.listing-title>.left>span{
+    font-family: "NoahTT-bold";
+    padding: 0 5px;
+}
+.ATM_name {
+    @include font ($black,0,initial ,"NoahTT-bold", 15px  );
+}
+.ATM_location a{
+    display: flex;
+    @include font ($black,0,initial ,"NoahTT-reg", 15px  );
+}
+.ATM_location a:hover{
+    text-decoration:underline solid  $border-color;
+    text-underline-position: under;
+}
+.listing-icon>.btn-text-blue>.chenge{
+    opacity: 1;
+    margin: 0;
+}
+
+// compare
+.compare_title{
+    @include font ($blue,65px 20px 45px 20px,initial ,"FedraSansArm-Bold", 40px  );
+    text-align: -webkit-center;
+}
+.compare_name_title>.icon-money{
+    font-size: 50px;
+    margin-right: 10px;
+}
+.compare_name_title {
+    @include font ($black-light,20px,initial ,"NoahTT-bold", 18px  );
+    display: flex;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    text-align: -webkit-center;
+}
+.compare_name_podtitle{
+    @include font ($black-light,20px,initial ,"NoahTT-bold", 16px  );
+}
+.compare_name_podtitle:nth-child(2n){
+    background-color: #f5f5f5;
+}
+
+.compare_name {
+    border-right: 1px solid $border-color;
+}
+.compare_name_servis {
+    width: 25%;
+    border-right: 1px solid $border-color;
+}
+.slider-info{
+    width: 75%;
+    overflow:hidden;
+}
+.slider{
+    display: flex;
+    overflow: hidden;
+}
+.owl-nav button{
+    position: absolute;
+}
+button.owl-prev {
+    background-image: url(../img/pre.png) !important;
+    background-repeat: no-repeat !important;
+    background-position: 24px 15px!important;
+    position: absolute;
+    top: 40px;
+    height: 40px;
+    background-color: #f5f5f5 !important;
+    width: 40px;
+    border-radius: 50%;
+    left: -20px;
+}
+button.owl-next {
+    background-image: url(../img/next.png) !important;
+    background-repeat: no-repeat !important;
+    background-position: 9px 15px !important;
+    position: absolute;
+    top: 40px;
+    height: 40px;
+    background-color: #f5f5f5 !important;
+    width: 40px;
+    border-radius: 50%;
+    right: -20px;
+}
+
+.compare_name_title {
+    position: relative;
+}
+.close,.close-warning{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 15px;
+    color: $border-color;
+    font-size: 15px;
+    height: 15px;
+}
+.close:hover{
+    color: $red;
+}
+.compare-item{
+    font-size: 14px;
+}
+
+.servis_name{
+    @extend .compare_name_podtitle;
+    font-family: "NoahTT-reg";
+    color: $black;
+}
+
+
+// .compare_name_title span{
+//     text-align: left;
+// }
+.compare-item img{
+    padding: 10px 0;
+    width: 50% !important;
+}
+
+.phone_number,.work_time {
+    color: #000;
+}
+.change_item>.listing-title.ATM_location_info:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px
+}
+.ATM_location {
+    display: flex;
+}
+// popup
+.popup-over,.popup-over-menu {
+    display: none;
+    @include position (fixed , 0,0, 0,0,auto );
+    background-color: #fff;
+    z-index: 16;
+    overflow: scroll;
+}
+.all-conditions,.menu-header{
+    display: flex;
+    align-items: center;
+    @include font ($black,20px 15px,initial ,"FedraSansArm-Bold", 17px  );
+    border-bottom: 1px solid $border-color;
+    box-shadow:0px 0px 7.6px 0.4px rgba(0, 0, 0, 0.06), 0px 12px 30px 1.45px rgba(0, 0, 0, 0.08);
+    position: relative;    
+}
+.menu-header>.icon-left{
+    margin-right: 5px;
+}
+.popup-over>.close-warning{
+    font-size: 20px;
+    z-index: 3;
+    line-height: 0;
+    right: 20px ;
+    top: 20px;
+    color: $black;
+}
+.popup-over-menu>.close-warning{
+    font-size: 20px;
+    z-index: 3;
+    line-height: 0;
+    right: 20px ;
+    top: 20px;
+    color: $black;
+}
+.warning>.icon{
+    height: max-content;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(51, 60, 132, 0.31);
+    border-radius: 5px;
+    color: $blue;
+}
+// end
+// product
+.listing-title.product-wrapper>.left{
+    flex: 4;
+}
+.margins{
+    margin: 27px 0;
+    position: relative;
+    height: max-content;
+}
+.product-title {
+    @include font ($black,0px 0px 12px 0px,initial ,"FedraSansArm-Bold", 30px  );
+}
+.product-inform {
+    @include font ($black,0px,initial ,"NoahTT-reg", 16px  );
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    @extend %trans;
+}
+.product-inform.active{
+    overflow: initial;
+    height: fit-content;
+}
+
+.blurring{
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-image: -moz-linear-gradient( 90deg, rgb(241,241,241) 0%, rgba(243,243,243,0) 100%);
+    background-image: -webkit-linear-gradient( 90deg, rgb(241,241,241) 0%, rgba(243,243,243,0) 100%);
+    background-image: -ms-linear-gradient( 90deg, rgb(241,241,241) 0%, rgba(243,243,243,0) 100%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 60px;
+    z-index: 1;
+}
+.more-info{
+    display: inline-flex;
+}
+.more-info >.btn-text-blue span{
+    cursor: pointer;
+    padding: 0;
+    margin: 0 5px 0 0;
+}
+.more-info >.btn-text-blue {
+    padding: 20px 0;
+}
+.right-border {
+    border: 1px solid $blue;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 9px;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+.add-functions>.btn-red{
+    margin: 0;
+}
+.add-functions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: min-content;
+}
+.add-functions>.btn-more{
+    font-size: 13px;
+    font-family: "FedraSansArm-Medium";
+    text-transform: initial;
+}
+.listing-title.product-wrapper>.right{
+    align-items: flex-start;
+}
+.add-functions a{
+    padding: 30px 0 0 0;
+}
+// end
+// document
+.document-title {
+    @include font ($black,20px 35px,initial ,"FedraSansArm-Bold", 17px  );
+}
+.document {
+    @include font ($black,10px 35px,initial ,"NoahTT-reg", 16px  );
+}
+.documents-cont:nth-child(3) {
+    border-right: 0;
+}
+.document-wrapper {
+    padding: 15px 0;
+    border-top: 1px solid $border-color;
+    position: relative;
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+    &:after {
+        display: block;
+        content: "";
+        height: auto;
+        position: absolute;
+        width: 1px;
+        top: 30px;
+        left: 33.3333%;
+        bottom: 30px;
+        border-left: 2px dashed $border-color;
+
+    }
+    &:before {
+        display: block;
+        content: "";
+        height: auto;
+        position: absolute;
+        width: 1px;
+        top: 30px;
+        right: 33.3333%;
+        bottom: 30px;
+        border-left: 2px dashed $border-color;
+
+    }
+    
+    
+}
+
+.document-wrapper>.blurring{
+    display: none;
+}
+.document-wrapper.active{
+    height: fit-content;
+}
+.wrapper>.more-info{
+    display: none;
+}
+.documents-cont {
+    flex: 1;
+    border-right: 2px dashed $border-color;
+}
+// end
+
+// table
+table.prise-table {
+    border-top: 1px solid $border-color;
+    text-align: center;
+    padding: 0px 35px 40px;
+    border-spacing: 0px;
+    
+}
+table.prise-table tr:first-child th {
+    border-bottom: 2px dashed $border-color;
+}
+table.prise-table th{
+    padding: 13px 20px;
+}
+table.prise-table td{
+    padding: 13px 20px;
+}
+table.prise-table tr:nth-child(2){
+    background-color: #fff !important;
+}
+table.prise-table tr:nth-child(2) th{
+    padding: 3px;
+}
+table.prise-table tr:nth-child(2n){
+background-color: #f6f6f6;
+}
+table.prise-table tr td:first-child{
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+}
+table.prise-table tr td:last-child{
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+}
+.margins>.bank-listing-map>.gradient{
+    height: initial;
+}
+.item-scroll{
+    overflow: scroll;
+}
+.item-scroll.active {
+    height: max-content;
+}
+.margins>.blurring {
+    display: none;
+    background-image: -moz-linear-gradient(90deg, #fff 0%, rgba(243, 243, 243, 0) 100%);
+    background-image: -webkit-linear-gradient(90deg, #fff 0%, rgba(243, 243, 243, 0) 100%);
+    background-image: -ms-linear-gradient(90deg, #fff 0%, rgba(243, 243, 243, 0) 100%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    margin: auto;
+    height: 60px;
+    z-index: 1;
+}
+.blurring.active {
+    opacity: 0;
+}
+// end
+// price
+.product-prise-wrapper{
+    border-top: 1px solid $border-color;
+    height: max-content;
+}
+.product-prise {
+    @include font ($black,0px,initial ,"NoahTT-reg", 16px  );
+}
+.product-prise i{
+    font-size: 12px;
+    margin-left: 6px;
+}
+.prise-title{
+    display: flex;
+    border-bottom: 2px dashed $border-color;
+    margin: 0 35px;
+    padding: 16px 0;
+}
+.prise-title:last-child{
+    border: 0px;
+}
+.total-prise-title{
+    display: flex;
+    background-color: #f6f6f6;
+    margin: 0px 20px 20px;
+    border-radius: 50px;
+    padding: 16px 0;
+}
+.total-prise-title i{
+    font-size: 12px;
+    margin-left: 6px;
+}
+.total-prise {
+    @include font ($black,0 16px,initial ,"NoahTT-bold", 16px  );
+    flex: auto;
+}
+.wrapper.margins.prise>.more-info {
+    display: none;
+}
+
+.prise-title>.left{
+    flex: 3;
+}
+.chenge-wrap{
+    padding: 10px 35px;
+}
+.chenge-wrap>.chenge.active{
+    color: $red;
+    background-color: #fce9ec;
+    border-radius: 50px;
+    padding: 13px 20px;
+}
+.chenge-wrap>.chenge{
+    @include font ($black-light,0px,initial ,"FedraSansArm-Medium", 14px  );
+    margin-left: 20px;
+}
+i.icon.icon-doc {
+    color: $blue;
+    margin-right: 10px;
+}
+// end
+// other-info
+.other-info{
+    flex: 1;
+}
+.prise-cont.other-info-wrapper.active {
+    height: fit-content;
+    overflow: hidden;
+}
+.left.other-info-title {
+    flex: 2;
+    font-family: "NoahTT-bold";
+    align-items: flex-start;
+}
+.right.other-info-text {
+    flex: 3;
+    justify-content: flex-start;
+}
+.prise-cont.other-info-wrapper {
+    display: flex;
+}
+.other-info>.product-title
+// end
+.open-more-button{
+    display: none;
+}
+button{
+    cursor: pointer;
+}
+.animet {
+    width: 52px;
+    height: 52px;
+    background-image: url(../img/ezgif-2-6bc5e678ec.png);
+    background-size: cover;
+
+    &:hover {
+        animation: play 6s steps(80) infinite;
+        -webkit-animation:play 6s steps(80) infinite;
+        -moz-animation: play 6s steps(80) infinite;
+        -ms-animation: play 6s steps(80) infinite;
+        -o-animation: play 6s steps(80) infinite;
+    }
+}
+
+@-webkit-keyframes play {
+    from { background-position:    0px; }
+     to { background-position: -4146px; }
+}
+
+@-moz-keyframes play {
+    from { background-position:    0px; }
+     to { background-position: -4146px; }
+}
+
+@-ms-keyframes play {
+    from { background-position:    0px; }
+     to { background-position: -4146px; }
+}
+@-o-keyframes play {
+    from { background-position:    0px; }
+     to { background-position: -4146px; }
+}
+
+@keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -4146px; }
+}
+
+
+/* PieChart styles */
+// color stuff
+$c-bg             : #fff;
+$c-baseColor      : #333;
+$c-baseColorBright: #666;
+
+$c-border           : #eee;
+$c-borderDark       : $c-baseColor;
+$c-borderBright     : adjust-lightness( $c-baseColor, 30 );
+$c-borderBrightPlus : adjust-lightness( $c-baseColor, 50 );
+$c-shadow           : $c-baseColor;
+$c-dashedLine       : adjust-lightness( $c-baseColor, 40 );
+
+$c-borderDevider : $c-borderBright;
+
+$c-red  : $red;
+$c-blue : $blue;
+
+// font-stuff
+$f-family : sans-serif;
+
+// sizes
+$f-baseSize               : 14px;
+
+$f-sizeHeadline           : 2 * $f-baseSize;
+$f-sizeSubHeadline        : $f-baseSize;
+
+$f-sizePieChartPercentage : 3 * $f-baseSize;
+$f-sizePieChartText       : 2 * $f-baseSize;
+
+$f-sizeBubbleLabel : 0.9 * $f-baseSize;
+$f-sizeBubbleValue : 1.5 * $f-baseSize;
+
+// weights
+$f-weight            : 100;
+$f-weightHeadline    : $f-weight;
+$f-weightSubHeadline : 400;
+
+$f-weightPieChartPercentage : 100;
+
+// spacing
+$f-spacing : 1px;
+
+// dimensions
+$d-chartHeight : 400px;
+
+
+.chart {
+    min-height: $d-chartHeight;
+    border-bottom: 1px solid $c-border;
+
+    padding: 1em;
+}
+
+
+
+.pieChart--center--innerCircle {
+    fill: #fff;
+}
+
+.pieChart--center--text {
+    font-size: $f-sizePieChartText;
+}
+
+.pieChart--center--outerCircle {
+    fill: #fff;
+}
+
+.pieChart--detail--divider {
+    stroke: $c-borderDevider;
+    stroke-width: 1;
+}
+
+.pieChart--detail--percentage {
+    font-size: $f-sizePieChartPercentage;
+    font-weight: $f-weightPieChartPercentage;
+
+    fill: $c-baseColor;
+    stroke-width: 1px;
+}
+
+.pieChart--detail--textContainer {
+    background-color: transparent;
+    padding: 10px 0 0 0;
+    margin: 0;
+
+    color: $c-baseColorBright;
+    font-style: italic;
+}
+
+.pieChart--detail__left {
+    text-align: left;
+}
+
+.pieChart--detail__right {
+    text-align: right;
+}
+
+.pieChart__blue {
+    fill: $c-blue;
+}
+
+.pieChart__red {
+    fill: $c-red;
+}
+
+
+// grafic text
+.position{
+    width: 290%;
+    left: -100%;
+    bottom: -81px;
+}
+.wrapper.wrapper-diogram{
+    flex: 15;
+    align-items: center;
+    justify-content: flex-end;
+}
+.wrapper-diogram,.diogram-cont {
+    display: flex;
+}
+.all-price-title {
+    @include font ($black,0,initial ,"NoahTT-reg", 15px  );
+}
+
+.all-total-price {
+    @include font ($black,0,initial ,"NoahTT-bold", 23px  );
+}
+.all-total-price>.icon-dram {
+    font-size: 15px;
+}
+.final-settlement{
+    display: grid;
+    flex: 4;
+    margin-left: 30px;
+}
+.all-price,.pircent-price{
+    margin: 15px 0;
+}
+.end-price {
+    background-color: #eee;
+    padding:28px 22px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.price-wrap{
+    display: flex;
+    align-items: center;
+}
+.all-price {
+    position: relative;
+    padding: 0 30px 0 15px;
+    &::after{
+        position: absolute;
+        content: "";
+        top: 0;
+        background-color: $red;
+        left: -4px;
+        border-radius: 50px;
+        bottom: 0;
+        margin: auto;
+        height: 80%;
+        width: 4px;
+    }
+}
+.pircent-price {
+    position: relative;
+    padding: 0 30px 0 15px;
+    &::after{
+        position: absolute;
+        content: "";
+        top: 0;
+        background-color: $blue;
+        left: -4px;
+        border-radius: 50px;
+        bottom: 0;
+        margin: auto;
+        height: 80%;
+        width: 4px;
+    }
+}
+.diogram {
+    width: 200px;
+    position: relative;
+}
+
+
+#pieChart {
+    position: absolute;
+    top: -36px;
+    left: -60px;
+  
+    
+}
+.chart-container {
+    position: relative;
+}
+
+
+text.pieChart--detail--percentage {
+    display: none;
+}

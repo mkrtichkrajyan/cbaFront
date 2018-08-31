@@ -1,0 +1,114 @@
+@font-face {
+	font-family: "iconfont";
+	src: url("icons/iconfont.eot?140023960c876c8d9dfb393df868739d?#iefix") format("embedded-opentype"),
+url("icons/iconfont.woff2") format("woff2"),
+url("icons/iconfont.woff?140023960c876c8d9dfb393df868739d") format("woff");
+}
+
+.icon {
+	line-height: 1;
+}
+
+.icon:before {
+	font-family: iconfont !important;
+	font-style: normal;
+	font-weight: normal !important;
+	vertical-align: top;
+}
+
+.icon-add:before {
+	content: "\f101";
+}
+.icon-arrow-down:before {
+	content: "\f102";
+}
+.icon-arrow-right:before {
+	content: "\f103";
+}
+.icon-back-arrrow:before {
+	content: "\f104";
+}
+.icon-download:before {
+	content: "\f105";
+}
+.icon-dram:before {
+	content: "\f106";
+}
+.icon-fb:before {
+	content: "\f107";
+}
+.icon-in:before {
+	content: "\f108";
+}
+.icon-list:before {
+	content: "\f109";
+}
+.icon-list-tow:before {
+	content: "\f10a";
+}
+.icon-print:before {
+	content: "\f10b";
+}
+.icon-scales:before {
+	content: "\f10c";
+}
+.icon-search:before {
+	content: "\f10d";
+}
+.icon-more:before {
+	content: "\f10e";
+}
+.icon-tick:before {
+	content: "\f10f";
+}
+.icon-tw:before {
+	content: "\f110";
+}
+.icon-user:before {
+	content: "\f111";
+}
+.icon-you:before {
+	content: "\f112";
+}
+.icon-question:before {
+	content: "\f113";
+}
+.icon-filters:before {
+	content: "\f114";
+}
+.icon-x:before {
+	content: "\f115";
+}
+.icon-Info:before {
+	content: "\f116";
+}
+.icon-time:before {
+	content: "\f117";
+}
+.icon-phone:before {
+	content: "\f118";
+}
+.icon-pin:before {
+	content: "\f119";
+}
+.icon-loans:before {
+	content: "\f11a";
+}
+.icon-deposits:before {
+	content: "\f11b";
+}
+.icon-money:before {
+	content: "\f11c";
+}
+.icon-cards:before {
+	content: "\f11d";
+}
+.icon-insurance:before {
+	content: "\f11e";
+}
+.icon-car:before {
+	content: "\f11f";
+}
+.icon-doc:before {
+	content: "\f120";
+}

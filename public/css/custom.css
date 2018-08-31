@@ -1,0 +1,16 @@
+.belonging_icon{
+	width: 80px;
+}
+.company_icon{
+	max-width: 160px;
+	max-height: 96px;
+}
+#exportBranchesAtmsList{
+    cursor: pointer;
+}
+.branch_bankomat_show_address{
+	cursor: pointer;
+}
+.not-allowed{
+	cursor: not-allowed;
+}
