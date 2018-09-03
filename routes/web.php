@@ -36,3 +36,9 @@ Route::post('/export-bankomats-list/{id}', 'CompaniesController@downloadBankomat
 
 
 Route::any('/car-loans-filters/', 'HomeController@carLoansFilters');
+
+Route::get('/contacts/', 'ExtraController@contacts');
+
+Route::get('/about-us/', 'ExtraController@aboutUs');
+
+Route::get('/site-map/', 'ExtraController@sitemap');

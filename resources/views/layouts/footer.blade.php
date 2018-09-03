@@ -1,4 +1,4 @@
-<footer >
+<footer>
     <div class="row align-middle align-justify">
         <div class="columns  large-2 medium-2 small-12">
             <div class="footer-logo">
@@ -9,15 +9,11 @@
         </div>
         <div class="columns  large-8 medium-7 small-12">
             <div class="footer-menu">
-                <a href="">
-                    Մեր մասին 
-                </a>
-                <a href="">
-                    Կայքի քարտեզ  
-                </a>
-                <a href="">
-                    Հետադարձ կապ
-                </a>
+                <a href="{{url('/about-us')}}">Մեր մասին</a>
+
+                <a href="{{url('/site-map')}}">Կայքի քարտեզ </a>
+
+                <a href="{{url('/contacts')}}">Հետադարձ կապ</a>
             </div>
         </div>
         <div class="columns  large-2 medium-3 small-12">
@@ -38,7 +34,7 @@
         </div>
     </div>
 
-    <div class="row align-middle align-justify bord" >
+    <div class="row align-middle align-justify bord">
         <div class="columns  large-2 medium-3 small-12">
             <div class="zoom-icon">
                 <a href="">
@@ -51,7 +47,7 @@
         </div>
         <div class="columns  large-8 medium-7 small-12">
             <div class="All-rights-reserved">
-                    © 2018 Central Bank of Armenia. All rights reserved.
+                © 2018 Central Bank of Armenia. All rights reserved.
             </div>
         </div>
         <div class="columns  large-2 medium-2 small-12">
