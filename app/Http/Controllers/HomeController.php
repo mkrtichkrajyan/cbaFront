@@ -335,7 +335,7 @@ class HomeController extends Controller
         }
 
         $errors = $validator->errors();
-dd($productsGroupByCompany);
+//dd($productsGroupByCompany);
         return view('compare.compareCarLoans',
             [
                 "belongings" => $belongings,
