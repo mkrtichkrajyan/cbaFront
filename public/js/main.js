@@ -244,7 +244,7 @@ $(document).ready(function () {
     });
 
 
-      $(".change_item").not(":first").hide();
+    $(".change_item").not(":first").hide();
     $(".chenge").click(function () {
         $(".chenge").removeClass("active").eq($(this).index()).addClass("active");
         $(".change_item").hide().eq($(this).index()).show()

@@ -585,9 +585,11 @@
                         </div>
                         @foreach($productsGroupByCompany as $productsGroupByCompanyCurr)
 
-                             <div class="wrapper min-pading">
+                            <div class="wrapper min-pading">
                                 <div class="table-wrapper">
-                                    <div class="th"><img src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}"></div>
+                                    <div class="th"><img
+                                                src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
+                                    </div>
 
                                     <div class="th"><span>98</span></div>
 
@@ -599,7 +601,7 @@
 
                                     <div class="th flex-wrapper">
                                         <button class="btn btn-pink">
-                                            <section>1</section>
+                                            <section>{{$productsGroupByCompanyCurr->count()-1}}</section>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
 
@@ -610,28 +612,36 @@
                                     </div>
                                 </div>
                                 <div class="hide-show">
-                                    {{--@if($productsGroupByCompanyCurr->count() > 1)--}}
+                                    @if($productsGroupByCompanyCurr->count() > 1)
+                                            @php(
+                                               $productsGroupByCompanyCurrFiltered = $productsGroupByCompanyCurr->filter(function ($value, $key) {
+                                                   return $key > 1;
+                                               })
+                                           )
 
-                                    <div class="table-wrapper">
-                                        <div class="th">
-                                            <span><img src="{{asset('img/convert.png')}}"></span>
-                                        </div>
+                                        @foreach($productsGroupByCompanyCurrFiltered as $companyOtherProduct)
+                                            <div class="table-wrapper">
+                                                <div class="th">
+                                                    <span><img src="{{backend_asset('savedImages/'.$companyOtherProduct->companyInfo->image )}}"></span>
+                                                </div>
 
-                                        <div class="th"><span> 98 </span></div>
+                                                <div class="th"><span> 98 </span></div>
 
-                                        <div class="th"><span>2 000 000</span></div>
+                                                <div class="th"><span>2 000 000</span></div>
 
-                                        <div class="th"><span>2 000 000</span></div>
+                                                <div class="th"><span>2 000 000</span></div>
 
-                                        <div class="th"><span>98</span></div>
+                                                <div class="th"><span>98</span></div>
 
-                                        <div class="th flex-wrapper ">
+                                                <div class="th flex-wrapper ">
 
-                                            <button class="btn btn-red"><i class="icon  icon-add"></i></button>
+                                                    <button class="btn btn-red"><i class="icon  icon-add"></i></button>
 
-                                            <a href="" class="btn btn-more"><i class="icon  icon-arrow-right"></i></a>
-                                        </div>
-                                    </div>
+                                                    <a href="" class="btn btn-more"><i class="icon  icon-arrow-right"></i></a>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         @endforeach

@@ -1,8 +1,8 @@
 @font-face {
 	font-family: "iconfont";
-	src: url("iconfont.eot?140023960c876c8d9dfb393df868739d?#iefix") format("embedded-opentype"),
-url("iconfont.woff2?140023960c876c8d9dfb393df868739d") format("woff2"),
-url("iconfont.woff?140023960c876c8d9dfb393df868739d") format("woff");
+	src: url("iconfont.eot?35a37ece9662b2ecbc369686ba67ec2d?#iefix") format("embedded-opentype"),
+url("iconfont.woff2?35a37ece9662b2ecbc369686ba67ec2d") format("woff2"),
+url("iconfont.woff?35a37ece9662b2ecbc369686ba67ec2d") format("woff");
 }
 
 .icon {
@@ -19,96 +19,120 @@ url("iconfont.woff?140023960c876c8d9dfb393df868739d") format("woff");
 .icon-add:before {
 	content: "\f101";
 }
-.icon-arrow-down:before {
+.icon-cart:before {
 	content: "\f102";
 }
-.icon-arrow-right:before {
+.icon-arrow-down:before {
 	content: "\f103";
 }
-.icon-back-arrrow:before {
+.icon-arrow-right:before {
 	content: "\f104";
 }
-.icon-download:before {
+.icon-other-loans:before {
 	content: "\f105";
 }
-.icon-dram:before {
+.icon-back-arrow:before {
 	content: "\f106";
 }
-.icon-fb:before {
+.icon-airplane:before {
 	content: "\f107";
 }
-.icon-in:before {
+.icon-x:before {
 	content: "\f108";
 }
-.icon-list:before {
+.icon-download:before {
 	content: "\f109";
 }
-.icon-list-tow:before {
+.icon-dram:before {
 	content: "\f10a";
 }
-.icon-print:before {
+.icon-fb:before {
 	content: "\f10b";
 }
-.icon-scales:before {
+.icon-filters:before {
 	content: "\f10c";
 }
-.icon-search:before {
+.icon-money:before {
 	content: "\f10d";
 }
-.icon-more:before {
+.icon-deposits:before {
 	content: "\f10e";
 }
-.icon-tick:before {
+.icon-insurance:before {
 	content: "\f10f";
 }
-.icon-tw:before {
+.icon-tractor:before {
 	content: "\f110";
 }
-.icon-user:before {
+.icon-house:before {
 	content: "\f111";
 }
-.icon-you:before {
+.icon-info:before {
 	content: "\f112";
 }
-.icon-question:before {
+.icon-in:before {
 	content: "\f113";
 }
-.icon-filters:before {
+.icon-list:before {
 	content: "\f114";
 }
-.icon-x:before {
+.icon-list-tow:before {
 	content: "\f115";
 }
-.icon-Info:before {
+.icon-desktop:before {
 	content: "\f116";
 }
-.icon-time:before {
+.icon-phone:before {
 	content: "\f117";
 }
-.icon-phone:before {
+.icon-location:before {
 	content: "\f118";
 }
-.icon-pin:before {
+.icon-print:before {
 	content: "\f119";
 }
-.icon-loans:before {
+.icon-question:before {
 	content: "\f11a";
 }
-.icon-deposits:before {
+.icon-scales:before {
 	content: "\f11b";
 }
-.icon-money:before {
+.icon-search:before {
 	content: "\f11c";
 }
 .icon-cards:before {
 	content: "\f11d";
 }
-.icon-insurance:before {
+.icon-more:before {
 	content: "\f11e";
 }
-.icon-car:before {
+.icon-tick:before {
 	content: "\f11f";
 }
-.icon-doc:before {
+.icon-time:before {
 	content: "\f120";
+}
+.icon-tw:before {
+	content: "\f121";
+}
+.icon-straw-hat:before {
+	content: "\f122";
+}
+.icon-user:before {
+	content: "\f123";
+}
+.icon-loan-recrediting:before {
+	content: "\f124";
+}
+.icon-gold:before {
+	content: "\f125";
+}
+.icon-you:before {
+	content: "\f126";
+}
+.icon-loans:before {
+	content: "\f127";
+}
+.icon-car:before {
+	content: "\f128";
 }

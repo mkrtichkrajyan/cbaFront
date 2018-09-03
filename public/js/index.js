@@ -128,7 +128,7 @@ function filter_products(backend_url) {
             $(".product_results").empty();
 
             result_listing_title = '<div class="listing-title">' +
-                '<div class="left"> Գտնվել է <span>7</span> առաջարկ</div>' +
+                '<div class="left"> Գտնվել է <span id="count_searched_products"></span> առաջարկ</div>' +
                 '<div class="right"><div class="listing-icon"><div class="add-function">' +
                 '<a href="" download=""> <i class="icon icon-right  icon-download"></i></a> <a href=""> <i class="icon icon-right  icon-more"></i></a>' +
                 '<a href=""> <i class="icon icon-right icon-print"></i></a></div>' +
@@ -137,11 +137,17 @@ function filter_products(backend_url) {
 
             $(".product_results").append(result_listing_title);
 
+            count_searched_products = 0;
+
+            product_results = '<div class="change_item">';
+
             $.each(data, function (index, valGroupedByCompany) {
                 //console.log(typeof valGroupedByCompany);
 
+                count_searched_products = count_searched_products + Object.size(valGroupedByCompany);
+
                 if (Object.size(valGroupedByCompany) > 1) {
-                    console.log(Object.values(valGroupedByCompany));
+                    //console.log(Object.values(valGroupedByCompany));
 
                     firstObject = Object.values(valGroupedByCompany)[0];
 
@@ -156,8 +162,7 @@ function filter_products(backend_url) {
 
                 other_suggestions = Object.size(valGroupedByCompany) - 1;
 
-                item =
-                    '<div class="change_item">' +
+                product_results +=
                     '<div class="wrapper pading">' +
                     '<div class="listing-title"><div class="left"><div class="category-title">' + firstObject.name + '</div></div><div class="right"><div class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + firstObject.company_info.image + '"></div></div></div>' +
 
@@ -173,205 +178,36 @@ function filter_products(backend_url) {
                     '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98%</div></div>' +
                     '</div>' +
 
-                    '<div class="table-pise-wrapper"><div class="table-pise"><div class="table-pise-title">Անվանական</div><div class="table-pise-text">98%</div></div></div>' +
-                    '</div>' +
+                    '<div class="table-pise-wrapper"><div class="table-pise"><div class="table-pise-title">Անվանական</div><div class="table-pise-text">98%</div></div></div></div>' +
 
-                    '<div class="listing-title">' +
-                    '<div class="left"><button type="button" class="btn btn-red"><i class="icon icon-left  icon-add"></i><span>համեմատել</span></button>' +
+                    '<div class="listing-title"><div class="left"><button type="button" class="btn btn-red"><i class="icon icon-left  icon-add"></i><span>համեմատել</span></button>' +
                     '<a href="?p=prod-page" class="btn btn-more"><span>ավելին</span><i class="icon icon-right  icon-arrow-right"></i></a></div>' +
-                    '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span><i class="icon icon-arrow-down"></i></button></div>' +
+                    '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span><i class="icon icon-arrow-down"></i></button></div></div>' +
                     '</div>';
 
-                $(".product_results").append(item);
+                product_results += '<section className="hide-show">';
 
-                $.each(data, function (index, valGroupedByCompany) {
+                if (other_suggestions_exist == 1) {
 
-                });
-                console.log();
-                {/*<section class="hide-show">*/
-                }
-                {/*if(other_suggestions > 0)*/
-                }
-                {/*@php(*/
-                }
-                {/*$companyProductsFiltered = $companyProducts->filter(function ($value, $key) {*/
-                }
-                {/*return $key > 1;*/
-                }
-                {/*})*/
-                }
-                {/*)*/
-                }
-                {/*@foreach($companyProductsFiltered as $companyProductCurr)*/
-                }
-                {/*<div class="add-result pading">*/
-                }
-                {/*<div class="listing-title">*/
-                }
-                {/*<div class="left">*/
-                }
-                {/*<div class="category-title">*/
-                }
-                {/*{{$companyProductCurr->name}}*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="right">*/
-                }
-                {/*<div class="category-logo">*/
-                }
-                {/*<img style="max-width: 80px;"*/
-                }
-                {/*src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table">*/
-                }
-                {/*<div class="table-pise-wrapper">*/
-                }
-                {/*<div class="table-pise">*/
-                }
-                {/*<div class="table-pise-title">*/
-                }
-                {/*Անվանական տոկոսադրույք*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-text">*/
-                }
-                {/*98%*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise">*/
-                }
-                {/*<div class="table-pise-title">*/
-                }
-                {/*Պարտադիր ճարներ <i*/
-                }
-                {/*class="icon icon-right  icon-question"></i>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-text">*/
-                }
-                {/*2 000 000*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-wrapper">*/
-                }
-                {/*<div class="table-pise">*/
-                }
-                {/*<div class="table-pise-title">*/
-                }
-                {/*Հետ վճարվող գումար*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-text">*/
-                }
-                {/*2 000 000 <i class="icons "></i>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise">*/
-                }
-                {/*<div class="table-pise-title">*/
-                }
-                {/*Անվանական տոկոսադրույք*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-text">*/
-                }
-                {/*98%*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-wrapper">*/
-                }
-                {/*<div class="table-pise">*/
-                }
-                {/*<div class="table-pise-title">*/
-                }
-                {/*Անվանական*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="table-pise-text">*/
-                }
-                {/*98%*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*<div class="listing-title">*/
-                }
-                {/*<div class="left">*/
-                }
-                {/*<button type="button" class="btn btn-red">*/
-                }
-                {/*<i class="icon icon-left  icon-add"></i>*/
-                }
-                {/*<span>*/
-                }
-                {/*համեմատել*/
-                }
-                {/*</span>*/
-                }
-                {/*</button>*/
-                }
-                {/*<a href="?p=prod-page" class="btn btn-more">*/
-                }
-                {/*<span>*/
-                }
-                {/*ավելին*/
-                }
-                {/*</span>*/
-                }
-                {/*<i class="icon icon-right  icon-arrow-right"></i>*/
-                }
-                {/*</a>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*</div>*/
-                }
-                {/*@endforeach*/
-                }
-                {/*@endif*/
-                }
-                {/*</section>*/
-                }
+                    $.each(valGroupedByCompany, function (key, groupedByCompanyOtherProduct) {
+                        console.log(groupedByCompanyOtherProduct);
+                        console.log(groupedByCompanyOtherProduct);
+
+                    });
+
+                }
+
+                product_results += '</section>';
 
             });
+
+
+            console.log(product_results);
+
+            $(".product_results").append(product_results);
+
+            $("#count_searched_products").text(count_searched_products);
+
         }
     });
 

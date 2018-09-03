@@ -248,8 +248,6 @@ class HomeController extends Controller
 
         $loan_term   =   $request->loan_term;
 
-        $loan_amount   =   $request->loan_amount;
-
         if(is_null($prepayment)){
 
             $prepayment_final =   0;
@@ -258,19 +256,27 @@ class HomeController extends Controller
             $prepayment_final =   $prepayment;
         }
 
+        if(!is_null($car_cost)){
+            $loan_amount   =   $car_cost - $prepayment_final;
+        }
+        else{
+            $loan_amount    =   NULL;
+        }
+
         if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
 
-            $loan_term_search_in_days = $loan_term_search;
+            $loan_term_search_in_days = $loan_term;
 
         } else if ($time_type == 2) {
 
-            $loan_term_search_in_days = $loan_term_search * 30;
+            $loan_term_search_in_days = $loan_term * 30;
 
         } else if ($time_type == 3) {
 
-            $loan_term_search_in_days = $loan_term_search * 365;
+            $loan_term_search_in_days = $loan_term * 365;
         }
 
+       //dd($loan_term_search_in_days);
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
                 'car_cost' => 'required|numeric',
@@ -282,29 +288,44 @@ class HomeController extends Controller
 
             $errors = $validator->errors();
 
-            $products = CarLoan::with('companyInfo')
-                ->with('carInfo')
+            if($errors->count() > 0){
 
-                ->with('loanTermFromPeriodicityTypeInfo')
+                $products = NULL;
 
-                ->with('loanTermToPeriodicityTypeInfo');
+                $productsGroupByCompany = NULL;
+            }
+            else{
+                $products = CarLoan::with('companyInfo')
+                    ->with('carInfo')
 
-            if (!is_null($loan_amount)) {
-                $products->where(function ($query) use ($loan_amount) {
-                    $query->where('loan_amount_from', '<=', (float)$loan_amount);
-                    $query->where('loan_amount_to', '>=', (float)$loan_amount);
-                });
+                    ->with('loanTermFromPeriodicityTypeInfo')
+
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+////                if (!is_null($loan_amount)) {
+//                    $products->where(function ($query) use ($loan_amount) {
+//                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+//                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+//                    });
+//                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
             }
 
-            $products = $products->get();
-
-            $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
-
-            $productsGroupByCompany = [];
-
-            foreach ($productsGroupByCompanyIds as $productCompanyId) {
-                $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
-            }
         } else {
             $validator = Validator::make($request->all(), []);
 

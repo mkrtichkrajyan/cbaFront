@@ -88,29 +88,21 @@
             </form>
         </div>
         <div class="columns  large-12 medium-12 small-12">
-            <div class="best_offer_title">
-                Լավագույն Առաջարկներ
-            </div>
+            <div class="best_offer_title">Լավագույն Առաջարկներ</div>
         </div>
         <div class="columns  large-4 medium-6 small-12">
             <a href="{{url('loans')}}" class="pading_left offer">
                 <i class="icon  icon-loans"></i>
-                <div class="offert-title">
-                    Սպառողական Վարկեր
-                </div>
+                <div class="offert-title uppercase"><span>Սպառողական Վարկեր</span></div>
             </a>
         </div>
         @foreach($belongings as $belonging)
 
             <div class="columns  large-4 medium-6 small-12">
                 <a href="{{url($belonging->productsByBelongingInfo->first()->compare_url)}}" class="pading_center offer" >
-                    {{--<i class="icon   icon-deposits">--}}
-                    <i>
-                        <img  class="belonging_icon" src="{{asset($belonging->icon)}}" />
-                    </i>
-                    <div class="offert-title">
-                        {{$belonging->name}}
-                    </div>
+                    <i class="icon {{$belonging->productsByBelongingInfo->first()->front_icon}}"></i>
+                        {{--<img  class="belonging_icon" src="{{asset($belonging->icon)}}" />--}}
+                    <div class="offert-title uppercase"><span>{{$belonging->name}}</span></div>
                 </a>
             </div>
         @endforeach
