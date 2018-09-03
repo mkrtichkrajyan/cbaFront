@@ -340,7 +340,7 @@
             </div>
 
             <div class="margin-top columns large-9 medium-auto product_results">
-                {{dd(!is_null($productsGroupByCompany))}}
+                {{--{{dd(!is_null($productsGroupByCompany))}}--}}
                 @if(!is_null($productsGroupByCompany))
 
                     <div class="listing-title">
