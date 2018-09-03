@@ -8,6 +8,7 @@ Object.size = function (obj) {
 
 
 function filter_products(backend_url) {
+    request_results_count = $("#request_results_count").val();
 
     filter_car_types = [];
 
@@ -85,132 +86,133 @@ function filter_products(backend_url) {
     prepayment = $("#prepayment").val();
 
     //console.log(backend_url);
+    if (request_results_count > 0) {
+        //alert(1);
+        $.ajax({
 
-    $.ajax({
+            type: 'get',
 
-        type: 'get',
+            url: backend_url,
 
-        url: backend_url,
+            data: {
+                'time_type_search': time_type_search,
 
-        data: {
-            'time_type_search': time_type_search,
+                'loan_term_search': loan_term_search,
 
-            'loan_term_search': loan_term_search,
+                'car_cost': car_cost,
 
-            'car_cost': car_cost,
+                'prepayment': prepayment,
 
-            'prepayment': prepayment,
+                'car_types': filter_car_types,
 
-            'car_types': filter_car_types,
+                'percentage_types': filter_percentage_types,
 
-            'percentage_types': filter_percentage_types,
+                'providing_types': filter_providing_types,
 
-            'providing_types': filter_providing_types,
+                'special_project_answers': special_project_answers,
 
-            'special_project_answers': special_project_answers,
+                'privileged_term_answers': privileged_term_answers,
 
-            'privileged_term_answers': privileged_term_answers,
+                'repayment_types': filter_repayment_types,
 
-            'repayment_types': filter_repayment_types,
+                'security_types': filter_security_types,
 
-            'security_types': filter_security_types,
+                'repayment_loan_interval_type': repayment_loan_interval_type,
 
-            'repayment_loan_interval_type': repayment_loan_interval_type,
+                'repayment_percent_interval_type': repayment_percent_interval_type,
+            },
 
-            'repayment_percent_interval_type': repayment_percent_interval_type,
-        },
+            success: function (data) {
+                data = JSON.parse(data);
 
-        success: function (data) {
-            data = JSON.parse(data);
+                backend_asset_path = $("#backend_asset_path").val();
 
-            backend_asset_path = $("#backend_asset_path").val();
+                $(".product_results").empty();
 
-            $(".product_results").empty();
+                result_listing_title = '<div class="listing-title">' +
+                    '<div class="left"> Գտնվել է <span id="count_searched_products"></span> առաջարկ</div>' +
+                    '<div class="right"><div class="listing-icon"><div class="add-function">' +
+                    '<a href="" download=""> <i class="icon icon-right  icon-download"></i></a> <a href=""> <i class="icon icon-right  icon-more"></i></a>' +
+                    '<a href=""> <i class="icon icon-right icon-print"></i></a></div>' +
+                    '<div class="btn-icon-blue"><i class="chenge icon icon-right icon-list"></i><i class="chenge icon icon-right icon-list-tow active"></i>' +
+                    '</div></div></div></div>';
 
-            result_listing_title = '<div class="listing-title">' +
-                '<div class="left"> Գտնվել է <span id="count_searched_products"></span> առաջարկ</div>' +
-                '<div class="right"><div class="listing-icon"><div class="add-function">' +
-                '<a href="" download=""> <i class="icon icon-right  icon-download"></i></a> <a href=""> <i class="icon icon-right  icon-more"></i></a>' +
-                '<a href=""> <i class="icon icon-right icon-print"></i></a></div>' +
-                '<div class="btn-icon-blue"><i class="chenge icon icon-right icon-list"></i><i class="chenge icon icon-right icon-list-tow active"></i>' +
-                '</div></div></div></div>';
+                $(".product_results").append(result_listing_title);
 
-            $(".product_results").append(result_listing_title);
+                count_searched_products = 0;
 
-            count_searched_products = 0;
+                product_results = '<div class="change_item">';
 
-            product_results = '<div class="change_item">';
+                $.each(data, function (index, valGroupedByCompany) {
+                    //console.log(typeof valGroupedByCompany);
 
-            $.each(data, function (index, valGroupedByCompany) {
-                //console.log(typeof valGroupedByCompany);
+                    count_searched_products = count_searched_products + Object.size(valGroupedByCompany);
 
-                count_searched_products = count_searched_products + Object.size(valGroupedByCompany);
+                    if (Object.size(valGroupedByCompany) > 1) {
+                        //console.log(Object.values(valGroupedByCompany));
 
-                if (Object.size(valGroupedByCompany) > 1) {
-                    //console.log(Object.values(valGroupedByCompany));
+                        firstObject = Object.values(valGroupedByCompany)[0];
 
-                    firstObject = Object.values(valGroupedByCompany)[0];
+                        other_suggestions_exist = 1;
+                    }
 
-                    other_suggestions_exist = 1;
-                }
+                    else {
+                        firstObject = valGroupedByCompany[0];
 
-                else {
-                    firstObject = valGroupedByCompany[0];
+                        other_suggestions_exist = 0;
+                    }
 
-                    other_suggestions_exist = 0;
-                }
+                    other_suggestions = Object.size(valGroupedByCompany) - 1;
 
-                other_suggestions = Object.size(valGroupedByCompany) - 1;
+                    product_results +=
+                        '<div class="wrapper pading">' +
+                        '<div class="listing-title"><div class="left"><div class="category-title">' + firstObject.name + '</div></div><div class="right"><div class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + firstObject.company_info.image + '"></div></div></div>' +
 
-                product_results +=
-                    '<div class="wrapper pading">' +
-                    '<div class="listing-title"><div class="left"><div class="category-title">' + firstObject.name + '</div></div><div class="right"><div class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + firstObject.company_info.image + '"></div></div></div>' +
+                        '<div class="table">' +
 
-                    '<div class="table">' +
+                        '<div class="table-pise-wrapper">' +
+                        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98% </div></div>' +
+                        '<div class="table-pise"><div class="table-pise-title">Պարտադիր ճարներ<i class="icon icon-right  icon-question"></i></div><div class="table-pise-text"> 2 000 000 </div></div>' +
+                        '</div>' +
 
-                    '<div class="table-pise-wrapper">' +
-                    '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98% </div></div>' +
-                    '<div class="table-pise"><div class="table-pise-title">Պարտադիր ճարներ<i class="icon icon-right  icon-question"></i></div><div class="table-pise-text"> 2 000 000 </div></div>' +
-                    '</div>' +
+                        '<div class="table-pise-wrapper">' +
+                        '<div class="table-pise"><div class="table-pise-title">Հետ վճարվող գումար </div><div class="table-pise-text"> 2 000 000 <i class="icons "></i></div></div>' +
+                        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98%</div></div>' +
+                        '</div>' +
 
-                    '<div class="table-pise-wrapper">' +
-                    '<div class="table-pise"><div class="table-pise-title">Հետ վճարվող գումար </div><div class="table-pise-text"> 2 000 000 <i class="icons "></i></div></div>' +
-                    '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98%</div></div>' +
-                    '</div>' +
+                        '<div class="table-pise-wrapper"><div class="table-pise"><div class="table-pise-title">Անվանական</div><div class="table-pise-text">98%</div></div></div></div>' +
 
-                    '<div class="table-pise-wrapper"><div class="table-pise"><div class="table-pise-title">Անվանական</div><div class="table-pise-text">98%</div></div></div></div>' +
+                        '<div class="listing-title"><div class="left"><button type="button" class="btn btn-red"><i class="icon icon-left  icon-add"></i><span>համեմատել</span></button>' +
+                        '<a href="?p=prod-page" class="btn btn-more"><span>ավելին</span><i class="icon icon-right  icon-arrow-right"></i></a></div>' +
+                        '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span><i class="icon icon-arrow-down"></i></button></div></div>' +
+                        '</div>';
 
-                    '<div class="listing-title"><div class="left"><button type="button" class="btn btn-red"><i class="icon icon-left  icon-add"></i><span>համեմատել</span></button>' +
-                    '<a href="?p=prod-page" class="btn btn-more"><span>ավելին</span><i class="icon icon-right  icon-arrow-right"></i></a></div>' +
-                    '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span><i class="icon icon-arrow-down"></i></button></div></div>' +
-                    '</div>';
+                    product_results += '<section className="hide-show">';
 
-                product_results += '<section className="hide-show">';
+                    if (other_suggestions_exist == 1) {
 
-                if (other_suggestions_exist == 1) {
+                        $.each(valGroupedByCompany, function (key, groupedByCompanyOtherProduct) {
+                            console.log(groupedByCompanyOtherProduct);
+                            console.log(groupedByCompanyOtherProduct);
 
-                    $.each(valGroupedByCompany, function (key, groupedByCompanyOtherProduct) {
-                        console.log(groupedByCompanyOtherProduct);
-                        console.log(groupedByCompanyOtherProduct);
+                        });
 
-                    });
+                    }
 
-                }
+                    product_results += '</section>';
 
-                product_results += '</section>';
-
-            });
+                });
 
 
-            console.log(product_results);
+                console.log(product_results);
 
-            $(".product_results").append(product_results);
+                $(".product_results").append(product_results);
 
-            $("#count_searched_products").text(count_searched_products);
+                $("#count_searched_products").text(count_searched_products);
 
-        }
-    });
-
+            }
+        });
+    }
 }
 
 $(document).ready(function () {

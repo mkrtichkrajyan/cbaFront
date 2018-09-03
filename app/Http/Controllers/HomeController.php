@@ -293,6 +293,8 @@ class HomeController extends Controller
                 $products = NULL;
 
                 $productsGroupByCompany = NULL;
+
+                $request_results_count  =   0;
             }
             else{
                 $products = CarLoan::with('companyInfo')
@@ -324,7 +326,9 @@ class HomeController extends Controller
                 foreach ($productsGroupByCompanyIds as $productCompanyId) {
                     $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
                 }
+                $request_results_count  =   $products->count();
             }
+
 
         } else {
             $validator = Validator::make($request->all(), []);
@@ -332,10 +336,12 @@ class HomeController extends Controller
             $products = NULL;
 
             $productsGroupByCompany = NULL;
+
+            $request_results_count  =   0;
         }
 
         $errors = $validator->errors();
-//dd($productsGroupByCompany);
+ //dd($request_results_count);
         return view('compare.compareCarLoans',
             [
                 "belongings" => $belongings,
@@ -395,6 +401,8 @@ class HomeController extends Controller
                 "productsGroupByCompany" => $productsGroupByCompany,
 
                 "errors" => $errors,
+
+                "request_results_count" => $request_results_count,
             ]);
     }
 

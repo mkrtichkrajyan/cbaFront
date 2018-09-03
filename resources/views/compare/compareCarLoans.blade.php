@@ -10,6 +10,8 @@
 
     <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path">
 
+    <input type="hidden" value="{{$request_results_count}}" id="request_results_count" name="request_results_count">
+
     <form id="seachProductForm" enctype="multipart/form-data" class="form-horizontal" name="carLoanForm"
           action="{{ url($currProductByBelongingsView->compare_url) }}" method="get">
 
