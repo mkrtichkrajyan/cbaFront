@@ -41,4 +41,6 @@ Route::get('/contacts/', 'ExtraController@contacts');
 
 Route::get('/about-us/', 'ExtraController@aboutUs');
 
+Route::get('/about-website/', 'ExtraController@aboutWebsite');
+
 Route::get('/site-map/', 'ExtraController@sitemap');

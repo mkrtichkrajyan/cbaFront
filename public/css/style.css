@@ -2345,7 +2345,11 @@ svg#pieChartSVG {
 }
 
 .content_richtext a {
-    color: #dd2341
+    /*color: #dd2341*/
+
+}
+.about_us_content a{
+    display: contents;
 }
 
 .content_richtext a:hover {

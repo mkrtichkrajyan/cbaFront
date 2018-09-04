@@ -26,19 +26,19 @@
                         <li>
                             <i class="icon icon-location"></i>
                             <span>
-                            ՀՀ Կենտրոնական բանկ  Վազգեն Սարգսյան.6
+                            {{$contact_us->address}}
                         </span>
                         </li>
                         <li>
                             <i class="icon icon-phone"></i>
                             <span>
-                            +374 10 592-697
+                           {{$contact_us->phone_number}}
                         </span>
                         </li>
                         <li>
                             <i class="icon icon-time"></i>
                             <span>
-                            Բացում երկուշաբթի, 09:30
+                           {{$contact_us->extra}}
                         </span>
                         </li>
                     </ul>
@@ -59,6 +59,10 @@
 
 <script>
     var map;
+
+    lat = parseFloat("{{$contact_us->lat}}");
+
+    lng = parseFloat("{{$contact_us->lat}}");
 
     function initContactMap() {
         map = new google.maps.Map(document.getElementById('contact_map'), {
@@ -125,7 +129,7 @@
         }, {"featureType": "water", "elementType": "labels.text.fill", "stylers": [{"color": "#9e9e9e"}]}];
 
         var markers = [
-            ['', 40.176013, 44.510348]
+            ['', {{@$contact_us->lat}}, {{@$contact_us->lng}}]
         ];
 
         var pinIcon = '{{asset("img/pin.png")}}';

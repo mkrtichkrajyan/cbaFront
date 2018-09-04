@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutUs;
+use App\Models\AboutWebsite;
+use App\Models\ContactUs;
 use Illuminate\Http\Request;
 
 class ExtraController extends Controller
@@ -13,7 +16,9 @@ class ExtraController extends Controller
      */
     public function contacts()
     {
-        return view('contact');
+        $contact_us =   ContactUs::first();
+
+        return view('contact', ["contact_us" => $contact_us]);
     }
 
     /**
@@ -23,7 +28,21 @@ class ExtraController extends Controller
      */
     public function aboutUs()
     {
-        return view('about');
+        $about_us = AboutUs::first();
+
+        return view('about', ["about_us" => $about_us]);
+    }
+
+    /**
+     * Show the application about-website page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function aboutWebsite()
+    {
+        $about_website = AboutWebsite::first();
+
+        return view('aboutWebsite', ["about_website" => $about_website]);
     }
 
     /**
