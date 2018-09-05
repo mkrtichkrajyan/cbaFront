@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AboutUs;
 use App\Models\AboutWebsite;
 use App\Models\ContactUs;
+use App\Models\HowToUse;
 use Illuminate\Http\Request;
 
 class ExtraController extends Controller
@@ -43,6 +44,18 @@ class ExtraController extends Controller
         $about_website = AboutWebsite::first();
 
         return view('aboutWebsite', ["about_website" => $about_website]);
+    }
+
+    /**
+     * Show the application how-to-use page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function howToUse()
+    {
+        $how_to_use = HowToUse::first();
+
+        return view('howToUse', ["how_to_use" => $how_to_use]);
     }
 
     /**

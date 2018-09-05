@@ -46,9 +46,8 @@
                 </div>            
             </div>
             <div class="inform-link">
-                <a href="">
-                    <i class="icon icon-left  icon-question"></i>
-                    <span>Ինչպե՞ս օգտվել</span>
+                <a href="{{url('/how-to-use/')}}">
+                    <i class="icon icon-left  icon-question"></i><span>Ինչպե՞ս օգտվել</span>
                 </a>
                 <a href="{{url('/about-website/')}}">Կայքի մասին</a>
             </div>
