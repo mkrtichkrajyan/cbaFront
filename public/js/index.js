@@ -217,6 +217,10 @@ function filter_products(backend_url) {
 
 $(document).ready(function () {
 
+    if ($(".multiple_select").length > 0) {
+        $(".multiple_select").dropdown();
+    }
+
     $(".no_negative_value").keydown(function (e) {
 
         console.log(e.key);
@@ -227,29 +231,115 @@ $(document).ready(function () {
         }
     });
 
+    $("#deposit_type").parent().find('.select-selected').bind("DOMSubtreeModified", function () {
+
+        if ($("#deposit_type").val() == 1) {
+            $(".condition_from_deposit_type_term_part").css('display', "block");
+        }
+        else {
+            $(".condition_from_deposit_type_term_part").css('display', "none");
+        }
+        //console.log($("#fileAtmOrBranch").val());
+        console.log($("#deposit_type").val());
+    });
+
+    $(".btn_compare").click(function () {
+
+        // curr_product_id = $(this).attr('data-id');
+        //
+        // if ($("#product_ids").val().trim().length > 0) {
+        //
+        //     product_ids = $("#product_ids").val().split(',')
+        // }
+        // else {
+        //     product_ids = [];
+        // }
+        if ($(this).hasClass('compare_act_button_checked')) {
+
+            $(this).removeClass('compare_act_button_checked');
+
+            // curr_product_index = product_ids.indexOf(curr_product_id);
+            //
+            // if (curr_product_index != -1) {
+            //
+            //     product_ids.splice(curr_product_index, 1);
+            // }
+        }
+        else {
+            $(this).addClass('compare_act_button_checked');
+
+            // if (product_ids.indexOf(curr_product_id) == -1) {
+            //
+            //     product_ids.push(curr_product_id);
+            // }
+        }
+        //
+        // console.log(product_ids.toString());
+        //
+        // compareProductsCount = product_ids.length;
+        //
+        // console.log(compareProductsCount);
+        //
+        // $("#product_ids").val(product_ids.toString());
+        //
+        // $("#compareProductsCount").text(compareProductsCount);
+    });
+    if ($("#slider-range-money-transfer").length > 0) {
+
+        money_transfer_amount_min = parseFloat($("#money_transfer_amount_min").val().trim());
+
+        money_transfer_amount_max = parseFloat($("#money_transfer_amount_max").val().trim());
+
+        $("#slider-range-money-transfer").slider({
+            range: "min",
+            min: money_transfer_amount_min,
+            max: money_transfer_amount_max,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#transfer_amount").val(ui.value);
+            }
+        });
+    }
+    if ($("#slider-range-mortgage").length > 0) {
+
+        loan_amount_min = parseFloat($("#loan_amount_min").val().trim());
+
+        loan_amount_max = parseFloat($("#loan_amount_max").val().trim());
+
+        $("#slider-range-mortgage").slider({
+            range: "min",
+            min: loan_amount_min,
+            max: loan_amount_max,
+            step: 0.1,
+            slide: function (event, ui) {
+                $("#amount").val(ui.value);
+            }
+        });
+    }
+
     $(".prepayment").keyup(function (e) {
 
-        car_cost = parseFloat($("#car_cost").val().trim());
+        cost = parseFloat($("#cost").val().trim());
 
         prepayment = parseFloat($("#maximum").val().trim());
 
         $("#slider-range-max").slider({
             range: "min",
             min: 0,
-            max: car_cost,
+            max: cost,
             step: 0.1,
             slide: function (event, ui) {
                 $("#maximum").val(ui.value);
             }
         });
 
-        if ($("#maximum").val().trim().length == 0 && $("#car_cost").val().trim().length > 0) {
+        if ($("#maximum").val().trim().length == 0 && $("#cost").val().trim().length > 0) {
 
-            loan_amount_automatic = car_cost;
+            loan_amount_automatic = cost;
         }
-        else if ($("#maximum").val().trim().length > 0 && $("#car_cost").val().trim().length > 0) {
+        else if ($("#maximum").val().trim().length > 0 && $("#cost").val().trim().length > 0) {
 
-            loan_amount_automatic = car_cost - prepayment;
+            loan_amount_automatic = cost - prepayment;
         }
         else {
             loan_amount_automatic = "";
@@ -260,29 +350,29 @@ $(document).ready(function () {
         $("#loan_amount").val(loan_amount_automatic);
     });
 
-    $("#car_cost").keyup(function (e) {
+    $("#cost").keyup(function (e) {
 
-        car_cost = parseFloat($("#car_cost").val().trim());
+        cost = parseFloat($("#cost").val().trim());
 
         prepayment = parseFloat($("#maximum").val().trim());
 
         $("#slider-range-max").slider({
             range: "min",
             min: 0,
-            max: car_cost,
+            max: cost,
             step: 0.1,
             slide: function (event, ui) {
                 $("#maximum").val(ui.value);
             }
         });
 
-        if ($("#maximum").val().trim().length == 0 && $("#car_cost").val().trim().length > 0) {
+        if ($("#maximum").val().trim().length == 0 && $("#cost").val().trim().length > 0) {
 
-            loan_amount_automatic = car_cost;
+            loan_amount_automatic = cost;
         }
-        else if ($("#maximum").val().trim().length > 0 && $("#car_cost").val().trim().length > 0) {
+        else if ($("#maximum").val().trim().length > 0 && $("#cost").val().trim().length > 0) {
 
-            loan_amount_automatic = car_cost - prepayment;
+            loan_amount_automatic = cost - prepayment;
         }
         else {
             loan_amount_automatic = "";

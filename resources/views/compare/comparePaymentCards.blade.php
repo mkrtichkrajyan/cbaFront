@@ -12,16 +12,16 @@
         <div class="columns large-12 medium-12 small-12">
             <div class="listing-title">
                 <div class="left">
-                    <a href="" class="come-back">
+                    <a href="{{$previousUrl}}" class="come-back">
                         <div class="come-back-icon">
-                            <i class="icon icon-back-arrrow"></i>
+                            <i class="icon icon-back-arrow"></i>
                         </div>
                         <span>Վճարային քարտ</span>
                     </a>
                 </div>
                 <div class="right">
                     <div class="listing-icon">
-                        <i class="icon   icon-car"></i>
+                        <i class="icon {{$currProductByBelongingsView->front_icon}}"></i>
                     </div>
                 </div>
             </div>
@@ -29,44 +29,35 @@
         <div class="columns large-12 medium-12 small-12">
             <div class="wrapper slid-wrapper">
                 <div class="row">
-                    <div class="columns large-3 medium-6 small-12">
-                        <label class="label" for="amount">Ավտոմեքենայի արժեք</label>
-                        <div class="rel">
-                            <input type="text" id="minimym" class="input">
-                            <div id="slider-range-min"></div>
-                            <i class="icon icon-right icon-dram"></i>
-                        </div>
-                    </div>
-                    <div class="columns large-3 medium-6 small-12">
-                        <label class="label" for="amount">Կանխավճար</label>
-                        <div class="rel">
-                            <input type="text" id="maximym"  class="input">
-                            <div id="slider-range-max"></div>
-                            <i class="icon icon-right icon-dram"></i>
-                        </div>
-                    </div>
-                    <div class="columns large-3 medium-6 small-12">
-                        <label class="label" for="amount">Ժամկետ</label>
-                        <div class="rel">
-                            <input type="text" id="time" class="input">
-                            <div class="chenge-time">
-                            <span class="chenge-time-active active">
-                                ամիս
-                            </span>
-                                <span class="chenge-time-active">
-                                տարի
-                            </span>
+
+                    <div class="columns large-3 medium-6 small-12 dropDownSemantic">
+                        <label class="label">Արժույթ</label>
+
+                        <div class="select_inputs">
+                            <div class="">
+                                <div class="ui fluid search selection dropdown multiple_select semantic_dropdown_simple">
+                                    <input type="hidden" name="currency" value="{{$currency}}">
+                                    <i class="dropdown icon"></i>
+                                    <div class="default text">Ընտրել ցանկից</div>
+                                    <div class="menu">
+                                        @foreach($payment_card_currencies_types as $payment_card_currencies_type)
+                                            <div class="item"
+                                                 data-value="{{$payment_card_currencies_type->id}}">{{$payment_card_currencies_type->name}}</div>
+                                        @endforeach
+
+                                    </div>
+                                </div>
                             </div>
+                            @if ($errors->has('currency'))
+                                <span class="help-block err-field">
+                                        <strong>{{ $errors->first('currency') }}</strong>
+                                    </span>
+                            @endif
                         </div>
+
                     </div>
-                    <div class="columns large-3 medium-6 small-12">
-                        <label class="label" for="amount">Վարկի գումար</label>
-                        <div class="rel">
-                            <input type="text" id="price" class="input">
-                            <i class="icon icon-right icon-dram"></i>
-                        </div>
-                    </div>
-                    <div class="columns large-12 medium-12 small-12" >
+
+                    <div class="columns large-12 medium-12 small-12">
                         <div class="read-more">
                             <i class="icon icon-left icon-filters"></i> Այլ պայմաններ
                         </div>
@@ -90,116 +81,85 @@
         <div class="margin-top none columns large-3 medium-3 small-12">
             <div class="wrapper check-box-panel-wrapper  popup">
                 <form>
+
                     <div class="check-drop-down-wrapper">
                         <div class="check-drop-title">
-                        <span>
-                                Ավտոմեքենա
-                        </span>
-                            <i></i>
+                            <span>Քարտի տեսակ</span><i></i>
                         </div>
                         <div class="check-drop-down">
-                            <label class="container">One
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Two
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Three
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                            @foreach($payment_card_product_types as $payment_card_product_type)
+                                <label class="container">{{$payment_card_product_type->name}}
+                                    <input type="checkbox" id="payment_card_product_type_{{$payment_card_product_type->id}}"
+                                           data-id="{{$payment_card_product_type->id}}"
+                                           name="payment_card_product_type_{{$payment_card_product_type->id}}"
+                                           value="1"
+                                           class="filter_product filter_checkbox filter_payment_card_product_type">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
+
                     <div class="check-drop-down-wrapper">
                         <div class="check-drop-title">
-                        <span>
-                                Մարման եղանակ
-                        </span>
-                            <i></i>
+                            <span>Ռեգիոն</span><i></i>
                         </div>
                         <div class="check-drop-down">
-                            <label class="container">Բոլորը
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container"> Առաջնային շուկա
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Երկրորդային շուկա
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="check-box check-drop-down">
-                            <div class="custom-select wrapper">
-                                <select>
-                                    <option value="0">Բոլորը</option>
-                                    <option value="1">Առաջնային շուկա</option>
-                                    <option value="2">Երկրորդային շուկա</option>
-                                    <option value="3">Երկրորդային շուկա</option>
-                                </select>
-                            </div>
-                            <div class="custom-select wrapper">
-                                <select>
-                                    <option value="0">Բոլորը</option>
-                                    <option value="1">Առաջնային շուկա</option>
-                                    <option value="2">Երկրորդային շուկա</option>
-                                    <option value="3">Երկրորդային շուկա</option>
-                                </select>
-                            </div>
+                            @foreach($payment_card_regions as $payment_card_region)
+                                <label class="container">{{$payment_card_region->name}}
+                                    <input type="checkbox" id="payment_card_region_{{$payment_card_region->id}}"
+                                           data-id="{{$payment_card_region->id}}"
+                                           name="payment_card_region_{{$payment_card_region->id}}"
+                                           value="1"
+                                           class="filter_product filter_checkbox filter_payment_card_region">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
+
                     <div class="check-drop-down-wrapper">
                         <div class="check-drop-title">
-                        <span>
-                                Տրամադրման եղանակ
-                        </span>
-                            <i></i>
+                            <span>Հատուկ քարտեր</span><i></i>
                         </div>
                         <div class="check-drop-down">
-                            <label class="container">One
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Two
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Three
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                            @foreach ($payment_specials_cards as $payment_specials_card)
+                                <label class="container">{{$payment_specials_card->name}}
+                                    <input type="checkbox" id="payment_specials_card_{{$payment_specials_card->id}}"
+                                           data-id="{{$payment_specials_card->id}}"
+                                           name="payment_specials_card_{{$payment_specials_card->id}}"
+                                           value="1"
+                                           class="filter_product filter_checkbox filter_payment_specials_card">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
+
                     <div class="check-drop-down-wrapper">
                         <div class="check-drop-title">
-                        <span>
-                                Տոկոսադրույք
-                        </span>
-                            <i></i>
+                            <span>Լրացուցիչ</span><i></i>
                         </div>
                         <div class="check-drop-down">
-                            <label class="container">One
-                                <input type="checkbox" checked="checked">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Two
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="container">Three
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
+                            @foreach ($payment_extra_cards as $payment_extra_card)
+                                <label class="container">{{$payment_extra_card->name}}
+                                    <input type="checkbox" id="payment_extra_card_{{$payment_extra_card->id}}"
+                                           data-id="{{$payment_extra_card->id}}"
+                                           name="payment_extra_card_{{$payment_extra_card->id}}"
+                                           value="1"
+                                           class="filter_product filter_checkbox filter_payment_extra_card">
+                                    <span class="checkmark"></span>
+                                </label>
+                            @endforeach
                         </div>
                     </div>
+
+
                 </form>
             </div>
         </div>
         <div class="margin-top columns large-9 medium-auto">
+            @if(!is_null($productsGroupByCompany))
             <div class="listing-title">
                 <div class="left">
                     Գտնվել է <span>{{$products->count()}}</span> առաջարկ
@@ -224,7 +184,7 @@
                     </div>
                 </div>
             </div>
-            @foreach($productsGroupByCompany as $companyProducts)
+                @foreach($productsGroupByCompany as $companyProducts)
 
                 <div class="change_item">
 
@@ -232,14 +192,15 @@
                         <div class="listing-title">
                             <div class="left">
                                 <div class="category-title">
-                                   {{$companyProducts->first()->name}}
+                                    {{$companyProducts->first()->name}}
                                 </div>
                             </div>
                             <div class="right">
                                 <div class="category-logo">
                                     {{--<img src="{{ env('BACKEND_URL') . 'savedImages/'.$companyProducts->first()->companyInfo->image }}">--}}
-                                    <img style="max-width: 80px;" src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
-                                 </div>
+                                    <img style="max-width: 80px;"
+                                         src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
+                                </div>
                             </div>
                         </div>
                         <div class="table">
@@ -267,7 +228,7 @@
                                         Հետ վճարվող գումար
                                     </div>
                                     <div class="table-pise-text">
-                                        2 000 000  <i class="icons "></i>
+                                        2 000 000 <i class="icons "></i>
                                     </div>
                                 </div>
                                 <div class="table-pise">
@@ -318,103 +279,102 @@
 
                         <section class="hide-show">
                             @if($companyProducts->count() > 1)
-                             @php(
-                                $companyProductsFiltered = $companyProducts->filter(function ($value, $key) {
-                                    return $key > 1;
-                                })
-                            )
-                            @foreach($companyProductsFiltered as $companyProductCurr)
-                                <div class="add-result pading">
-                                <div class="listing-title">
-                                    <div class="left">
-                                        <div class="category-title">
-                                            {{$companyProductCurr->name}}
-                                        </div>
-                                    </div>
-                                    <div class="right">
-                                        <div class="category-logo">
-                                            <img src="{{$companyProductCurr->companyInfo->image}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table">
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
+                                @php(
+                                   $companyProductsFiltered = $companyProducts->filter(function ($value, $key) {
+                                       return $key > 1;
+                                   })
+                               )
+                                @foreach($companyProductsFiltered as $companyProductCurr)
+                                    <div class="add-result pading">
+                                        <div class="listing-title">
+                                            <div class="left">
+                                                <div class="category-title">
+                                                    {{$companyProductCurr->name}}
+                                                </div>
                                             </div>
-                                            <div class="table-pise-text">
-                                                98%
+                                            <div class="right">
+                                                <div class="category-logo">
+                                                    <img src="{{$companyProductCurr->companyInfo->image}}">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                        <div class="table">
+                                            <div class="table-pise-wrapper">
+                                                <div class="table-pise">
+                                                    <div class="table-pise-title">
+                                                        Անվանական տոկոսադրույք
+                                                    </div>
+                                                    <div class="table-pise-text">
+                                                        98%
+                                                    </div>
+                                                </div>
+                                                <div class="table-pise">
+                                                    <div class="table-pise-title">
+                                                        Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                                    </div>
+                                                    <div class="table-pise-text">
+                                                        2 000 000
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="table-pise-text">
-                                                2 000 000
+                                            <div class="table-pise-wrapper">
+                                                <div class="table-pise">
+                                                    <div class="table-pise-title">
+                                                        Հետ վճարվող գումար
+                                                    </div>
+                                                    <div class="table-pise-text">
+                                                        2 000 000 <i class="icons "></i>
+                                                    </div>
+                                                </div>
+                                                <div class="table-pise">
+                                                    <div class="table-pise-title">
+                                                        Անվանական տոկոսադրույք
+                                                    </div>
+                                                    <div class="table-pise-text">
+                                                        98%
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="table-pise-wrapper">
+                                                <div class="table-pise">
+                                                    <div class="table-pise-title">
+                                                        Անվանական
+                                                    </div>
+                                                    <div class="table-pise-text">
+                                                        98%
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Հետ վճարվող գումար
-                                            </div>
-                                            <div class="table-pise-text">
-                                                2 000 000  <i class="icons "></i>
-                                            </div>
-                                        </div>
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="listing-title">
-                                    <div class="left">
-                                        <button class="btn btn-red">
-                                            <i class="icon icon-left  icon-add"></i>
-                                            <span>
+                                        <div class="listing-title">
+                                            <div class="left">
+                                                <button class="btn btn-red">
+                                                    <i class="icon icon-left  icon-add"></i>
+                                                    <span>
                                                 համեմատել
                                         </span>
-                                        </button>
-                                        <a href="?p=prod-page" class="btn btn-more">
+                                                </button>
+                                                <a href="?p=prod-page" class="btn btn-more">
                                         <span>
                                                 ավելին
                                         </span>
-                                            <i class="icon icon-right  icon-arrow-right"></i>
-                                        </a>
+                                                    <i class="icon icon-right  icon-arrow-right"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
                                 @endforeach
                             @endif
-                         </section>
+                        </section>
                     </div>
                 </div>
 
             @endforeach
-
+            @endif
         </div>
     </div>
 
 </main>
-
 
 
 @include('layouts.footer')

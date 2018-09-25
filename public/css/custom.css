@@ -20,3 +20,61 @@
 .about_content{
 	min-height: 296px;
 }
+.gold_pledge_type_selectbox{
+	/*min-width: 257px;*/
+	line-height: 50px !important;
+	height: 50px;
+	margin: 0 !important;
+}
+.btn_compare{
+    margin: 18px;
+}
+
+.btn_compare:hover{
+    background-color: #dc2341;
+    color:white;
+}
+.compare_act_button_checked{
+    background-color: #dc2341;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.24);
+}
+
+.compare_act_button_checked{
+    color:white;
+}
+
+/*semantic*/
+.ui.search.dropdown>input.search{
+	font-family: inherit;
+	font-size: 14px;
+}
+.ui.selection.active.dropdown .menu{
+	max-width: 100% !important;
+	box-shadow: 0 2px 2px 0 rgba(34,36,38,.15);  !important;
+}
+.ui.dropdown .menu>.item{
+	font-size: 14px;
+}
+/*semantic*/
+
+.come-back:hover{
+	color:white;
+}
+html{
+	font-size: 15.5px;
+}
+.dropDownSemantic{
+	font-size: 14px;
+}
+main{
+	min-height: 76%;
+}
+.single_filter_count{
+	float: right;
+	font-weight: bold;
+}
+.deposit_type_selectbox,.currency_type_selectbox{
+	line-height: 50px !important;
+	height: 50px;
+	margin: 0;
+}

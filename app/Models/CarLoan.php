@@ -8,7 +8,8 @@ class CarLoan extends Model
 {
     protected $table = 'car_loans';
 
-    public function belongingId() {
+    public function belongingId()
+    {
 
         return 1;
     }
@@ -35,21 +36,24 @@ class CarLoan extends Model
 
     public function securityTypes()
     {
-        return $this->hasMany('App\Models\ProductsSecurityType','product_id','id')->where('belonging_id',$this->belongingId());
+        return $this->hasMany('App\Models\ProductsSecurityType', 'product_id', 'id')->where('belonging_id', $this->belongingId());
     }
 
     public function companyInfo()
     {
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
     }
+
     public function carInfo()
     {
         return $this->hasOne('App\Models\CarType', 'id', 'car_type');
     }
+
     public function loanTermFromPeriodicityTypeInfo()
     {
         return $this->hasOne('App\Models\TimeType', 'id', 'loan_term_from_periodicity_type');
     }
+
     public function loanTermToPeriodicityTypeInfo()
     {
         return $this->hasOne('App\Models\TimeType', 'id', 'loan_term_to_periodicity_type');

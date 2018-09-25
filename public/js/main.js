@@ -167,40 +167,36 @@ $(document).ready(function () {
         $(this).parent().children(".check-drop-down").slideToggle(200);
     });
 
-    // $( function() {
-    //
-    //     prepayment_from_min    =   parseInt( $('#prepayment_from_min').val());
-    //
-    //     prepayment_to_max    =   parseInt($('#prepayment_to_max').val());
-    //
-    //     car_cost_min    =   parseInt( $('#car_cost_min').val());
-    //
-    //     car_cost_max    =   parseInt($('#car_cost_max').val());
-    //
-    //   $( "#slider-range-min" ).slider({
-    //     range: "min",
-    //    // value: 37,
-    //     min: car_cost_min,
-    //     max: car_cost_max,
-    //     slide: function( event, ui ) {
-    //       $( "#minimym" ).val( ui.value );
-    //     }
-    //   });
-    //
-    //   $( "#slider-range-max" ).slider({
-    //       //$( "#slider-range-cost" ).slider({
-    //     range: "min",
-    //     //value: 37,
-    //     min: car_cost_min,
-    //     max: car_cost_max,
-    //     slide: function( event, ui ) {
-    //       $( "#car_cost" ).val(  ui.value );
-    //     }
-    //   });
-    //   $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
-    //
-    //   $( "#amount" ).val($( "#slider-range-max" ).slider( "value" ) );
-    // } );
+    $( function() {
+
+        deposit_money_min    =   parseInt( $('#deposit_money_min').val());
+
+        deposit_money_max    =   parseInt($('#deposit_money_max').val());
+
+      $( "#slider-range-deposit" ).slider({
+        range: "min",
+       // value: 37,
+        min: deposit_money_min,
+        max: deposit_money_max,
+        slide: function( event, ui ) {
+          $( "#loan_amount" ).val( ui.value );
+        }
+      });
+
+      // $( "#slider-range-max" ).slider({
+      //     //$( "#slider-range-cost" ).slider({
+      //   range: "min",
+      //   //value: 37,
+      //   min: car_cost_min,
+      //   max: car_cost_max,
+      //   slide: function( event, ui ) {
+      //     $( "#car_cost" ).val(  ui.value );
+      //   }
+      // });
+      // $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
+      //
+      // $( "#amount" ).val($( "#slider-range-max" ).slider( "value" ) );
+    } );
 
 
     $(function () {

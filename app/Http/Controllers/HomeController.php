@@ -3,27 +3,58 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SearchCarLoansRequest;
+use App\Models\AgricLoan;
 use App\Models\Belonging;
 use App\Models\CarLoan;
 use App\Models\CarType;
+use App\Models\ConsumerCredit;
+use App\Models\Country;
 use App\Models\CreditLoan;
+use App\Models\CreditPurposeTypes;
+use App\Models\Deposit;
+use App\Models\DepositCapitalizationsList;
+use App\Models\DepositInterestRatesPayment;
+use App\Models\DepositsSpecialsList;
+use App\Models\DepositTypesList;
+use App\Models\GoldAssayType;
 use App\Models\GoldLoan;
+use App\Models\GoldPledgeType;
+use App\Models\LoanCurrenciesType;
+use App\Models\LoanRefinancing;
+use App\Models\LoanRefinancingPurposeType;
+use App\Models\MoneyTransfer;
+use App\Models\MoneyTransferCurrenciesAllType;
+use App\Models\Mortgage;
+use App\Models\MortgagePurposeType;
+use App\Models\OnlineLoan;
 use App\Models\PaymentCard;
+use App\Models\PaymentCardCurrency;
+use App\Models\PaymentCardProductType;
+use App\Models\PaymentCardRegion;
+use App\Models\PaymentCardType;
+use App\Models\PaymentExtraCard;
+use App\Models\PaymentSpecialCard;
 use App\Models\PercentageType;
 use App\Models\ProductByBelongingsView;
 use App\Models\ProvidingType;
+use App\Models\PurposeType;
 use App\Models\RepaymentLoanIntervalType;
 use App\Models\RepaymentPercentIntervalType;
 use App\Models\RepaymentType;
 use App\Models\SecurityType;
+use App\Models\StudentLoan;
 use App\Models\TimeType;
+use App\Models\TransferBank;
+use App\Models\TransferSystem;
+use App\Models\TravelInsurance;
 use App\Models\YesNo;
 use App\Models\YesNoAllAnswer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
-class HomeController extends Controller
+class HomeController extends MainController
 {
     /**
      * Show the application home dashboard.
@@ -35,6 +66,16 @@ class HomeController extends Controller
         $belongings = Belonging::whereIn('extra', [2, 3])->with('productsByBelongingInfo')->get();
 
         return view('home', ["belongings" => $belongings]);
+    }
+
+    /**
+     * Give the previousUrl.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function loansPreviousUrl(Request $request)
+    {
+        return url('/');
     }
 
     /**
@@ -183,43 +224,13 @@ class HomeController extends Controller
 
         $belongings = Belonging::with('productsByBelongingInfo')->get();
 
-        $car_types = CarType::all();
-
         $time_types = TimeType::all();
-
-        $repayment_types = RepaymentType::all();
-
-        $percentage_types = PercentageType::all();
-
-        $providing_types = ProvidingType::all();
-
-        $security_types = SecurityType::all();
-
-        $yes_no_all_answers = YesNoAllAnswer::all();
 
         $yes_no_answers = YesNo::all();
 
         $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
 
         $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
-
-        $loan_amount_to_max = CarLoan::max('loan_amount_to');
-
-        $prepayment_to_max = CarLoan::max('prepayment_to');
-
-        $prepayment_from_min = CarLoan::min('prepayment_from');
-
-        if (is_null($prepayment_from_min)) {
-            $prepayment_from_min = 0;
-        }
-
-        if (is_null($prepayment_to_max)) {
-            $prepayment_to_max = 0;
-        }
-
-        $special_projects_having_products_count = CarLoan::where('special_projects', 1)->count();
-
-        $privileged_term_having_products_count = CarLoan::where('privileged_term_checked', 1)->count();
 
         $car_cost_max_query = DB::table('car_loans')->select(DB::raw('max(loan_amount_to + prepayment_to) as cost'))->first();
 
@@ -229,38 +240,28 @@ class HomeController extends Controller
 
         $car_cost_max = $car_cost_max_query->cost;
 
-        if (!$loan_amount_to_max) {
-
-            $loan_amount_to_max = 0;
-        }
-
         $loan_term_from_periodicity_type = $request->input('loan_term_from_periodicity_type');
 
         $productPercentageTypesArr = ["1" => "+", "2" => "-", "3" => "±"];
 
-        $loan_term_search = $request->loan_term_search;
-
         $time_type = $request->time_type;
 
-        $car_cost   =   $request->car_cost;
+        $car_cost = $request->car_cost;
 
-        $prepayment   =   $request->prepayment;
+        $prepayment = $request->prepayment;
 
-        $loan_term   =   $request->loan_term;
+        $loan_term = $request->loan_term;
 
-        if(is_null($prepayment)){
-
-            $prepayment_final =   0;
-        }
-        else{
-            $prepayment_final =   $prepayment;
+        if (is_null($prepayment)) {
+            $prepayment_final = 0;
+        } else {
+            $prepayment_final = $prepayment;
         }
 
-        if(!is_null($car_cost)){
-            $loan_amount   =   $car_cost - $prepayment_final;
-        }
-        else{
-            $loan_amount    =   NULL;
+        if (!is_null($car_cost)) {
+            $loan_amount = $car_cost - $prepayment_final;
+        } else {
+            $loan_amount = NULL;
         }
 
         if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
@@ -276,7 +277,6 @@ class HomeController extends Controller
             $loan_term_search_in_days = $loan_term * 365;
         }
 
-       //dd($loan_term_search_in_days);
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
                 'car_cost' => 'required|numeric',
@@ -288,20 +288,38 @@ class HomeController extends Controller
 
             $errors = $validator->errors();
 
-            if($errors->count() > 0){
+            if ($errors->count() > 0) {
 
                 $products = NULL;
 
                 $productsGroupByCompany = NULL;
 
-                $request_results_count  =   0;
+                $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $car_types = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
+
+                $special_projects_having_products_count = NULL;
+
+                $special_projects_no_having_products_count = NULL;
             }
-            else{
+            else {
                 $products = CarLoan::with('companyInfo')
                     ->with('carInfo')
-
                     ->with('loanTermFromPeriodicityTypeInfo')
-
                     ->with('loanTermToPeriodicityTypeInfo');
 
                 if (!is_null($loan_term_search_in_days)) {
@@ -326,22 +344,63 @@ class HomeController extends Controller
                 foreach ($productsGroupByCompanyIds as $productCompanyId) {
                     $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
                 }
-                $request_results_count  =   $products->count();
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $car_types = $productsFiltersSingleCounts["car_types"];
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
             }
-
-
-        } else {
+        }
+        else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
 
             $productsGroupByCompany = NULL;
 
-            $request_results_count  =   0;
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $car_types = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
         }
 
         $errors = $validator->errors();
- //dd($request_results_count);
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
         return view('compare.compareCarLoans',
             [
                 "belongings" => $belongings,
@@ -350,31 +409,15 @@ class HomeController extends Controller
 
                 "belonging_id" => $belonging_id,
 
-                "repayment_types" => $repayment_types,
-
-                "percentage_types" => $percentage_types,
-
-                "providing_types" => $providing_types,
-
                 "repayment_loan_interval_types" => $repayment_loan_interval_types,
 
                 "repayment_percent_interval_types" => $repayment_percent_interval_types,
-
-                "prepayment_from_min" => $prepayment_from_min,
-
-                "prepayment_to_max" => $prepayment_to_max,
 
                 "car_cost_max" => $car_cost_max,
 
                 "car_cost_min" => $car_cost_min,
 
-                "security_types" => $security_types,
-
-                "car_types" => $car_types,
-
                 "time_types" => $time_types,
-
-                "yes_no_all_answers" => $yes_no_all_answers,
 
                 "yes_no_answers" => $yes_no_answers,
 
@@ -403,6 +446,28 @@ class HomeController extends Controller
                 "errors" => $errors,
 
                 "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "car_types" => $car_types,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
             ]);
     }
 
@@ -420,55 +485,149 @@ class HomeController extends Controller
 
         $belongings = Belonging::with('productsByBelongingInfo')->get();
 
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
         $time_types = TimeType::all();
 
-        $loan_amount_to_max = GoldLoan::max('loan_amount_to');
+        $gold_pledge_types = GoldPledgeType::all();
 
-        $name = $request->input('name');
+        $yes_no_all_answers = YesNoAllAnswer::all();
 
-        $comp_name = $request->input('comp_name');
+        $yes_no_answers = YesNo::all();
 
-        $loan_amount_from = $request->input('loan_amount_from');
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
 
-        $loan_amount_to = $request->input('loan_amount_to');
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
 
-        $percent_val = $request->input('percent');
+        $time_type = $request->time_type;
 
-        $percent = (float)$percent_val;
+        $loan_term = $request->loan_term;
 
-        $loan_term_from = $request->input('loan_term_from');
+        $loan_amount = $request->loan_amount;
 
-        $loan_term_to = $request->input('loan_term_to');
+        $gold_pledge_type = $request->gold_pledge_type;
 
-        $loan_term_from_periodicity_type = $request->input('loan_term_from_periodicity_type');
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
 
-        $loan_term_to_periodicity_type = $request->input('loan_term_to_periodicity_type');
+            $loan_term_search_in_days = $loan_term;
 
-        $name_sql_val = '%' . @$name . '%';
+        } else if ($time_type == 2) {
 
-        $comp_name_sql_val = '%' . @$comp_name . '%';
+            $loan_term_search_in_days = $loan_term * 30;
 
-        $products = GoldLoan::with('companyInfo')
-            ->with('ProductStatus')
-            ->with('goldPledgeTypeInfo');
+        } else if ($time_type == 3) {
 
+            $loan_term_search_in_days = $loan_term * 365;
+        }
 
-        if (!is_null($name)) {
-            $products->where(function ($query) use ($name, $name_sql_val) {
-                if ($name) {
-                    $query->where('name', 'like', $name_sql_val);
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+
+                'gold_pledge_type' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+
+                if ($gold_pledge_type == 3) {
+
+                    $gold_pledge_types_arr = $gold_pledge_types->pluck('id')->toArray();
+                } else {
+                    $gold_pledge_types_arr = array($gold_pledge_type);
                 }
-            });
+
+                $products = GoldLoan::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo')
+                    ->with('goldPledgeTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($gold_pledge_type)) {
+                    $products->where(function ($query) use ($gold_pledge_types_arr) {
+
+                        $query->whereIn('gold_pledge_type', $gold_pledge_types_arr);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $gold_assay_types = $productsFiltersSingleCounts["gold_assay_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+            }
         }
-        $products = $products->get();
+        else {
+            $validator = Validator::make($request->all(), []);
 
-        $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+            $products = NULL;
 
-        $productsGroupByCompany = [];
+            $productsGroupByCompany = NULL;
 
-        foreach ($productsGroupByCompanyIds as $productCompanyId) {
-            $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $repayment_types = NULL;
+
+            $gold_assay_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
         }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
 
         return view('compare.compareGoldLoans',
             [
@@ -476,33 +635,55 @@ class HomeController extends Controller
 
                 "currProductByBelongingsView" => $currProductByBelongingsView,
 
+                "currBelonging" => $currBelonging,
+
                 "belonging_id" => $belonging_id,
+
+                "gold_assay_types" => $gold_assay_types,
+
+                "gold_pledge_types" => $gold_pledge_types,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
 
                 "time_types" => $time_types,
 
-                "name" => $name,
+                "time_type" => $time_type,
 
-                "comp_name" => $comp_name,
+                "loan_term" => $loan_term,
 
-                "loan_amount_from" => $loan_amount_from,
+                "gold_pledge_type" => $gold_pledge_type,
 
-                "loan_amount_to" => $loan_amount_to,
+                "loan_amount" => $loan_amount,
 
-                "loan_amount_to" => $loan_amount_to,
-
-                "percent" => $percent,
-
-                "loan_term_from" => $loan_term_from,
-
-                "loan_term_to" => $loan_term_to,
-
-                "loan_term_from_periodicity_type" => $loan_term_from_periodicity_type,
-
-                "loan_term_to_periodicity_type" => $loan_term_to_periodicity_type,
+                "errors" => $errors,
 
                 "products" => $products,
 
                 "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "repayment_types" => $repayment_types,
+
+                "gold_assay_types" => $gold_assay_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
             ]);
     }
 
@@ -520,56 +701,174 @@ class HomeController extends Controller
 
         $belongings = Belonging::with('productsByBelongingInfo')->get();
 
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
         $time_types = TimeType::all();
 
-        $loan_amount_to_max = CreditLoan::max('loan_amount_to');
+        $yes_no_answers = YesNo::all();
 
-        $name = $request->input('name');
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
 
-        $comp_name = $request->input('comp_name');
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
 
-        $loan_amount_from = $request->input('loan_amount_from');
+        $time_type = $request->time_type;
 
-        $loan_amount_to = $request->input('loan_amount_to');
+        $loan_term = $request->loan_term;
 
-        $percent_val = $request->input('percent');
+        $cost = $request->cost;
 
-        $percent = (float)$percent_val;
+        $prepayment = $request->prepayment;
 
-        $loan_term_from = $request->input('loan_term_from');
+        if (is_null($prepayment)) {
+            $prepayment_final = 0;
+        } else {
+            $prepayment_final = $prepayment;
+        }
 
-        $loan_term_to = $request->input('loan_term_to');
+        if (!is_null($cost)) {
+            $loan_amount = $cost - $prepayment_final;
+        } else {
+            $loan_amount = NULL;
+        }
 
-        $loan_term_from_periodicity_type = $request->input('loan_term_from_periodicity_type');
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+            $loan_term_search_in_days = $loan_term;
 
-        $loan_term_to_periodicity_type = $request->input('loan_term_to_periodicity_type');
+        } else if ($time_type == 2) {
+            $loan_term_search_in_days = $loan_term * 30;
 
-        $name_sql_val = '%' . @$name . '%';
+        } else if ($time_type == 3) {
+            $loan_term_search_in_days = $loan_term * 365;
+        }
 
-        $comp_name_sql_val = '%' . @$comp_name . '%';
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
 
-        $products = CreditLoan::with('companyInfo')
-            ->with('ProductStatus')
-            ->with('goldPledgeTypeInfo');
+                'cost' => 'required|numeric',
 
+                'prepayment' => 'nullable|numeric',
+            ]);
 
-        if (!is_null($name)) {
-            $products->where(function ($query) use ($name, $name_sql_val) {
-                if ($name) {
-                    $query->where('name', 'like', $name_sql_val);
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $creditPurposeTypes = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
+
+                $special_projects_having_products_count = NULL;
+
+                $special_projects_no_having_products_count = NULL;
+            }
+            else {
+                $products = CreditLoan::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
                 }
-            });
+                if (!is_null($loan_term_search_in_days)) {
+
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $creditPurposeTypes = $productsFiltersSingleCounts["creditPurposeTypes"];
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $creditPurposeTypes = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
         }
 
-        $products = $products->get();
+        $errors = $validator->errors();
 
-        $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
-
-        $productsGroupByCompany = [];
-
-        foreach ($productsGroupByCompanyIds as $productCompanyId) {
-            $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
-        }
+        $previousUrl = $this->loansPreviousUrl($request);
 
         return view('compare.compareCredits',
             [
@@ -577,33 +876,1613 @@ class HomeController extends Controller
 
                 "currProductByBelongingsView" => $currProductByBelongingsView,
 
+                "currBelonging" => $currBelonging,
+
                 "belonging_id" => $belonging_id,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
 
                 "time_types" => $time_types,
 
-                "name" => $name,
+                "time_type" => $time_type,
 
-                "comp_name" => $comp_name,
+                "loan_term" => $loan_term,
 
-                "loan_amount_from" => $loan_amount_from,
+                "cost" => $cost,
 
-                "loan_amount_to" => $loan_amount_to,
+                "prepayment" => $prepayment,
 
-                "loan_amount_to" => $loan_amount_to,
+                "loan_amount" => $loan_amount,
 
-                "percent" => $percent,
-
-                "loan_term_from" => $loan_term_from,
-
-                "loan_term_to" => $loan_term_to,
-
-                "loan_term_from_periodicity_type" => $loan_term_from_periodicity_type,
-
-                "loan_term_to_periodicity_type" => $loan_term_to_periodicity_type,
+                "errors" => $errors,
 
                 "products" => $products,
 
                 "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "creditPurposeTypes" => $creditPurposeTypes,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
+            ]);
+    }
+
+    /**
+     * compare Student Loans.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareStudentLoans(Request $request)
+    {
+        $belonging_id = 4;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+                $products = StudentLoan::with('companyInfo')
+                    ->with('securityTypes')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareStudentLoans',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "repayment_types" => $repayment_types,
+
+                "percentage_types" => $percentage_types,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
+            ]);
+    }
+
+    /**
+     * compare Agric Loans.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareAgricLoans(Request $request)
+    {
+        $belonging_id = 5;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $loanCurrenciesTypes = LoanCurrenciesType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        $currency = $request->currency;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+
+                'currency' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+                $products = AgricLoan::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+                if (!is_null($currency)) {
+                    $products->where(function ($query) use ($currency) {
+
+                        $query->where('currency', (float)$currency);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $purposeTypes = $productsFiltersSingleCounts["purposeTypes"];
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $purposeTypes = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareAgricLoans',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "loanCurrenciesTypes" => $loanCurrenciesTypes,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "currency" => $currency,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "purposeTypes" => $purposeTypes,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
+            ]);
+    }
+
+    /**
+     * compare Consumer Credits.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareConsumerCredits(Request $request)
+    {
+        $belonging_id = 6;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
+
+                $special_projects_having_products_count = NULL;
+
+                $special_projects_no_having_products_count = NULL;
+            }
+            else {
+                $products = ConsumerCredit::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareConsumerCredits',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
+            ]);
+    }
+
+    /**
+     * compare Loan Refinancings.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareLoanRefinancings(Request $request)
+    {
+        $belonging_id = 11;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $loanCurrenciesTypes = LoanCurrenciesType::all();
+
+        $loanRefinancingPurposeType = LoanRefinancingPurposeType::all();
+
+        $repayment_types = RepaymentType::all();
+
+        $percentage_types = PercentageType::all();
+
+        $providing_types = ProvidingType::all();
+
+        $security_types = SecurityType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $special_projects_having_products_count = LoanRefinancing::where('special_projects', 1)->count();
+
+        $privileged_term_having_products_count = LoanRefinancing::where('privileged_term_checked', 1)->count();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        $currency = $request->currency;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+
+                'currency' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+                $products = LoanRefinancing::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+//                if (!is_null($currency)) {
+//                    $products->where(function ($query) use ($currency) {
+//
+//                        $query->where('currency', (float)$currency);
+//                    });
+//                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+            }
+        } else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+        }
+
+        $errors = $validator->errors();
+        //Session::forget('previousUrl');
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareLoanRefinancings',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "loanRefinancingPurposeType" => $loanRefinancingPurposeType,
+
+                "loanCurrenciesTypes" => $loanCurrenciesTypes,
+
+                "repayment_types" => $repayment_types,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "currency" => $currency,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+            ]);
+    }
+
+    /**
+     * compare Deposits.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareDeposits(Request $request)
+    {
+        $belonging_id = 7;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $loanCurrenciesTypes = LoanCurrenciesType::all();
+
+        $loanRefinancingPurposeType = LoanRefinancingPurposeType::all();
+
+        $repayment_types = RepaymentType::all();
+
+        $percentage_types = PercentageType::all();
+
+        $providing_types = ProvidingType::all();
+
+        $security_types = SecurityType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $deposit_types_list = DepositTypesList::all();
+
+        $deposit_interest_rates_payments = DepositInterestRatesPayment::all();
+
+        $deposit_capitalizations_list = DepositCapitalizationsList::all();
+
+        $deposits_specials_list = DepositsSpecialsList::all();
+
+        $deposit_money_min = Deposit::min('deposit_money_from');
+
+        $deposit_money_max = Deposit::max('deposit_money_to');
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        $currency = $request->currency;
+
+        $deposit_type = $request->deposit_type;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+
+                'currency' => 'required',
+
+                'deposit_type' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+                $products = Deposit::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+
+                        $query->where('deposit_money_from', '<=', (float)$loan_amount);
+
+                        $query->where('deposit_money_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+
+                        $query->where('deposit_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('deposit_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+                if (!is_null($currency)) {
+                    $products->where(function ($query) use ($currency) {
+
+                        $query->where('currency', (float)$currency);
+                    });
+                }
+                if (!is_null($deposit_type)) {
+                    $products->where(function ($query) use ($deposit_type) {
+
+                        $query->where('deposit_type', (float)$deposit_type);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+            }
+        } else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareDeposits',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "loanRefinancingPurposeType" => $loanRefinancingPurposeType,
+
+                "loanCurrenciesTypes" => $loanCurrenciesTypes,
+
+                "repayment_types" => $repayment_types,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "deposit_types_list" => $deposit_types_list,
+
+                "deposit_interest_rates_payments" => $deposit_interest_rates_payments,
+
+                "deposit_capitalizations_list" => $deposit_capitalizations_list,
+
+                "deposits_specials_list" => $deposits_specials_list,
+
+                "deposit_money_min" => $deposit_money_min,
+
+                "deposit_money_max" => $deposit_money_max,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "currency" => $currency,
+
+                "deposit_type" => $deposit_type,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+            ]);
+    }
+
+    /**
+     * compare Online Loans.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function compareOnlineLoans(Request $request)
+    {
+        $belonging_id = 13;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
+
+                $special_projects_having_products_count = NULL;
+
+                $special_projects_no_having_products_count = NULL;
+            }
+            else {
+                $products = OnlineLoan::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareOnlineLoans',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "loan_amount" => $loan_amount,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
+            ]);
+    }
+
+    /**
+     * compare Mortgages.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function compareMortgages(Request $request)
+    {
+        $belonging_id = 8;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $time_types = TimeType::all();
+
+        $loanCurrenciesTypes = LoanCurrenciesType::all();
+
+        $mortgagePurposeTypes = MortgagePurposeType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $loan_amount_min = Mortgage::min('loan_amount_from');
+
+        $loan_amount_max = Mortgage::max('loan_amount_to');
+
+        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+        $purpose_type = $request->purpose_type;
+
+        $currency = $request->currency;
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $loan_amount = $request->loan_amount;
+
+        $amount = $request->amount;
+
+        $prepayment = $request->prepayment;
+
+        if (is_null($prepayment)) {
+
+            $prepayment_final = 0;
+        } else {
+            $prepayment_final = $prepayment;
+        }
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
+
+                'loan_amount' => 'required|numeric',
+
+                'amount' => 'required|numeric',
+
+                'prepayment' => 'nullable|numeric',
+
+                'purpose_type' => 'required',
+
+                'currency' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
+
+                $special_projects_having_products_count = NULL;
+
+                $special_projects_no_having_products_count = NULL;
+            }
+            else {
+                $products = Mortgage::with('companyInfo')
+                    ->with('loanTermFromPeriodicityTypeInfo')
+                    ->with('loanTermToPeriodicityTypeInfo');
+
+                if (!is_null($loan_amount)) {
+                    $products->where(function ($query) use ($loan_amount) {
+                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+
+                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+                    });
+                }
+                if (!is_null($loan_term_search_in_days)) {
+                    $products->where(function ($query) use ($loan_term_search_in_days) {
+                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                    });
+                }
+                if (!is_null($currency)) {
+                    $products->where(function ($query) use ($currency) {
+                        $query->where('currency', (float)$currency);
+                    });
+                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+
+                $special_projects_having_products_count = $products->where('special_projects', 1)->count();
+
+                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
+
+            $special_projects_having_products_count = NULL;
+
+            $special_projects_no_having_products_count = NULL;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareMortgages',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "mortgagePurposeTypes" => $mortgagePurposeTypes,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "loan_amount_min" => $loan_amount_min,
+
+                "loan_amount_max" => $loan_amount_max,
+
+                "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+                "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+                "time_types" => $time_types,
+
+                "loanCurrenciesTypes" => $loanCurrenciesTypes,
+
+                "purpose_type" => $purpose_type,
+
+                "currency" => $currency,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "amount" => $amount,
+
+                "loan_amount" => $loan_amount,
+
+                "prepayment" => $prepayment,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "previousUrl" => $previousUrl,
+
+                "request_results_count" => $request_results_count,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
+
+                "special_projects_having_products_count" => $special_projects_having_products_count,
+
+                "special_projects_no_having_products_count" => $special_projects_no_having_products_count,
             ]);
     }
 
@@ -623,59 +2502,71 @@ class HomeController extends Controller
 
         $time_types = TimeType::all();
 
-        $loan_amount_to_max = CarLoan::max('loan_amount_to');
+        $payment_card_currencies_types = PaymentCardCurrency::all();
 
-        $name = $request->input('name');
+        $payment_card_types = PaymentCardType::all();
 
-        $comp_name = $request->input('comp_name');
+        $payment_card_product_types = PaymentCardProductType::all();
 
-        $loan_amount_from = $request->input('loan_amount_from');
+        $payment_card_regions = PaymentCardRegion::all();
 
-        $loan_amount_to = $request->input('loan_amount_to');
+        $payment_extra_cards = PaymentExtraCard::all();
 
-        $percent_val = $request->input('percent');
+        $payment_specials_cards = PaymentSpecialCard::all();
 
-        $percent = (float)$percent_val;
+        $currency  = $request->input('currency');
 
-        $loan_term_from = $request->input('loan_term_from');
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'currency' => 'required',
+            ]);
 
-        $loan_term_to = $request->input('loan_term_to');
+            $errors = $validator->errors();
 
-        $loan_term_from_periodicity_type = $request->input('loan_term_from_periodicity_type');
+            if ($errors->count() > 0) {
+                $products = NULL;
 
-        $loan_term_to_periodicity_type = $request->input('loan_term_to_periodicity_type');
+                $productsGroupByCompany = NULL;
 
-        $name_sql_val = '%' . @$name . '%';
+                $request_results_count = 0;
+            }
+            else {
+                $products = PaymentCard::with('companyInfo')
+                    ->with('creditLineInfo')
+                    ->with('productsPaymentCardsType')
+                    ->with('productsPaymentCardsCurrencies')
+                    ->with('productsPaymentCardsCardType')
+                    ->with('productsPaymentCardsRegion')
+                    ->with('productsSpecialsCardsType')
+                    ->with('productsPaymentCardsExtraType')
+                    ->with('attachmentCardInfo');
 
-        $comp_name_sql_val = '%' . @$comp_name . '%';
+                $products = $products->get();
 
-        $products = PaymentCard::with('companyInfo')
-            ->with('creditLineInfo')
-            ->with('productsPaymentCardsType')
-            ->with('productsPaymentCardsCurrencies')
-            ->with('productsPaymentCardsCardType')
-            ->with('productsPaymentCardsRegion')
-            ->with('productsSpecialsCardsType')
-            ->with('productsPaymentCardsExtraType')
-            ->with('attachmentCardInfo');
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
 
+                $productsGroupByCompany = [];
 
-        if (!is_null($name)) {
-            $products->where(function ($query) use ($name, $name_sql_val) {
-                if ($name) {
-                    $query->where('name', 'like', $name_sql_val);
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
                 }
-            });
+
+                $request_results_count = $products->count();
+            }
         }
-        $products = $products->get();
+        else {
+            $validator = Validator::make($request->all(), []);
 
-        $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+            $products = NULL;
 
-        $productsGroupByCompany = [];
+            $productsGroupByCompany = NULL;
 
-        foreach ($productsGroupByCompanyIds as $productCompanyId) {
-            $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+            $request_results_count = 0;
         }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
 
         return view('compare.comparePaymentCards',
             [
@@ -687,29 +2578,335 @@ class HomeController extends Controller
 
                 "time_types" => $time_types,
 
-                "name" => $name,
+                "payment_card_currencies_types" => $payment_card_currencies_types,
 
-                "comp_name" => $comp_name,
+                "payment_card_types" => $payment_card_types,
 
-                "loan_amount_from" => $loan_amount_from,
+                "payment_card_product_types" => $payment_card_product_types,
 
-                "loan_amount_to" => $loan_amount_to,
+                "payment_card_regions" => $payment_card_regions,
 
-                "loan_amount_to" => $loan_amount_to,
+                "payment_extra_cards" => $payment_extra_cards,
 
-                "percent" => $percent,
+                "payment_specials_cards" => $payment_specials_cards,
 
-                "loan_term_from" => $loan_term_from,
+                "currency" => $currency,
 
-                "loan_term_to" => $loan_term_to,
-
-                "loan_term_from_periodicity_type" => $loan_term_from_periodicity_type,
-
-                "loan_term_to_periodicity_type" => $loan_term_to_periodicity_type,
+                "errors" => $errors,
 
                 "products" => $products,
 
                 "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+            ]);
+    }
+
+    /**
+     * compare Money Transfers.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function compareMoneyTransfers(Request $request)
+    {
+        $belonging_id = 10;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $countries = Country::all();
+
+        $money_transfer_currencies_all_types = MoneyTransferCurrenciesAllType::all();
+
+        $transfer_systems = TransferSystem::all();
+
+        $transfer_banks = TransferBank::all();
+
+        $money_transfer_amount_min = MoneyTransfer::min('money_transfer_amount_from');
+
+        $money_transfer_amount_max = MoneyTransfer::max('money_transfer_amount_to');
+
+        if(is_null($money_transfer_amount_min)){
+            $money_transfer_amount_min  =   0;
+        }
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $currency = $request->currency;
+
+        $country = $request->country;
+
+        $transfer_amount = $request->transfer_amount;
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+
+                'transfer_amount' => 'required|numeric',
+
+                'country' => 'required',
+
+                'currency' => 'required',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            }
+            else {
+                $products = MoneyTransfer::with('companyInfo')
+                    ->with('transferType')
+                    ->with('countriesInfo');
+
+                if (!is_null($transfer_amount)) {
+                    $products->where(function ($query) use ($transfer_amount) {
+
+                        $query->where('money_transfer_amount_from', '<=', (float)$transfer_amount);
+
+                        $query->where('money_transfer_amount_to', '>=', (float)$transfer_amount);
+                    });
+                }
+
+                if ( !is_null($country)) {
+                    $products->whereHas('countriesInfo', function ($q) use ($country) {
+
+                        $q->where('country_id', 1);
+                     });
+                }
+//                if ( !is_null($currency)) {
+//                    $products->whereHas('currenciesInfo', function ($q) use ($currency) {
+//
+//                        $q->where('currency_id', $currency);
+//                     });
+//                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+            }
+        }
+        else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareMoneyTransfers',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "countries" => $countries,
+
+                "money_transfer_currencies_all_types" => $money_transfer_currencies_all_types,
+
+                "transfer_systems" => $transfer_systems,
+
+                "transfer_banks" => $transfer_banks,
+
+                "money_transfer_amount_min" => $money_transfer_amount_min,
+
+                "money_transfer_amount_max" => $money_transfer_amount_max,
+
+                "currency" => $currency,
+
+                "country" => $country,
+
+                "transfer_amount" => $transfer_amount,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
+            ]);
+    }
+
+    /**
+     * compare Travel Insurances.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function compareTravelInsurances(Request $request)
+    {
+        $belonging_id = 12;
+
+        $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+        $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+        $currBelonging = Belonging::where("id", $belonging_id)->first();
+
+        $countries = Country::all();
+
+        $time_types = TimeType::all();
+
+        $yes_no_all_answers = YesNoAllAnswer::all();
+
+        $yes_no_answers = YesNo::all();
+
+        $non_recoverable_amount_having_products_count = TravelInsurance::where('non_recoverable_amount','!=' , 2)->count();
+
+        $time_type = $request->time_type;
+
+        $loan_term = $request->loan_term;
+
+        $age = $request->age;
+
+        $country = $request->country;
+
+        if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+            $loan_term_search_in_days = $loan_term;
+
+        } else if ($time_type == 2) {
+
+            $loan_term_search_in_days = $loan_term * 30;
+
+        } else if ($time_type == 3) {
+
+            $loan_term_search_in_days = $loan_term * 365;
+        }
+
+        if (count($request->all()) > 0) {
+            $validator = Validator::make($request->all(), [
+                'loan_term' => 'required|numeric',
+
+                'age' => 'required|numeric',
+            ]);
+
+            $errors = $validator->errors();
+
+            if ($errors->count() > 0) {
+
+                $products = NULL;
+
+                $productsGroupByCompany = NULL;
+
+                $request_results_count = 0;
+            } else {
+                $products = TravelInsurance::with('companyInfo');
+//
+//                if (!is_null($loan_amount)) {
+//                    $products->where(function ($query) use ($loan_amount) {
+//
+//                        $query->where('loan_amount_from', '<=', (float)$loan_amount);
+//
+//                        $query->where('loan_amount_to', '>=', (float)$loan_amount);
+//                    });
+//                }
+//                if (!is_null($loan_term_search_in_days)) {
+//                    $products->where(function ($query) use ($loan_term_search_in_days) {
+//                        $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+//                        $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+//                    });
+//                }
+
+                $products = $products->get();
+
+                $productsGroupByCompanyIds = array_unique($products->pluck('company_id')->toArray());
+
+                $productsGroupByCompany = [];
+
+                foreach ($productsGroupByCompanyIds as $productCompanyId) {
+                    $productsGroupByCompany[] = $products->where('company_id', $productCompanyId);
+                }
+
+                $request_results_count = $products->count();
+            }
+        } else {
+            $validator = Validator::make($request->all(), []);
+
+            $products = NULL;
+
+            $productsGroupByCompany = NULL;
+
+            $request_results_count = 0;
+        }
+
+        $errors = $validator->errors();
+
+        $previousUrl = $this->loansPreviousUrl($request);
+
+        return view('compare.compareTravelInsurances',
+            [
+                "belongings" => $belongings,
+
+                "currProductByBelongingsView" => $currProductByBelongingsView,
+
+                "currBelonging" => $currBelonging,
+
+                "belonging_id" => $belonging_id,
+
+                "yes_no_all_answers" => $yes_no_all_answers,
+
+                "yes_no_answers" => $yes_no_answers,
+
+                "countries" => $countries,
+
+                "non_recoverable_amount_having_products_count" => $non_recoverable_amount_having_products_count,
+
+                "time_types" => $time_types,
+
+                "time_type" => $time_type,
+
+                "loan_term" => $loan_term,
+
+                "age" => $age,
+
+                "country" => $country,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "request_results_count" => $request_results_count,
+
+                "previousUrl" => $previousUrl,
             ]);
     }
 }

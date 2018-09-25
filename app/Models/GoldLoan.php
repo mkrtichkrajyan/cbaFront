@@ -28,6 +28,11 @@ class GoldLoan extends Model
         return $this->hasOne('App\Models\GoldPledgeType', 'id', 'gold_pledge_type');
     }
 
+    public function goldAssayTypes()
+    {
+        return $this->hasMany('App\Models\ProductsGoldAssayType', 'product_id', 'id');
+    }
+
     public function loanTermFromPeriodicityTypeInfo()
     {
         return $this->hasOne('App\Models\TimeType', 'id', 'loan_term_from_periodicity_type');

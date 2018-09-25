@@ -46,3 +46,5 @@ Route::get('/about-website/', 'ExtraController@aboutWebsite');
 Route::get('/how-to-use/', 'ExtraController@howToUse');
 
 Route::get('/site-map/', 'ExtraController@sitemap');
+
+Route::get('/createSelectBox', 'HomeController@createSelectBox');

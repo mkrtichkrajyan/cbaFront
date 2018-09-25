@@ -5,6 +5,27 @@
 	url("icons/iconfont.woff?35a37ece9662b2ecbc369686ba67ec2d") format("woff");
 }
 
+/*@font-face {*/
+	/*font-family: 'cust_tahoma';*/
+	/*src: url('icons/fonts/tahomaa.eot?#iefix') format('embedded-opentype'),*/
+	/*url('icons/tahomaa.woff') format('woff'),*/
+	/*url('icons/tahomaa.ttf') format('truetype'),*/
+	/*url('icons/tahomaa.svg#tahomaa') format('svg');*/
+	/*font-weight: normal;*/
+	/*font-style: normal;*/
+/*}*/
+
+/*@font-face {*/
+	/*font-family: 'cust_tahoma-bold';*/
+	/*src: url('icons/Tahoma-Bold.eot?#iefix') format('embedded-opentype'),*/
+	/*url('icons/Tahoma-Bold.woff') format('woff'),*/
+	/*url('icons/Tahoma-Bold.ttf') format('truetype'),*/
+	/*url('icons/Tahoma-Bold.svg#Tahoma-Bold') format('svg');*/
+	/*font-weight: bold;*/
+	/*font-style: normal;*/
+/*}*/
+
+
 .icon {
 	line-height: 1;
 }
@@ -14,6 +35,11 @@
 	font-style: normal;
 	font-weight: normal !important;
 	vertical-align: top;
+}
+
+.semantic_dropdown_simple .icon:before {
+	font-family: inherit !important;
+	vertical-align: baseline !important;
 }
 
 .icon-add:before {

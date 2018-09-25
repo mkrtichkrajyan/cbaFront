@@ -8,10 +8,10 @@ class Belonging extends Model
 {
     protected $table = 'belongings';
 
-//    public function company()
-//    {
-//        return $this->hasMany('App\Models\Company', 'belonging_id','name');
-//    }
+    public function company()
+    {
+        return $this->hasMany('App\Models\Company', 'belonging_id','name');
+    }
 
     public function productsByBelongingInfo()
     {

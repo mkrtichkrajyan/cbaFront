@@ -552,6 +552,10 @@ a {
     font-size: 45px;
     color: white
 }
+.listing-icon > .icon {
+    font-size: 45px;
+    color: white
+}
 
 .back-fon {
     width: 100%;
