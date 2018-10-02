@@ -22,8 +22,8 @@
                     </a>
                 </div>
                 <div class="right">
-                    <div class="listing-icon">
-                        <img src="assets/img/evoca.png" alt="">
+                    <div class="listing-icon prodCompanyImg">
+                        <img src="{{backend_asset('savedImages/'.$product->companyInfo->image )}}" alt="">
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="all-total-price">
                     <span class="chart-count-2">
-                    0.5%
+                        0.5%
                     </span>
                     </div>
                 </div>
