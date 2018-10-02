@@ -23,7 +23,7 @@
                 </div>
                 <div class="right">
                     <div class="listing-icon prodCompanyImg">
-                        <img src="{{backend_asset('savedImages/'.$product->companyInfo->image )}}" alt="">
+                        <img src="{{backend_asset('savedImages/'.@$product->companyInfo->image )}}" alt="">
                     </div>
                 </div>
             </div>
@@ -322,7 +322,7 @@
                                     <span>Ավտոմեքենա</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>{{$product->carInfo->name}}</span>
+                                    <span>{{@$product->carInfo->name}}</span>
                                 </div>
                             </div>
                             <div class="prise-title">
