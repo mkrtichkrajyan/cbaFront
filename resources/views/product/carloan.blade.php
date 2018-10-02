@@ -338,7 +338,7 @@
                                     <span>Տրամադրման եղանակ</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>{{$product->providingTypeInfo->name}}</span>
+                                    <span>{{@$product->providingTypeInfo->name}}</span>
                                 </div>
                             </div>
                         </div>
