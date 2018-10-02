@@ -239,11 +239,19 @@ $(document).ready(function () {
         }
     });
 
-
     $(".change_item").not(":first").hide();
+
     $(".chenge").click(function () {
+        //alert($(this).index());
+       // console.log($(".chenge").eq($(this).index())[0]);
         $(".chenge").removeClass("active").eq($(this).index()).addClass("active");
         $(".change_item").hide().eq($(this).index()).show()
+    }).eq(0).addClass("active");
+
+    $(".chenge").click(function () {
+        $(this).parent().find(".chenge").removeClass("active").eq($(this).index()).addClass("active");
+
+        $(this).parent().find(".change_item").hide().eq($(this).index()).show()
     }).eq(0).addClass("active");
 
 

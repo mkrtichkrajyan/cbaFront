@@ -13,6 +13,11 @@ class TravelInsurance extends Model
         return 12;
     }
 
+    public function companyInfo()
+    {
+        return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
+
     public function securityTypes()
     {
         return $this->hasMany('App\Models\ProductsSecurityType','product_id','id')->where('belonging_id',$this->belongingId());

@@ -16,7 +16,6 @@ class MoneyTransfer extends Model
     public function securityTypes()
     {
         return $this->hasMany('App\Models\ProductsSecurityType','product_id','id')->where('belonging_id',$this->belongingId());
-
     }
 
     public function ProductStatus()
@@ -37,25 +36,20 @@ class MoneyTransfer extends Model
     public function transferSystemsInfo()
     {
         return $this->hasMany('App\Models\ProductMoneyTransferSystem','product_id','id')->where('belonging_id',$this->belongingId());
-
     }
 
     public function countriesInfo()
     {
         return $this->hasMany('App\Models\ProductMoneyTransferCountry','product_id','id')->where('belonging_id',$this->belongingId());
-
     }
 
     public function currenciesInfo()
     {
         return $this->hasMany('App\Models\ProductMoneyTransferCurrency','product_id','id')->where('belonging_id',$this->belongingId());
-
     }
 
     public function transferBanksInfo()
     {
         return $this->hasMany('App\Models\ProductMoneyTransferBank','product_id','id')->where('belonging_id',$this->belongingId());
-
     }
-
 }

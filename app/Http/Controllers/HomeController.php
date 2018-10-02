@@ -46,6 +46,7 @@ use App\Models\StudentLoan;
 use App\Models\TimeType;
 use App\Models\TransferBank;
 use App\Models\TransferSystem;
+use App\Models\TransferType;
 use App\Models\TravelInsurance;
 use App\Models\YesNo;
 use App\Models\YesNoAllAnswer;
@@ -315,8 +316,7 @@ class HomeController extends MainController
                 $special_projects_having_products_count = NULL;
 
                 $special_projects_no_having_products_count = NULL;
-            }
-            else {
+            } else {
                 $products = CarLoan::with('companyInfo')
                     ->with('carInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
@@ -346,7 +346,7 @@ class HomeController extends MainController
                 }
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $car_types = $productsFiltersSingleCounts["car_types"];
 
@@ -360,14 +360,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -539,6 +538,20 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $repayment_types = NULL;
+
+                $gold_assay_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
             } else {
 
                 if ($gold_pledge_type == 3) {
@@ -586,7 +599,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $percentage_types = $productsFiltersSingleCounts["percentage_types"];
 
@@ -598,10 +611,9 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -779,8 +791,7 @@ class HomeController extends MainController
                 $special_projects_having_products_count = NULL;
 
                 $special_projects_no_having_products_count = NULL;
-            }
-            else {
+            } else {
                 $products = CreditLoan::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
                     ->with('loanTermToPeriodicityTypeInfo');
@@ -815,7 +826,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $creditPurposeTypes = $productsFiltersSingleCounts["creditPurposeTypes"];
 
@@ -829,14 +840,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -1023,7 +1033,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $percentage_types = $productsFiltersSingleCounts["percentage_types"];
 
@@ -1035,14 +1045,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -1240,7 +1249,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $purposeTypes = $productsFiltersSingleCounts["purposeTypes"];
 
@@ -1254,14 +1263,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -1441,8 +1449,7 @@ class HomeController extends MainController
                 $special_projects_having_products_count = NULL;
 
                 $special_projects_no_having_products_count = NULL;
-            }
-            else {
+            } else {
                 $products = ConsumerCredit::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
                     ->with('loanTermToPeriodicityTypeInfo');
@@ -1474,7 +1481,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $percentage_types = $productsFiltersSingleCounts["percentage_types"];
 
@@ -1486,14 +1493,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -1601,27 +1607,11 @@ class HomeController extends MainController
 
         $loanCurrenciesTypes = LoanCurrenciesType::all();
 
-        $loanRefinancingPurposeType = LoanRefinancingPurposeType::all();
-
-        $repayment_types = RepaymentType::all();
-
-        $percentage_types = PercentageType::all();
-
-        $providing_types = ProvidingType::all();
-
-        $security_types = SecurityType::all();
-
-        $yes_no_all_answers = YesNoAllAnswer::all();
-
         $yes_no_answers = YesNo::all();
 
         $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
 
         $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
-
-        $special_projects_having_products_count = LoanRefinancing::where('special_projects', 1)->count();
-
-        $privileged_term_having_products_count = LoanRefinancing::where('privileged_term_checked', 1)->count();
 
         $time_type = $request->time_type;
 
@@ -1632,21 +1622,17 @@ class HomeController extends MainController
         $currency = $request->currency;
 
         if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
-
             $loan_term_search_in_days = $loan_term;
 
         } else if ($time_type == 2) {
-
             $loan_term_search_in_days = $loan_term * 30;
 
         } else if ($time_type == 3) {
-
             $loan_term_search_in_days = $loan_term * 365;
         }
 
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
-
                 'loan_term' => 'required|numeric',
 
                 'loan_amount' => 'required|numeric',
@@ -1663,6 +1649,20 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $percentage_types = NULL;
+
+                $providing_types = NULL;
+
+                $security_types = NULL;
+
+                $repayment_types = NULL;
+
+                $privileged_term_having_products_count = NULL;
+
+                $privileged_term_no_having_products_count = NULL;
             } else {
                 $products = LoanRefinancing::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
@@ -1670,7 +1670,6 @@ class HomeController extends MainController
 
                 if (!is_null($loan_amount)) {
                     $products->where(function ($query) use ($loan_amount) {
-
                         $query->where('loan_amount_from', '<=', (float)$loan_amount);
 
                         $query->where('loan_amount_to', '>=', (float)$loan_amount);
@@ -1678,7 +1677,6 @@ class HomeController extends MainController
                 }
                 if (!is_null($loan_term_search_in_days)) {
                     $products->where(function ($query) use ($loan_term_search_in_days) {
-
                         $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
 
                         $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
@@ -1702,6 +1700,22 @@ class HomeController extends MainController
                 }
 
                 $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
+
+                $loanRefinancingPurposeTypes = $productsFiltersSingleCounts["loanRefinancingPurposeTypes"];
+
+                $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+                $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+                $security_types = $productsFiltersSingleCounts["security_types"];
+
+                $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+                $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
+
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
             }
         } else {
             $validator = Validator::make($request->all(), []);
@@ -1711,6 +1725,20 @@ class HomeController extends MainController
             $productsGroupByCompany = NULL;
 
             $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_having_products_count = NULL;
+
+            $privileged_term_no_having_products_count = NULL;
         }
 
         $errors = $validator->errors();
@@ -1728,29 +1756,13 @@ class HomeController extends MainController
 
                 "belonging_id" => $belonging_id,
 
-                "loanRefinancingPurposeType" => $loanRefinancingPurposeType,
-
                 "loanCurrenciesTypes" => $loanCurrenciesTypes,
-
-                "repayment_types" => $repayment_types,
-
-                "percentage_types" => $percentage_types,
-
-                "providing_types" => $providing_types,
-
-                "security_types" => $security_types,
-
-                "yes_no_all_answers" => $yes_no_all_answers,
 
                 "yes_no_answers" => $yes_no_answers,
 
                 "repayment_loan_interval_types" => $repayment_loan_interval_types,
 
                 "repayment_percent_interval_types" => $repayment_percent_interval_types,
-
-                "privileged_term_having_products_count" => $privileged_term_having_products_count,
-
-                "special_projects_having_products_count" => $special_projects_having_products_count,
 
                 "time_types" => $time_types,
 
@@ -1771,6 +1783,22 @@ class HomeController extends MainController
                 "request_results_count" => $request_results_count,
 
                 "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "loanRefinancingPurposeTypes" => $loanRefinancingPurposeTypes,
+
+                "percentage_types" => $percentage_types,
+
+                "providing_types" => $providing_types,
+
+                "security_types" => $security_types,
+
+                "repayment_types" => $repayment_types,
+
+                "privileged_term_having_products_count" => $privileged_term_having_products_count,
+
+                "privileged_term_no_having_products_count" => $privileged_term_no_having_products_count,
             ]);
     }
 
@@ -1796,29 +1824,9 @@ class HomeController extends MainController
 
         $loanRefinancingPurposeType = LoanRefinancingPurposeType::all();
 
-        $repayment_types = RepaymentType::all();
-
-        $percentage_types = PercentageType::all();
-
-        $providing_types = ProvidingType::all();
-
-        $security_types = SecurityType::all();
-
-        $yes_no_all_answers = YesNoAllAnswer::all();
-
         $yes_no_answers = YesNo::all();
 
-        $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
-
-        $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
-
         $deposit_types_list = DepositTypesList::all();
-
-        $deposit_interest_rates_payments = DepositInterestRatesPayment::all();
-
-        $deposit_capitalizations_list = DepositCapitalizationsList::all();
-
-        $deposits_specials_list = DepositsSpecialsList::all();
 
         $deposit_money_min = Deposit::min('deposit_money_from');
 
@@ -1835,21 +1843,15 @@ class HomeController extends MainController
         $deposit_type = $request->deposit_type;
 
         if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
-
             $loan_term_search_in_days = $loan_term;
-
         } else if ($time_type == 2) {
-
             $loan_term_search_in_days = $loan_term * 30;
-
         } else if ($time_type == 3) {
-
             $loan_term_search_in_days = $loan_term * 365;
         }
 
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
-
                 'loan_term' => 'required|numeric',
 
                 'loan_amount' => 'required|numeric',
@@ -1868,6 +1870,24 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
+
+                $productsFiltersSingleCounts = NULL;
+
+                $deposit_interest_rates_payments = NULL;
+
+                $deposit_capitalizations_list = NULL;
+
+                $deposits_specials_list = NULL;
+
+                $money_increasing = NULL;
+
+                $money_decreasing = NULL;
+
+                $currency_changing = NULL;
+
+                $deposit_interruption = NULL;
+
+                $minimum_money = NULL;
             } else {
                 $products = Deposit::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
@@ -1875,7 +1895,6 @@ class HomeController extends MainController
 
                 if (!is_null($loan_amount)) {
                     $products->where(function ($query) use ($loan_amount) {
-
                         $query->where('deposit_money_from', '<=', (float)$loan_amount);
 
                         $query->where('deposit_money_to', '>=', (float)$loan_amount);
@@ -1883,7 +1902,6 @@ class HomeController extends MainController
                 }
                 if (!is_null($loan_term_search_in_days)) {
                     $products->where(function ($query) use ($loan_term_search_in_days) {
-
                         $query->where('deposit_term_from_in_days', '<=', (float)$loan_term_search_in_days);
 
                         $query->where('deposit_term_to_in_days', '>=', (float)$loan_term_search_in_days);
@@ -1891,13 +1909,11 @@ class HomeController extends MainController
                 }
                 if (!is_null($currency)) {
                     $products->where(function ($query) use ($currency) {
-
                         $query->where('currency', (float)$currency);
                     });
                 }
                 if (!is_null($deposit_type)) {
                     $products->where(function ($query) use ($deposit_type) {
-
                         $query->where('deposit_type', (float)$deposit_type);
                     });
                 }
@@ -1913,6 +1929,32 @@ class HomeController extends MainController
                 }
 
                 $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
+
+                $deposit_interest_rates_payments = $productsFiltersSingleCounts["deposit_interest_rates_payments"];
+
+                $deposit_capitalizations_list = $productsFiltersSingleCounts["deposit_capitalizations_list"];
+
+                $deposits_specials_list = $productsFiltersSingleCounts["deposits_specials_list"];
+
+                $money_increasing = $productsFiltersSingleCounts["money_increasing"];
+
+                $money_decreasing = $productsFiltersSingleCounts["money_decreasing"];
+
+                $currency_changing = $productsFiltersSingleCounts["currency_changing"];
+
+                $deposit_interruption = $productsFiltersSingleCounts["deposit_interruption"];
+
+                $minimum_money = [];
+
+                foreach ($yes_no_answers as $yes_no_answer) {
+                    if ($yes_no_answer->id == 1) {
+                        $minimum_money[$yes_no_answer->id] = $products->where('minimum_money', $yes_no_answer->id)->count();
+                    } else {
+                        $minimum_money[$yes_no_answer->id] = $products->where('minimum_money', '!=', 1)->count();
+                    }
+                }
             }
         } else {
             $validator = Validator::make($request->all(), []);
@@ -1922,6 +1964,24 @@ class HomeController extends MainController
             $productsGroupByCompany = NULL;
 
             $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $deposit_interest_rates_payments = NULL;
+
+            $deposit_capitalizations_list = NULL;
+
+            $deposits_specials_list = NULL;
+
+            $money_increasing = NULL;
+
+            $money_decreasing = NULL;
+
+            $currency_changing = NULL;
+
+            $deposit_interruption = NULL;
+
+            $minimum_money = NULL;
         }
 
         $errors = $validator->errors();
@@ -1942,29 +2002,9 @@ class HomeController extends MainController
 
                 "loanCurrenciesTypes" => $loanCurrenciesTypes,
 
-                "repayment_types" => $repayment_types,
-
-                "percentage_types" => $percentage_types,
-
-                "providing_types" => $providing_types,
-
-                "security_types" => $security_types,
-
-                "yes_no_all_answers" => $yes_no_all_answers,
-
                 "yes_no_answers" => $yes_no_answers,
 
-                "repayment_loan_interval_types" => $repayment_loan_interval_types,
-
-                "repayment_percent_interval_types" => $repayment_percent_interval_types,
-
                 "deposit_types_list" => $deposit_types_list,
-
-                "deposit_interest_rates_payments" => $deposit_interest_rates_payments,
-
-                "deposit_capitalizations_list" => $deposit_capitalizations_list,
-
-                "deposits_specials_list" => $deposits_specials_list,
 
                 "deposit_money_min" => $deposit_money_min,
 
@@ -1991,6 +2031,24 @@ class HomeController extends MainController
                 "request_results_count" => $request_results_count,
 
                 "previousUrl" => $previousUrl,
+
+                "productsFiltersSingleCounts" => $productsFiltersSingleCounts,
+
+                "deposit_interest_rates_payments" => $deposit_interest_rates_payments,
+
+                "deposit_capitalizations_list" => $deposit_capitalizations_list,
+
+                "deposits_specials_list" => $deposits_specials_list,
+
+                "money_increasing" => $money_increasing,
+
+                "money_decreasing" => $money_decreasing,
+
+                "currency_changing" => $currency_changing,
+
+                "deposit_interruption" => $deposit_interruption,
+
+                "minimum_money" => $minimum_money,
             ]);
     }
 
@@ -2072,8 +2130,7 @@ class HomeController extends MainController
                 $special_projects_having_products_count = NULL;
 
                 $special_projects_no_having_products_count = NULL;
-            }
-            else {
+            } else {
                 $products = OnlineLoan::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
                     ->with('loanTermToPeriodicityTypeInfo');
@@ -2105,7 +2162,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $percentage_types = $productsFiltersSingleCounts["percentage_types"];
 
@@ -2117,14 +2174,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -2325,8 +2381,7 @@ class HomeController extends MainController
                 $special_projects_having_products_count = NULL;
 
                 $special_projects_no_having_products_count = NULL;
-            }
-            else {
+            } else {
                 $products = Mortgage::with('companyInfo')
                     ->with('loanTermFromPeriodicityTypeInfo')
                     ->with('loanTermToPeriodicityTypeInfo');
@@ -2363,7 +2418,7 @@ class HomeController extends MainController
 
                 $request_results_count = $products->count();
 
-                $productsFiltersSingleCounts    =   $this->compareProductsGetSomeFilters($belonging_id,$products);
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
 
                 $percentage_types = $productsFiltersSingleCounts["percentage_types"];
 
@@ -2375,14 +2430,13 @@ class HomeController extends MainController
 
                 $privileged_term_having_products_count = $products->where('privileged_term_checked', 1)->count();
 
-                $privileged_term_no_having_products_count = $products->where('privileged_term_checked','!=', 1)->count();
+                $privileged_term_no_having_products_count = $products->where('privileged_term_checked', '!=', 1)->count();
 
                 $special_projects_having_products_count = $products->where('special_projects', 1)->count();
 
-                $special_projects_no_having_products_count = $products->where('special_projects','!=', 1)->count();
+                $special_projects_no_having_products_count = $products->where('special_projects', '!=', 1)->count();
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -2504,17 +2558,7 @@ class HomeController extends MainController
 
         $payment_card_currencies_types = PaymentCardCurrency::all();
 
-        $payment_card_types = PaymentCardType::all();
-
-        $payment_card_product_types = PaymentCardProductType::all();
-
-        $payment_card_regions = PaymentCardRegion::all();
-
-        $payment_extra_cards = PaymentExtraCard::all();
-
-        $payment_specials_cards = PaymentSpecialCard::all();
-
-        $currency  = $request->input('currency');
+        $currency = $request->input('currency');
 
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
@@ -2529,8 +2573,19 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
-            }
-            else {
+
+                $productsFiltersSingleCounts = NULL;
+
+                $payment_card_types = NULL;
+
+                $payment_card_product_types = NULL;
+
+                $payment_card_regions = NULL;
+
+                $payment_extra_cards = NULL;
+
+                $payment_specials_cards = NULL;
+            } else {
                 $products = PaymentCard::with('companyInfo')
                     ->with('creditLineInfo')
                     ->with('productsPaymentCardsType')
@@ -2540,6 +2595,13 @@ class HomeController extends MainController
                     ->with('productsSpecialsCardsType')
                     ->with('productsPaymentCardsExtraType')
                     ->with('attachmentCardInfo');
+
+                if (!is_null($currency)) {
+                    $products->whereHas('productsPaymentCardsCurrencies', function ($q) use ($currency) {
+                        $q->where('currency_id', $currency);
+                    });
+                }
+
 
                 $products = $products->get();
 
@@ -2552,9 +2614,22 @@ class HomeController extends MainController
                 }
 
                 $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
+
+//                $payment_card_currencies_types = $productsFiltersSingleCounts["payment_card_currencies_types"];
+
+                $payment_card_types = $productsFiltersSingleCounts["payment_card_types"];
+
+                $payment_card_product_types = $productsFiltersSingleCounts["payment_card_product_types"];
+
+                $payment_extra_cards = $productsFiltersSingleCounts["payment_extra_cards"];
+
+                $payment_card_regions = $productsFiltersSingleCounts["payment_card_regions"];
+
+                $payment_specials_cards = $productsFiltersSingleCounts["payment_specials_cards"];
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -2562,12 +2637,25 @@ class HomeController extends MainController
             $productsGroupByCompany = NULL;
 
             $request_results_count = 0;
+
+            $productsFiltersSingleCounts = NULL;
+
+            $payment_card_types = NULL;
+
+            $payment_card_product_types = NULL;
+
+            $payment_card_regions = NULL;
+
+            $payment_extra_cards = NULL;
+
+            $payment_specials_cards = NULL;
         }
 
         $errors = $validator->errors();
 
         $previousUrl = $this->loansPreviousUrl($request);
 
+        //dd($payment_card_currencies_types);
         return view('compare.comparePaymentCards',
             [
                 "belongings" => $belongings,
@@ -2580,6 +2668,18 @@ class HomeController extends MainController
 
                 "payment_card_currencies_types" => $payment_card_currencies_types,
 
+                "currency" => $currency,
+
+                "errors" => $errors,
+
+                "products" => $products,
+
+                "productsGroupByCompany" => $productsGroupByCompany,
+
+                "previousUrl" => $previousUrl,
+
+                "request_results_count" => $request_results_count,
+
                 "payment_card_types" => $payment_card_types,
 
                 "payment_card_product_types" => $payment_card_product_types,
@@ -2589,18 +2689,6 @@ class HomeController extends MainController
                 "payment_extra_cards" => $payment_extra_cards,
 
                 "payment_specials_cards" => $payment_specials_cards,
-
-                "currency" => $currency,
-
-                "errors" => $errors,
-
-                "products" => $products,
-
-                "productsGroupByCompany" => $productsGroupByCompany,
-
-                "request_results_count" => $request_results_count,
-
-                "previousUrl" => $previousUrl,
             ]);
     }
 
@@ -2622,21 +2710,17 @@ class HomeController extends MainController
 
         $countries = Country::all();
 
+        $transfer_types = TransferType::all();
+
         $money_transfer_currencies_all_types = MoneyTransferCurrenciesAllType::all();
-
-        $transfer_systems = TransferSystem::all();
-
-        $transfer_banks = TransferBank::all();
 
         $money_transfer_amount_min = MoneyTransfer::min('money_transfer_amount_from');
 
         $money_transfer_amount_max = MoneyTransfer::max('money_transfer_amount_to');
 
-        if(is_null($money_transfer_amount_min)){
-            $money_transfer_amount_min  =   0;
+        if (is_null($money_transfer_amount_min)) {
+            $money_transfer_amount_min = 0;
         }
-
-        $yes_no_all_answers = YesNoAllAnswer::all();
 
         $yes_no_answers = YesNo::all();
 
@@ -2648,7 +2732,6 @@ class HomeController extends MainController
 
         if (count($request->all()) > 0) {
             $validator = Validator::make($request->all(), [
-
                 'transfer_amount' => 'required|numeric',
 
                 'country' => 'required',
@@ -2665,30 +2748,30 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
-            }
-            else {
+
+                $transfer_systems = NULL;
+
+                $transfer_banks = NULL;
+            } else {
                 $products = MoneyTransfer::with('companyInfo')
                     ->with('transferType')
                     ->with('countriesInfo');
 
                 if (!is_null($transfer_amount)) {
                     $products->where(function ($query) use ($transfer_amount) {
-
                         $query->where('money_transfer_amount_from', '<=', (float)$transfer_amount);
 
                         $query->where('money_transfer_amount_to', '>=', (float)$transfer_amount);
                     });
                 }
 
-                if ( !is_null($country)) {
+                if (!is_null($country)) {
                     $products->whereHas('countriesInfo', function ($q) use ($country) {
-
-                        $q->where('country_id', 1);
-                     });
+                        $q->where('country_id', $country);
+                    });
                 }
 //                if ( !is_null($currency)) {
 //                    $products->whereHas('currenciesInfo', function ($q) use ($currency) {
-//
 //                        $q->where('currency_id', $currency);
 //                     });
 //                }
@@ -2704,9 +2787,14 @@ class HomeController extends MainController
                 }
 
                 $request_results_count = $products->count();
+
+                $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
+
+                $transfer_systems = $productsFiltersSingleCounts["transfer_systems"];
+
+                $transfer_banks = $productsFiltersSingleCounts["transfer_banks"];
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -2714,6 +2802,10 @@ class HomeController extends MainController
             $productsGroupByCompany = NULL;
 
             $request_results_count = 0;
+
+            $transfer_systems = NULL;
+
+            $transfer_banks = NULL;
         }
 
         $errors = $validator->errors();
@@ -2730,17 +2822,13 @@ class HomeController extends MainController
 
                 "belonging_id" => $belonging_id,
 
-                "yes_no_all_answers" => $yes_no_all_answers,
-
                 "yes_no_answers" => $yes_no_answers,
 
                 "countries" => $countries,
 
                 "money_transfer_currencies_all_types" => $money_transfer_currencies_all_types,
 
-                "transfer_systems" => $transfer_systems,
-
-                "transfer_banks" => $transfer_banks,
+                "transfer_types" => $transfer_types,
 
                 "money_transfer_amount_min" => $money_transfer_amount_min,
 
@@ -2759,6 +2847,10 @@ class HomeController extends MainController
                 "productsGroupByCompany" => $productsGroupByCompany,
 
                 "request_results_count" => $request_results_count,
+
+                "transfer_systems" => $transfer_systems,
+
+                "transfer_banks" => $transfer_banks,
 
                 "previousUrl" => $previousUrl,
             ]);
@@ -2783,11 +2875,7 @@ class HomeController extends MainController
 
         $time_types = TimeType::all();
 
-        $yes_no_all_answers = YesNoAllAnswer::all();
-
         $yes_no_answers = YesNo::all();
-
-        $non_recoverable_amount_having_products_count = TravelInsurance::where('non_recoverable_amount','!=' , 2)->count();
 
         $time_type = $request->time_type;
 
@@ -2798,15 +2886,10 @@ class HomeController extends MainController
         $country = $request->country;
 
         if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
-
             $loan_term_search_in_days = $loan_term;
-
         } else if ($time_type == 2) {
-
             $loan_term_search_in_days = $loan_term * 30;
-
         } else if ($time_type == 3) {
-
             $loan_term_search_in_days = $loan_term * 365;
         }
 
@@ -2826,6 +2909,10 @@ class HomeController extends MainController
                 $productsGroupByCompany = NULL;
 
                 $request_results_count = 0;
+
+                $non_recoverable_amount_having_products_count = NULL;
+
+                $non_recoverable_amount_no_having_products_count = NULL;
             } else {
                 $products = TravelInsurance::with('companyInfo');
 //
@@ -2855,6 +2942,10 @@ class HomeController extends MainController
                 }
 
                 $request_results_count = $products->count();
+
+                $non_recoverable_amount_having_products_count = $products->where('non_recoverable_amount', '!=', 2)->count();
+
+                $non_recoverable_amount_no_having_products_count = $products->where('non_recoverable_amount', 2)->count();
             }
         } else {
             $validator = Validator::make($request->all(), []);
@@ -2864,6 +2955,10 @@ class HomeController extends MainController
             $productsGroupByCompany = NULL;
 
             $request_results_count = 0;
+
+            $non_recoverable_amount_having_products_count = NULL;
+
+            $non_recoverable_amount_no_having_products_count = NULL;
         }
 
         $errors = $validator->errors();
@@ -2880,13 +2975,9 @@ class HomeController extends MainController
 
                 "belonging_id" => $belonging_id,
 
-                "yes_no_all_answers" => $yes_no_all_answers,
-
                 "yes_no_answers" => $yes_no_answers,
 
                 "countries" => $countries,
-
-                "non_recoverable_amount_having_products_count" => $non_recoverable_amount_having_products_count,
 
                 "time_types" => $time_types,
 
@@ -2906,7 +2997,31 @@ class HomeController extends MainController
 
                 "request_results_count" => $request_results_count,
 
+                "non_recoverable_amount_having_products_count" => $non_recoverable_amount_having_products_count,
+
+                "non_recoverable_amount_no_having_products_count" => $non_recoverable_amount_no_having_products_count,
+
                 "previousUrl" => $previousUrl,
             ]);
     }
+
+
+    /**
+     * car Loan Product page
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function carLoanProduct($id, Request $request)
+    {
+        $product = CarLoan::where('id', $id)->with('companyInfo')
+            ->with('carInfo')
+            ->with('ProductStatus')
+            ->with('securityTypes')
+            ->with('providingTypeInfo')
+            ->with('repaymentTypeInfo')
+            ->with('CarSalons')->first();
+
+        return view('product.carloan', ["product" => $product]);
+    }
+
 }

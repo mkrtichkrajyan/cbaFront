@@ -48,3 +48,7 @@ Route::get('/how-to-use/', 'ExtraController@howToUse');
 Route::get('/site-map/', 'ExtraController@sitemap');
 
 Route::get('/createSelectBox', 'HomeController@createSelectBox');
+
+
+
+Route::get('/car-loan-product/{id}', 'HomeController@carLoanProduct');

@@ -100,7 +100,8 @@
                         <div class="columns large-3 medium-6 small-12">
                             <label class="label" for="amount">Վարկի գումար</label>
                             <div class="rel">
-                                <input type="number" id="loan_amount" class="no_negative_value" name="loan_amount" value="{{$loan_amount}}"
+                                <input type="number" id="loan_amount" class="no_negative_value" name="loan_amount"
+                                       value="{{$loan_amount}}"
                                        class="input">
 
                                 <input type="hidden" name="loan_amount_search" id="loan_amount_search"
@@ -146,197 +147,172 @@
                 </div>
             </div>
 
-            <div class="margin-top none columns large-3 medium-3 small-12">
+            @if(!is_null($productsGroupByCompany))
 
-                <div class="wrapper check-box-panel-wrapper  popup">
-                    <form>
+                <div class="margin-top none columns large-3 medium-3 small-12">
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Նպատակ</span>
-                                <i></i>
+                    <div class="wrapper check-box-panel-wrapper  popup">
+                        <form>
+
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Նպատակ</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+
+                                    @foreach ($loanRefinancingPurposeTypes as $purposeType)
+                                        <label class="container">{{$purposeType["info"]->name}}
+                                            <input type="checkbox" id="purpose_type_{{$purposeType['id']}}"
+                                                   data-id="{{$purposeType['id']}}"
+                                                   name="purpose_type_{{$purposeType['id']}}"
+                                                   value="1"
+                                                   class="filter_product filter_checkbox filter_purpose_type">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count purpose_type_filter_count">{{$purposeType["count"]}}</span>
+                                        </label>
+                                    @endforeach
+
+                                </div>
                             </div>
-                            <div class="check-drop-down">
 
-                                @foreach ($loanRefinancingPurposeType as $purposeType)
-                                    <label class="container">{{$purposeType->name}}
-                                        <input type="checkbox" id="purpose_type_{{$purposeType->id}}"
-                                               data-id="{{$purposeType->id}}"
-                                               name="purpose_type_{{$purposeType->id}}"
-                                               value="1"
-                                               class="filter_product filter_checkbox filter_purpose_type">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-
-                            </div>
-                        </div>
-
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Տոկոսադրույք</span>
-                                <i></i>
-                            </div>
-                            <div class="check-drop-down">
-
-                                @foreach($percentage_types as $percentage_type)
-                                    @if($percentage_type->id   !=  1)
-                                        <label class="container">{{$percentage_type->name}}
-                                            <input type="checkbox" id="percentage_type_{{$percentage_type->id}}"
-                                                   data-id="{{$percentage_type->id}}"
-                                                   name="percentage_type_{{$percentage_type->id}}"
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Տոկոսադրույք</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    @foreach($percentage_types as $percentage_type)
+                                        <label class="container">{{$percentage_type["info"]->name}}
+                                            <input type="checkbox" id="percentage_type_{{$percentage_type['id']}}"
+                                                   data-id="{{$percentage_type['id']}}"
+                                                   name="percentage_type_{{$percentage_type['id']}}"
                                                    value="1"
                                                    class="filter_product filter_checkbox filter_percentage_type">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count percentage_filter_count">{{$percentage_type["count"]}}</span>
                                         </label>
-                                    @endif
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Մարման եղանակ </span>
-                                <i></i>
-                            </div>
-                            <div class="check-drop-down">
-                                @foreach($repayment_types as $repayment_type)
-                                    @if($repayment_type->id   !=  1)
-                                        <label class="container">{{$repayment_type->name}}
-                                            <input id="repayment_type_{{$repayment_type->id}}"
-                                                   name="repayment_type_{{$repayment_type->id}}"
-                                                   type="checkbox" value="1" data-id="{{$repayment_type->id}}"
-                                                   class="filter_product filter_checkbox filter_repayment_type" ">
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Մարման եղանակ </span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+
+                                    @foreach($repayment_types as $repayment_type)
+                                        <label class="container">{{$repayment_type["info"]->name}}
+                                            <input type="checkbox" id="repayment_type_{{$repayment_type['id']}}"
+                                                   data-id="{{$repayment_type['id']}}"
+                                                   name="repayment_type_{{$repayment_type['id']}}"
+                                                   value="1"
+                                                   class="filter_product filter_checkbox filter_repayment_type">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count repayment_type_filter_count">{{$repayment_type["count"]}}</span>
                                         </label>
-                                    @endif
-                                @endforeach
-                            </div>
-
-                            <div class="check-box check-drop-down">
-                                <div class="custom-select wrapper">
-                                    <select id="repayment_loan_interval_type" name="repayment_loan_interval_type"
-                                            class="filter_product filter_selectbox filter_repayment_loan_interval_type">
-                                        <option value="">Վարկ</option>
-                                        @foreach($repayment_loan_interval_types as $repayment_loan_interval_type)
-                                            <option value="{{$repayment_loan_interval_type->id}}">{{$repayment_loan_interval_type->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    @endforeach
                                 </div>
-                                <div class="custom-select wrapper">
-                                    <select id="repayment_percent_interval_type" name="repayment_percent_interval_type"
-                                            class="filter_product filter_selectbox filter_repayment_percent_interval_type">
-                                        <option value="">Տոկոս</option>
-                                        @foreach($repayment_percent_interval_types as $repayment_percent_interval_type)
-                                            <option value="{{$repayment_percent_interval_type->id}}">{{$repayment_percent_interval_type->name}}</option>
-                                        @endforeach
-                                    </select>
+
+                                <div class="check-box check-drop-down">
+                                    <div class="custom-select wrapper">
+                                        <select id="repayment_loan_interval_type" name="repayment_loan_interval_type"
+                                                class="filter_product filter_selectbox filter_repayment_loan_interval_type">
+                                            <option value="">Վարկ</option>
+                                            @foreach($repayment_loan_interval_types as $repayment_loan_interval_type)
+                                                <option value="{{$repayment_loan_interval_type->id}}">{{$repayment_loan_interval_type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="custom-select wrapper">
+                                        <select id="repayment_percent_interval_type"
+                                                name="repayment_percent_interval_type"
+                                                class="filter_product filter_selectbox filter_repayment_percent_interval_type">
+                                            <option value="">Տոկոս</option>
+                                            @foreach($repayment_percent_interval_types as $repayment_percent_interval_type)
+                                                <option value="{{$repayment_percent_interval_type->id}}">{{$repayment_percent_interval_type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+
                             </div>
 
-                        </div>
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Տրամադրման եղանակ</span><i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    @foreach($providing_types as $providing_type)
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                            <span>
-                                    Տրամադրման եղանակ
-                            </span>
-                                <i></i>
-                            </div>
-                            <div class="check-drop-down">
-
-                                @foreach($providing_types as $providing_type)
-                                    @if($providing_type->id   !=  3)
-                                        <label class="container">{{$providing_type->name}}
-                                            <input type="checkbox" id="providing_type_{{$providing_type->id}}"
-                                                   data-id="{{$providing_type->id}}"
-                                                   name="providing_type_{{$providing_type->id}}"
+                                        <label class="container">{{$providing_type["info"]->name}}
+                                            <input type="checkbox" id="providing_type_{{$providing_type['id']}}"
+                                                   data-id="{{$providing_type['id']}}"
+                                                   name="providing_type_{{$providing_type['id']}}"
                                                    value="1"
                                                    class="filter_product filter_checkbox filter_providing_type">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count providing_type_filter_count">{{$providing_type["count"]}}</span>
                                         </label>
-                                    @endif
-                                @endforeach
+
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Ապահովվածություն </span>
-                                <i></i>
-                            </div>
-                            <div class="check-drop-down">
-                                <label class="container">բոլորը
-                                    <input type="checkbox" id="security_type_0"
-                                           name="security_type_0" value="1"
-                                           class="curr_all_checkboxes_check_uncheck filter_product">
-                                    <span class="checkmark"></span>
-                                </label>
-
-                                @foreach($security_types as $security_type)
-
-                                    <label class="container">{{$security_type->name}}
-                                        <input type="checkbox" id="security_type_{{$security_type->id}}"
-                                               data-id="{{$security_type->id}}"
-                                               class="filter_product filter_checkbox filter_security_type"
-                                               name="security_type_{{$security_type->id}}" value="1" class="">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        @if($special_projects_having_products_count > 0)
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
-                                    <span>Հատուկ Ծրագիր  </span>
+                                    <span>Ապահովվածություն </span>
                                     <i></i>
                                 </div>
                                 <div class="check-drop-down">
+                                    @foreach($security_types as $security_type)
 
-                                    @foreach($yes_no_answers as $yes_no_answer)
-
-                                        <label class="container">{{$yes_no_answer->name}}
-                                            <input type="checkbox" id="special_project_answer_{{$yes_no_answer->id}}"
-                                                   name="special_project_answer_{{$yes_no_answer->id}}"
-                                                   value="1" data-id="{{$yes_no_answer->id}}"
-                                                   class="filter_product filter_checkbox filter_special_project">
+                                        <label class="container">{{$security_type["info"]->name}}
+                                            <input type="checkbox" id="security_type_{{$security_type['id']}}"
+                                                   data-id="{{$security_type['id']}}"
+                                                   class="filter_product filter_checkbox filter_security_type"
+                                                   name="security_type_{{$security_type['id']}}" value="1" class="">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count security_type_filter_count">{{$security_type["count"]}}</span>
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
-                        @endif
 
-                        @if($privileged_term_having_products_count > 0)
-                            <div class="check-drop-down-wrapper">
-                                <div class="check-drop-title">
-                                    <span>Արտոնյալ ժամկետ</span>
-                                    <i></i>
+                            @if($privileged_term_having_products_count > 0)
+                                <div class="check-drop-down-wrapper">
+                                    <div class="check-drop-title">
+                                        <span>Արտոնյալ ժամկետ</span>
+                                        <i></i>
+                                    </div>
+                                    <div class="check-drop-down">
+
+                                        @foreach($yes_no_answers as $yes_no_answer)
+
+                                            <label class="container">{{$yes_no_answer->name}}
+                                                <input type="checkbox"
+                                                       id="privileged_term_answer_{{$yes_no_answer->id}}"
+                                                       name="privileged_term_answer_{{$yes_no_answer->id}}" value="1"
+                                                       data-id="{{$yes_no_answer->id}}"
+                                                       class="filter_product filter_checkbox filter_privileged_term">
+                                                <span class="checkmark"></span>
+                                                @if($yes_no_answer->id == 1)
+                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_having_products_count}}</span>
+                                                @else
+                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_no_having_products_count}}</span>
+                                                @endif
+                                            </label>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="check-drop-down">
-
-                                    @foreach($yes_no_answers as $yes_no_answer)
-
-                                        <label class="container">{{$yes_no_answer->name}}
-                                            <input type="checkbox"
-                                                   id="privileged_term_answer_{{$yes_no_answer->id}}"
-                                                   name="privileged_term_answer_{{$yes_no_answer->id}}" value="1"
-                                                   data-id="{{$yes_no_answer->id}}"
-                                                   class="filter_product filter_checkbox filter_privileged_term">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    </form>
+                            @endif
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="margin-top columns large-9 medium-auto product_results">
-
-                @if(!is_null($productsGroupByCompany))
+                <div class="margin-top columns large-9 medium-auto product_results">
 
                     <div class="listing-title">
                         <div class="left">
@@ -362,6 +338,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="change_item">
                         @foreach($productsGroupByCompany as $companyProducts)
 
@@ -650,9 +627,10 @@
                         @endforeach
 
                     </div>
-                @endif
 
-            </div>
+                </div>
+            @endif
+
         </div>
     </form>
 

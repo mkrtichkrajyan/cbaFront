@@ -28,7 +28,7 @@
                     </div>
                     <div class="right">
                         <div class="listing-icon">
-                            <i class="icon   icon-car"></i>
+                            <i class="icon {{$currProductByBelongingsView->front_icon}}"></i>
                         </div>
                     </div>
                 </div>
@@ -48,12 +48,11 @@
                                         <div class="default text">Ընտրել ցանկից</div>
                                         <div class="menu">
                                             @foreach($countries as $countryCurr)
-                                                <div class="item" data-value="{{$countryCurr->id}}"><i class="{{$countryCurr->code}} flag"></i>{{$countryCurr->name_am}}
+                                                <div class="item" data-value="{{$countryCurr->id}}"><i
+                                                            class="{{$countryCurr->code}} flag"></i>{{$countryCurr->name_am}}
                                                 </div>
                                             @endforeach
                                         </div>
-
-
                                     </div>
                                 </div>
                                 @if ($errors->has('country'))
@@ -149,32 +148,35 @@
                 </div>
             </div>
 
-            <div class="margin-top none columns large-3 medium-3 small-12">
+            @if(!is_null($productsGroupByCompany))
 
-                <div class="wrapper check-box-panel-wrapper  popup">
-                    <form>
+                <div class="margin-top none columns large-3 medium-3 small-12">
 
-                        {{--<div class="check-drop-down-wrapper">--}}
+                    <div class="wrapper check-box-panel-wrapper  popup">
+                        <form>
+
+                            {{--<div class="check-drop-down-wrapper">--}}
                             {{--<div class="check-drop-title">--}}
-                                {{--<span>Տոկոսադրույք</span>--}}
-                                {{--<i></i>--}}
+                            {{--<span>Տոկոսադրույք</span>--}}
+                            {{--<i></i>--}}
                             {{--</div>--}}
                             {{--<div class="check-drop-down">--}}
 
-                                {{--@foreach($percentage_types as $percentage_type)--}}
-                                    {{--@if($percentage_type->id   !=  1)--}}
-                                        {{--<label class="container">{{$percentage_type->name}}--}}
-                                            {{--<input type="checkbox" id="percentage_type_{{$percentage_type->id}}"--}}
-                                                   {{--data-id="{{$percentage_type->id}}"--}}
-                                                   {{--name="percentage_type_{{$percentage_type->id}}"--}}
-                                                   {{--value="1"--}}
-                                                   {{--class="filter_product filter_checkbox filter_percentage_type">--}}
-                                            {{--<span class="checkmark"></span>--}}
-                                        {{--</label>--}}
-                                    {{--@endif--}}
-                                {{--@endforeach--}}
+                            {{--@foreach($percentage_types as $percentage_type)--}}
+                            {{--@if($percentage_type->id   !=  1)--}}
+                            {{--<label class="container">{{$percentage_type->name}}--}}
+                            {{--<input type="checkbox" id="percentage_type_{{$percentage_type->id}}"--}}
+                            {{--data-id="{{$percentage_type->id}}"--}}
+                            {{--name="percentage_type_{{$percentage_type->id}}"--}}
+                            {{--value="1"--}}
+                            {{--class="filter_product filter_checkbox filter_percentage_type">--}}
+                            {{--<span class="checkmark"></span>--}}
+                            {{--</label>--}}
+                            {{--@endif--}}
+                            {{--@endforeach--}}
                             {{--</div>--}}
-                        {{--</div>--}}
+                            {{--</div>--}}
+
 
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
@@ -188,21 +190,55 @@
                                         <label class="container">{{$yes_no_answer->name}}
                                             <input type="checkbox"
                                                    id="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
-                                                   name="non_recoverable_expense_answer_{{$yes_no_answer->id}}" value="1"
+                                                   name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
+                                                   value="1"
                                                    data-id="{{$yes_no_answer->id}}"
                                                    class="filter_product filter_checkbox filter_non_recoverable_expense">
                                             <span class="checkmark"></span>
+                                            @if($yes_no_answer->id == 1)
+                                                <span class="single_filter_count non_recoverable_amount_having_products_filter_count">{{$non_recoverable_amount_having_products_count}}</span>
+                                            @else
+                                                <span class="single_filter_count non_recoverable_amount_no_having_products_filter_count">{{$non_recoverable_amount_no_having_products_count}}</span>
+                                            @endif
                                         </label>
                                     @endforeach
                                 </div>
                             </div>
-                    </form>
-                </div>
-            </div>
 
-            <div class="margin-top columns large-9 medium-auto product_results">
-                {{--{{dd(!is_null($products->count()))}}--}}
-                @if(!is_null($productsGroupByCompany))
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Մուտքերի քանակ</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    <label class="container">Մեկ
+                                        <input type="checkbox"
+                                               id="term_inputs_quantity_1"
+                                               name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
+                                               value="1"
+                                               data-id="{{$yes_no_answer->id}}"
+                                               class="filter_product filter_checkbox filter_term_inputs_quantity">
+                                        <span class="checkmark"></span>
+                                        <span class="single_filter_count term_inputs_quantity_filter_count">2</span>
+
+                                    </label>
+                                    <label class="container">Մեկից ավել
+                                        <input type="checkbox"
+                                               id="term_inputs_quantity_1"
+                                               name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
+                                               value="1"
+                                               data-id="{{$yes_no_answer->id}}"
+                                               class="filter_product filter_checkbox filter_term_inputs_quantity">
+                                        <span class="checkmark"></span>
+                                        <span class="single_filter_count term_inputs_quantity_filter_count">1</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="margin-top columns large-9 medium-auto product_results">
 
                     <div class="listing-title">
                         <div class="left">
@@ -228,6 +264,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="change_item">
                         @foreach($productsGroupByCompany as $companyProducts)
 
@@ -241,11 +278,11 @@
                                     </div>
                                     <div class="right">
                                         <div class="category-logo">
-                                            <img style="max-width: 80px;"
-                                                 src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
+                                            <img style="max-width: 80px;" src="{{ backend_asset('savedImages/'.@$companyProducts->first()->companyInfo->image )}}">
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="table">
                                     <div class="table-pise-wrapper">
                                         <div class="table-pise">
@@ -303,18 +340,14 @@
                                     </span>
                                         </button>
                                         <a href="?p=prod-page" class="btn btn-more">
-                                    <span>
-                                            ավելին
-                                    </span>
+                                            <span>ավելին</span>
                                             <i class="icon icon-right  icon-arrow-right"></i>
                                         </a>
                                     </div>
                                     <div class="right">
                                         <button type="button" class="btn btn-pink other_suggestions_open_close">
                                             <section>{{$companyProducts->count()-1}}</section>
-                                            <span>
-                                            այլ առաջարկ
-                                    </span>
+                                            <span>այլ առաջարկ</span>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
                                     </div>
@@ -340,7 +373,7 @@
                                                     <div class="right">
                                                         <div class="category-logo">
                                                             <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">
+                                                                 src="{{ backend_asset('savedImages/'.@$companyProductCurr->companyInfo->image )}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -356,8 +389,7 @@
                                                         </div>
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Պարտադիր ճարներ <i
-                                                                        class="icon icon-right  icon-question"></i>
+                                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
                                                             </div>
                                                             <div class="table-pise-text">
                                                                 2 000 000
@@ -397,14 +429,10 @@
                                                     <div class="left">
                                                         <button type="button" class="btn btn-white btn_compare">
                                                             <i class="icon icon-left  icon-add"></i>
-                                                            <span>
-                                                    համեմատել
-                                            </span>
+                                                            <span>համեմատել</span>
                                                         </button>
                                                         <a href="?p=prod-page" class="btn btn-more">
-                                            <span>
-                                                    ավելին
-                                            </span>
+                                                            <span>ավելին</span>
                                                             <i class="icon icon-right  icon-arrow-right"></i>
                                                         </a>
                                                     </div>
@@ -453,7 +481,7 @@
                             <div class="wrapper min-pading">
                                 <div class="table-wrapper">
                                     <div class="th"><img
-                                                src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
+                                                src="{{backend_asset('savedImages/'.@$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
                                     </div>
 
                                     <div class="th"><span>98</span></div>
@@ -470,14 +498,15 @@
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
 
-                                        <button class="btn btn-white btn_compare"><i class="icon  icon-add"></i></button>
+                                        <button class="btn btn-white btn_compare"><i class="icon  icon-add"></i>
+                                        </button>
 
                                         <a href="" class="btn btn-more"><i
                                                     class="icon icon-right  icon-arrow-right"></i></a>
                                     </div>
                                 </div>
                                 <div class="hide-show">
-                                  
+
                                     @if($productsGroupByCompanyCurr->count() > 1)
                                         @php(
                                            $productsGroupByCompanyCurrFiltered = $productsGroupByCompanyCurr->filter(function ($value, $key) use($productsGroupByCompanyCurr) {
@@ -488,7 +517,7 @@
                                         @foreach($productsGroupByCompanyCurrFiltered as $companyOtherProduct)
                                             <div class="table-wrapper">
                                                 <div class="th">
-                                                    <span><img src="{{backend_asset('savedImages/'.$companyOtherProduct->companyInfo->image )}}"></span>
+                                                    <span><img src="{{backend_asset('savedImages/'.@$companyOtherProduct->companyInfo->image )}}"></span>
                                                 </div>
 
                                                 <div class="th"><span> 98 </span></div>
@@ -501,9 +530,11 @@
 
                                                 <div class="th flex-wrapper ">
 
-                                                    <button class="btn btn-white btn_compare"><i class="icon  icon-add"></i></button>
+                                                    <button class="btn btn-white btn_compare"><i
+                                                                class="icon  icon-add"></i></button>
 
-                                                    <a href="" class="btn btn-more"><i class="icon  icon-arrow-right"></i></a>
+                                                    <a href="" class="btn btn-more"><i
+                                                                class="icon  icon-arrow-right"></i></a>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -513,9 +544,10 @@
                         @endforeach
 
                     </div>
-                @endif
 
-            </div>
+                </div>
+            @endif
+
         </div>
     </form>
 

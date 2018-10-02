@@ -48,7 +48,8 @@
                                         <div class="default text">Ընտրել ցանկից</div>
                                         <div class="menu">
                                             @foreach($countries as $countryCurr)
-                                                <div class="item" data-value="{{$countryCurr->id}}"><i class="{{$countryCurr->code}} flag"></i>{{$countryCurr->name_am}}
+                                                <div class="item" data-value="{{$countryCurr->id}}"><i
+                                                            class="{{$countryCurr->code}} flag"></i>{{$countryCurr->name_am}}
                                                 </div>
                                             @endforeach
                                         </div>
@@ -75,7 +76,8 @@
                                         <div class="default text">Ընտրել ցանկից</div>
                                         <div class="menu">
                                             @foreach($money_transfer_currencies_all_types as $money_transfer_currencies_all_type)
-                                                <div class="item" data-value="{{$money_transfer_currencies_all_type->id}}">{{$money_transfer_currencies_all_type->name}}</div>
+                                                <div class="item"
+                                                     data-value="{{$money_transfer_currencies_all_type->id}}">{{$money_transfer_currencies_all_type->name}}</div>
                                             @endforeach
 
                                         </div>
@@ -93,12 +95,15 @@
                         <div class="columns large-3 medium-6 small-12">
                             <label class="label" for="amount">Գումար</label>
                             <div class="rel">
-                                <input type="number" id="transfer_amount" name="transfer_amount" value="{{$transfer_amount}}"
+                                <input type="number" id="transfer_amount" name="transfer_amount"
+                                       value="{{$transfer_amount}}"
                                        class="input no_negative_value">
 
-                                <input type="hidden" id="money_transfer_amount_min" value="{{$money_transfer_amount_min}}">
+                                <input type="hidden" id="money_transfer_amount_min"
+                                       value="{{$money_transfer_amount_min}}">
 
-                                <input type="hidden" id="money_transfer_amount_max" value="{{$money_transfer_amount_max}}">
+                                <input type="hidden" id="money_transfer_amount_max"
+                                       value="{{$money_transfer_amount_max}}">
 
 
                                 <div id="slider-range-money-transfer"></div>
@@ -142,54 +147,73 @@
                 </div>
             </div>
 
-            <div class="margin-top none columns large-3 medium-3 small-12">
+            @if(!is_null($productsGroupByCompany))
 
-                <div class="wrapper check-box-panel-wrapper  popup">
-                    <form>
+                <div class="margin-top none columns large-3 medium-3 small-12">
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Համակարգի անվանում</span><i></i>
-                            </div>
-                            <div class="check-drop-down">
-                                @foreach($transfer_systems as $transfer_system)
-                                    <label class="container">{{$transfer_system->name}}
-                                        <input type="checkbox" id="transfer_system_{{$transfer_system->id}}"
-                                               data-id="{{$transfer_system->id}}"
-                                               name="transfer_system_{{$transfer_system->id}}"
-                                               value="1"
-                                               class="filter_product filter_checkbox filter_transfer_system">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
+                    <div class="wrapper check-box-panel-wrapper  popup">
+                        <form>
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Ստացող բանկ</span><i></i>
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Փոխանցման ձև</span>
+                                </div>
+                                <div class="check-drop-down">
+                                    <div class="custom-select wrapper">
+                                        <select id="transfer_type" name="transfer_type"
+                                                class="filter_product filter_selectbox filter_transfer_type">
+                                            <option value="">Փոխանցման ձև</option>
+                                            @foreach($transfer_types as $transfer_type)
+                                                <option value="{{$transfer_type->id}}">{{$transfer_type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="check-drop-down">
-                                @foreach($transfer_banks as $transfer_bank)
-                                    <label class="container">{{$transfer_bank->name}}
-                                        <input type="checkbox" id="transfer_bank_{{$transfer_bank->id}}"
-                                               data-id="{{$transfer_bank->id}}"
-                                               name="transfer_bank_{{$transfer_bank->id}}"
-                                               value="1"
-                                               class="filter_product filter_checkbox filter_transfer_bank">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
 
-                    </form>
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Համակարգի անվանում</span><i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    @foreach($transfer_systems as $transfer_system)
+                                        <label class="container">{{$transfer_system["info"]->name}}
+                                            <input type="checkbox" id="transfer_system_{{$transfer_system['id']}}"
+                                                   data-id="{{$transfer_system['id']}}"
+                                                   name="transfer_system_{{$transfer_system['id']}}"
+                                                   value="1"
+                                                   class="filter_product filter_checkbox filter_transfer_system">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count transfer_system_filter_count">{{$transfer_system["count"]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Ստացող բանկ</span><i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    @foreach($transfer_banks as $transfer_bank)
+                                        <label class="container">{{$transfer_bank["info"]->name}}
+                                            <input type="checkbox" id="transfer_bank_{{$transfer_bank['id']}}"
+                                                   data-id="{{$transfer_bank['id']}}"
+                                                   name="transfer_bank_{{$transfer_bank['id']}}"
+                                                   value="1"
+                                                   class="filter_product filter_checkbox filter_transfer_bank">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count transfer_bank_filter_count">{{$transfer_bank["count"]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="margin-top columns large-9 medium-auto product_results">
-                {{--{{dd(!is_null($products->count()))}}--}}
-                @if(!is_null($productsGroupByCompany))
+                <div class="margin-top columns large-9 medium-auto product_results">
 
                     <div class="listing-title">
                         <div class="left">
@@ -215,6 +239,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="change_item">
                         @foreach($productsGroupByCompany as $companyProducts)
 
@@ -503,9 +528,10 @@
                         @endforeach
 
                     </div>
-                @endif
 
-            </div>
+                </div>
+            @endif
+
         </div>
     </form>
 

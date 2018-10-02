@@ -436,13 +436,11 @@
                                         <button type="button" class="btn btn-red">
                                             <i class="icon icon-left  icon-add"></i>
                                             <span>
-                                            համեմատել
-                                    </span>
+                                                համեմատել
+                                            </span>
                                         </button>
-                                        <a href="?p=prod-page" class="btn btn-more">
-                                    <span>
-                                            ավելին
-                                    </span>
+                                        <a href="{{url('/car-loan-product/'.$companyProducts->first()->id)}}" class="btn btn-more">
+                                            <span>ավելին</span>
                                             <i class="icon icon-right  icon-arrow-right"></i>
                                         </a>
                                     </div>
@@ -537,9 +535,9 @@
                                             </span>
                                                         </button>
                                                         <a href="?p=prod-page" class="btn btn-more">
-                                            <span>
-                                                    ավելին
-                                            </span>
+                                                    <span>
+                                                            ավելին
+                                                    </span>
                                                             <i class="icon icon-right  icon-arrow-right"></i>
                                                         </a>
                                                     </div>

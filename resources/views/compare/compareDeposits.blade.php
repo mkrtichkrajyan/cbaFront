@@ -83,7 +83,7 @@
                             @endif
                         </div>
 
-                        <div class="columns large-3 medium-6 small-12 condition_from_deposit_type_term_part" >
+                        <div class="columns large-3 medium-6 small-12 condition_from_deposit_type_term_part">
                             <label class="label" for="amount">Ժամկետ</label>
                             <div class="rel">
 
@@ -129,8 +129,10 @@
                                        value="{{$loan_amount}}">
 
 
-                                <input type="hidden" id="deposit_money_min" name="deposit_money_min" value="{{$deposit_money_min}}">
-                                <input type="hidden" id="deposit_money_max" name="deposit_money_max" value="{{$deposit_money_max}}">
+                                <input type="hidden" id="deposit_money_min" name="deposit_money_min"
+                                       value="{{$deposit_money_min}}">
+                                <input type="hidden" id="deposit_money_max" name="deposit_money_max"
+                                       value="{{$deposit_money_max}}">
                                 <div id="slider-range-deposit"></div>
 
                                 <i class="icon icon-right icon-dram"></i>
@@ -173,154 +175,162 @@
                 </div>
             </div>
 
-            <div class="margin-top none columns large-3 medium-3 small-12">
+            @if(!is_null($productsGroupByCompany))
 
-                <div class="wrapper check-box-panel-wrapper  popup">
-                    <form>
+                <div class="margin-top none columns large-3 medium-3 small-12">
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Կապիտալացում</span>
-                                <i></i>
+                    <div class="wrapper check-box-panel-wrapper  popup">
+                        <form>
+
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Կապիտալացում</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+
+                                    @foreach ($deposit_capitalizations_list as $deposit_capitalization)
+                                        <label class="container">{{$deposit_capitalization["info"]->name}}
+                                            <input type="checkbox"
+                                                   id="deposit_capitalization_{{$deposit_capitalization['id']}}"
+                                                   data-id="{{$deposit_capitalization['id']}}"
+                                                   name="deposit_capitalization_{{$deposit_capitalization['id']}}"
+                                                   value="1"
+                                                   class="filter_product filter_checkbox filter_capitalization">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count capitalization_filter_count">{{$deposit_capitalization["count"]}}</span>
+                                        </label>
+                                    @endforeach
+
+                                </div>
                             </div>
-                            <div class="check-drop-down">
 
-                                @foreach ($deposit_capitalizations_list as $deposit_capitalization)
-                                    <label class="container">{{$deposit_capitalization->name}}
-                                        <input type="checkbox" id="deposit_capitalization_{{$deposit_capitalization->id}}"
-                                               data-id="{{$deposit_capitalization->id}}"
-                                               name="deposit_capitalization_{{$deposit_capitalization->id}}"
-                                               value="1"
-                                               class="filter_product filter_checkbox filter_capitalization">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Տոկոսագումարների վճարում</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
 
-                            </div>
-                        </div>
-
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Տոկոսագումարների վճարում</span>
-                                <i></i>
-                            </div>
-                            <div class="check-drop-down">
-
-                                @foreach ($deposit_interest_rates_payments as $deposit_interest_rates_payment)
-                                        <label class="container">{{$deposit_interest_rates_payment->name}}
-                                            <input type="checkbox" id="deposit_interest_rates_payment_{{$deposit_interest_rates_payment->id}}"
-                                                   data-id="{{$deposit_interest_rates_payment->id}}"
-                                                   name="deposit_interest_rates_payment_{{$deposit_interest_rates_payment->id}}"
+                                    @foreach ($deposit_interest_rates_payments as $deposit_interest_rates_payment)
+                                        <label class="container">{{$deposit_interest_rates_payment["info"]->name}}
+                                            <input type="checkbox"
+                                                   id="deposit_interest_rates_payment_{{$deposit_interest_rates_payment['id']}}"
+                                                   data-id="{{$deposit_interest_rates_payment['id']}}"
+                                                   name="deposit_interest_rates_payment_{{$deposit_interest_rates_payment['id']}}"
                                                    value="1"
                                                    class="filter_product filter_checkbox filter_deposit_interest_rates_payment">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count interest_rates_payment_filter_count">{{$deposit_interest_rates_payment["count"]}}</span>
                                         </label>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Փոփոխության հնարավորություն </span>
-                                <i></i>
+                                    @endforeach
+                                </div>
                             </div>
 
-                            <div class="check-drop-down">
-                                <label>Գումարի ավելացում</label>
-                                @foreach($yes_no_answers as $yes_no_answer_curr)
-                                    <label class="container">{{$yes_no_answer_curr->name}}
-                                        <input id="money_increasing_{{$yes_no_answer_curr->id}}"
-                                               name="money_increasing_{{$yes_no_answer_curr->id}}"
-                                               type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
-                                               class="filter_product filter_checkbox filter_money_increasing">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            <div class="check-drop-down">
-                                <label>Գումարի նվազեցում</label>
-                                @foreach($yes_no_answers as $yes_no_answer_curr)
-                                    <label class="container">{{$yes_no_answer_curr->name}}
-                                        <input id="money_decreasing_{{$yes_no_answer_curr->id}}"
-                                               name="money_decreasing_{{$yes_no_answer_curr->id}}"
-                                               type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
-                                               class="filter_product filter_checkbox filter_money_decreasing">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            <div class="check-drop-down">
-                                <label>Արժույթի փոփոխում</label>
-                                @foreach($yes_no_answers as $yes_no_answer_curr)
-                                    <label class="container">{{$yes_no_answer_curr->name}}
-                                        <input id="currency_changing_{{$yes_no_answer_curr->id}}"
-                                               name="currency_changing_{{$yes_no_answer_curr->id}}"
-                                               type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
-                                               class="filter_product filter_checkbox filter_currency_changing">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                            <div class="check-drop-down">
-                                <label>Ավանդի ընդհատում</label>
-                                @foreach($yes_no_answers as $yes_no_answer_curr)
-                                    <label class="container">{{$yes_no_answer_curr->name}}
-                                        <input id="deposit_interruption_{{$yes_no_answer_curr->id}}"
-                                               name="deposit_interruption_{{$yes_no_answer_curr->id}}"
-                                               type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
-                                               class="filter_product filter_checkbox filter_deposit_interruption">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Փոփոխության հնարավորություն </span>
+                                    <i></i>
+                                </div>
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                                <span>Նվազագույն գումար</span>
-                                <i></i>
+                                <div class="check-drop-down">
+                                    <label>Գումարի ավելացում</label>
+                                    @foreach($yes_no_answers as $yes_no_answer_curr)
+                                        <label class="container">{{$yes_no_answer_curr->name}}
+                                            <input id="money_increasing_{{$yes_no_answer_curr->id}}"
+                                                   name="money_increasing_{{$yes_no_answer_curr->id}}"
+                                                   type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
+                                                   class="filter_product filter_checkbox filter_money_increasing">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count money_increasing_filter_count">{{$money_increasing[$yes_no_answer_curr->id]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <div class="check-drop-down">
+                                    <label>Գումարի նվազեցում</label>
+                                    @foreach($yes_no_answers as $yes_no_answer_curr)
+                                        <label class="container">{{$yes_no_answer_curr->name}}
+                                            <input id="money_decreasing_{{$yes_no_answer_curr->id}}"
+                                                   name="money_decreasing_{{$yes_no_answer_curr->id}}"
+                                                   type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
+                                                   class="filter_product filter_checkbox filter_money_decreasing">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count money_decreasing_filter_count">{{$money_decreasing[$yes_no_answer_curr->id]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <div class="check-drop-down">
+                                    <label>Արժույթի փոփոխում</label>
+                                    @foreach($yes_no_answers as $yes_no_answer_curr)
+                                        <label class="container">{{$yes_no_answer_curr->name}}
+                                            <input id="currency_changing_{{$yes_no_answer_curr->id}}"
+                                                   name="currency_changing_{{$yes_no_answer_curr->id}}"
+                                                   type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
+                                                   class="filter_product filter_checkbox filter_currency_changing">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count currency_changing_filter_count">{{$currency_changing[$yes_no_answer_curr->id]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                                <div class="check-drop-down">
+                                    <label>Ավանդի ընդհատում</label>
+                                    @foreach($yes_no_answers as $yes_no_answer_curr)
+                                        <label class="container">{{$yes_no_answer_curr->name}}
+                                            <input id="deposit_interruption_{{$yes_no_answer_curr->id}}"
+                                                   name="deposit_interruption_{{$yes_no_answer_curr->id}}"
+                                                   type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
+                                                   class="filter_product filter_checkbox filter_deposit_interruption">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count deposit_interruption_filter_count">{{$deposit_interruption[$yes_no_answer_curr->id]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="check-drop-down">
-                                @foreach($yes_no_answers as $yes_no_answer_curr)
-                                    <label class="container">{{$yes_no_answer_curr->name}}
-                                        <input id="deposit_interruption_{{$yes_no_answer_curr->id}}"
-                                               name="deposit_interruption_{{$yes_no_answer_curr->id}}"
-                                               type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
-                                               class="filter_product filter_checkbox filter_deposit_interruption">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                @endforeach
-                            </div>
-                        </div>
 
-                        <div class="check-drop-down-wrapper">
-                            <div class="check-drop-title">
-                            <span>Հատուկ ավանդներ</span>
-                                <i></i>
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Նվազագույն գումար</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+                                    @foreach($yes_no_answers as $yes_no_answer_curr)
+                                        <label class="container">{{$yes_no_answer_curr->name}}
+                                            <input id="minimum_money_{{$yes_no_answer_curr->id}}"
+                                                   name="minimum_money_{{$yes_no_answer_curr->id}}"
+                                                   type="checkbox" value="1" data-id="{{$yes_no_answer_curr->id}}"
+                                                   class="filter_product filter_checkbox filter_minimum_money">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count deposit_interruption_filter_count">{{$minimum_money[$yes_no_answer_curr->id]}}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="check-drop-down">
 
-                                @foreach ($deposits_specials_list as $deposits_special)
-                                        <label class="container">{{$deposits_special->name}}
-                                            <input type="checkbox" id="deposits_special_{{$deposits_special->id}}"
-                                                   data-id="{{$deposits_special->id}}"
-                                                   name="deposits_special_{{$deposits_special->id}}"
+                            <div class="check-drop-down-wrapper">
+                                <div class="check-drop-title">
+                                    <span>Հատուկ ավանդներ</span>
+                                    <i></i>
+                                </div>
+                                <div class="check-drop-down">
+
+                                    @foreach ($deposits_specials_list as $deposits_special)
+                                        <label class="container">{{$deposits_special["info"]->name}}
+                                            <input type="checkbox" id="deposits_special_{{$deposits_special['id']}}"
+                                                   data-id="{{$deposits_special['id']}}"
+                                                   name="deposits_special_{{$deposits_special['id']}}"
                                                    value="1"
                                                    class="filter_product filter_checkbox filter_deposits_special">
                                             <span class="checkmark"></span>
+                                            <span class="single_filter_count deposits_special_filter_count">{{$deposits_special["count"]}}</span>
                                         </label>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
-
-
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="margin-top columns large-9 medium-auto product_results">
-
-                @if(!is_null($productsGroupByCompany))
+                <div class="margin-top columns large-9 medium-auto product_results">
 
                     <div class="listing-title">
                         <div class="left">
@@ -346,6 +356,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="change_item">
                         @foreach($productsGroupByCompany as $companyProducts)
 
@@ -634,9 +645,10 @@
                         @endforeach
 
                     </div>
-                @endif
 
-            </div>
+                </div>
+            @endif
+
         </div>
     </form>
 
