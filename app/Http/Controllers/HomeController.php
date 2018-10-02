@@ -3021,6 +3021,8 @@ class HomeController extends MainController
             ->with('repaymentTypeInfo')
             ->with('CarSalons')->first();
 
+        dd($product);
+
         return view('product.carloan', ["product" => $product]);
     }
 
