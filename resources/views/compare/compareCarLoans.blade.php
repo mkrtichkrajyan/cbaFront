@@ -2,15 +2,30 @@
 
 @include('layouts.head')
 
-@include('layouts.header')
+@include('layouts.headerCompare')
+
+@php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
+
 
 <main>
     <div class="back-fon" style="background-image: url({{asset('img/blue-fon.png')}});height: 150px;">
     </div>
 
-    <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path">
+    <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path"/>
 
-    <input type="hidden" value="{{$request_results_count}}" id="request_results_count" name="request_results_count">
+    <input type="hidden" value="{{url('/car-loan-product/')}}" id="prod_page_path" name="prod_page_path"/>
+
+    <input type="hidden" value="{{url('/company-branches-and-bankomats/')}}" id="company_path" name="company_path"/>
+
+    <input type="hidden" value="{{$request_results_count}}" id="request_results_count" name="request_results_count"/>
+
+
+    <input type="hidden" value="{{$car_cost}}" id="prod_cost" name="prod_cost"/>
+
+    <input type="hidden" value="{{$prepayment}}" id="prod_prepayment" name="prod_prepayment"/>
+
+    <input type="hidden" value="{{$loan_term_search_in_days}}" id="prod_loan_term_search_in_days"
+           name="prod_loan_term_search_in_days"/>
 
     <form id="seachProductForm" enctype="multipart/form-data" class="form-horizontal" name="carLoanForm"
           action="{{ url($currProductByBelongingsView->compare_url) }}" method="get">
@@ -60,7 +75,8 @@
                                 <input type="number" id="maximum" name="prepayment"
                                        class="input no_negative_value prepayment" value="{{$prepayment}}">
 
-                                <input type="hidden" id="" name="prepayment_search" value="{{$prepayment}}">
+                                <input type="hidden" id="prepayment_search" name="prepayment_search"
+                                       value="{{$prepayment}}">
 
                                 <div id="slider-range-max"></div>
                                 <i class="icon icon-right icon-dram"></i>
@@ -151,7 +167,7 @@
                 </div>
             </div>
 
-            @if(!is_null($productsGroupByCompany))
+            @if(!is_null($productsWithVariations))
 
                 <div class="margin-top none columns large-3 medium-3 small-12">
 
@@ -178,7 +194,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Տոկոսադրույք</span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
                                     @foreach($percentage_types as $percentage_type)
@@ -198,7 +213,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Մարման եղանակ </span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
 
@@ -216,7 +230,7 @@
                                 </div>
 
                                 <div class="check-box check-drop-down">
-                                    <div class="custom-select wrapper">
+                                    <div class="custom-select-second wrapper">
                                         <select id="repayment_loan_interval_type" name="repayment_loan_interval_type"
                                                 class="filter_product filter_selectbox filter_repayment_loan_interval_type">
                                             <option value="">Վարկ</option>
@@ -225,7 +239,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="custom-select wrapper">
+                                    <div class="custom-select-second wrapper">
                                         <select id="repayment_percent_interval_type"
                                                 name="repayment_percent_interval_type"
                                                 class="filter_product filter_selectbox filter_repayment_percent_interval_type">
@@ -236,7 +250,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="check-drop-down-wrapper">
@@ -263,7 +276,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Ապահովվածություն </span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
                                     @foreach($security_types as $security_type)
@@ -280,14 +292,13 @@
                                 </div>
                             </div>
 
-                            @if($special_projects_having_products_count > 0)
+
+                            @if($special_project_statuses[1]["count"] > 0)
                                 <div class="check-drop-down-wrapper">
                                     <div class="check-drop-title">
                                         <span>Հատուկ Ծրագիր  </span>
-                                        <i></i>
                                     </div>
                                     <div class="check-drop-down">
-
                                         @foreach($yes_no_answers as $yes_no_answer)
 
                                             <label class="container">{{$yes_no_answer->name}}
@@ -297,22 +308,18 @@
                                                        value="1" data-id="{{$yes_no_answer->id}}"
                                                        class="filter_product filter_checkbox filter_special_project">
                                                 <span class="checkmark"></span>
-                                                @if($yes_no_answer->id == 1)
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$special_projects_having_products_count}}</span>
-                                                @else
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$special_projects_no_having_products_count}}</span>
-                                                @endif
+                                                <span class="single_filter_count repayment_type_filter_count">{{$special_project_statuses[$yes_no_answer->id]["count"]}}</span>
                                             </label>
                                         @endforeach
                                     </div>
                                 </div>
                             @endif
 
-                            @if($privileged_term_having_products_count > 0)
+                            {{--@if($privileged_term_having_products_count > 0)--}}
+                            @if($privileged_term_statuses[1]["count"] > 0)
                                 <div class="check-drop-down-wrapper">
                                     <div class="check-drop-title">
                                         <span>Արտոնյալ ժամկետ</span>
-                                        <i></i>
                                     </div>
                                     <div class="check-drop-down">
 
@@ -325,11 +332,7 @@
                                                        data-id="{{$yes_no_answer->id}}"
                                                        class="filter_product filter_checkbox filter_privileged_term">
                                                 <span class="checkmark"></span>
-                                                @if($yes_no_answer->id == 1)
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_having_products_count}}</span>
-                                                @else
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_no_having_products_count}}</span>
-                                                @endif
+                                                <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_statuses[$yes_no_answer->id]["count"]}}</span>
                                             </label>
                                         @endforeach
                                     </div>
@@ -339,11 +342,44 @@
                     </div>
                 </div>
 
+                <div class="displayNone">
+                    <div class="table-wrap head_grouped_by_company">
+                        <div class="td">
+                            <span>Կազմակերպության անվանում</span>
+                        </div>
+
+                        <div class="td">
+                            <span>Անվանական տոկոսադրույք</span><i></i>
+                        </div>
+
+                        <div class="td">
+                            <span>Պարտադիր վճարներ </span>
+                        </div>
+
+                        <div class="td">
+                            <div class="flex-wrapper">
+                                <span>Հետ վճարվող գումար </span>
+                                <span>
+                                <div class="come-back-icon">
+                                    <i class="icon icon-arrow-right"></i>
+                                </div>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="td">
+                            <span> Փաստացի տոկոսադրույք </span>
+                        </div>
+                        <div class="td"></div>
+                    </div>
+                </div>
+
+
                 <div class="margin-top columns large-9 medium-auto product_results">
 
-                    <div class="listing-title">
+                    <div class="listing-title result_listing_title">
                         <div class="left">
-                            Գտնվել է <span>{{$products->count()}}</span> առաջարկ
+                            Գտնվել է <span class="count_searched_products">{{$request_results_count}}</span> առաջարկ
                         </div>
                         <div class="right">
                             <div class="listing-icon">
@@ -366,178 +402,222 @@
                         </div>
                     </div>
 
-                    <div class="change_item">
-                        @foreach($productsGroupByCompany as $companyProducts)
+                    <div class="change_item change_item_product_variations_results">
+                        @foreach($productsWithVariations as $currProduct)
 
                             <div class="wrapper pading">
                                 <div class="listing-title">
                                     <div class="left">
                                         <div class="category-title">
-                                            {{$companyProducts->first()->name}}
+                                            {{$currProduct["name"]}}
                                         </div>
                                     </div>
                                     <div class="right">
-                                        <div class="category-logo">
+                                        <a target="_blank"
+                                           href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}"
+                                           class="category-logo">
                                             <img style="max-width: 80px;"
-                                                 src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
-                                        </div>
+                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="table">
                                     <div class="table-pise-wrapper">
+
+                                        <div class="table-pise">
+                                            <div class="table-pise-title">
+                                                Կազմակերպություն
+                                            </div>
+                                            <div class="table-pise-text">
+                                                {{$currProduct["companyInfo"]->name}}
+                                            </div>
+                                        </div>
+
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
                                                 Անվանական տոկոսադրույք
                                             </div>
                                             <div class="table-pise-text">
-                                                98%
+                                                {{$currProduct["variations"][0]["percentage"]}}
                                             </div>
                                         </div>
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                                Ընդամենը պարտադիր վճարներ
+                                                <i class="icon icon-right  icon-question"></i>
                                             </div>
                                             <div class="table-pise-text">
-                                                2 000 000
+                                                {{$currProduct["variations"][0]["require_payments"]}}
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="table-pise-wrapper">
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Հետ վճարվող գումար
+                                                Ընդամենը հետ վճարվող գումար
                                             </div>
                                             <div class="table-pise-text">
-                                                2 000 000 <i class="icons "></i>
+                                                {{$currProduct["variations"][0]["sum_payments"]}} <i class="icons "></i>
                                             </div>
                                         </div>
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
+                                                Փաստացի տոկոսադրույք
                                             </div>
                                             <div class="table-pise-text">
-                                                98%
+                                                {{round($currProduct["variations"][0]["factual_percentage"], 2) }}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="listing-title">
                                     <div class="left">
-                                        <button type="button" class="btn btn-red">
+                                        @php($firstProductVariation =    $currProduct["variations"][0])
+
+                                        @php($unique_options    =   "bel_".$belonging_id."_prod_".$currProduct["id"]."_prov_" .$firstProductVariation["providing_type"]."_perc_".
+                                        $firstProductVariation["percentage_type"]."_rep_" . $firstProductVariation["repayment_type"]."_rep_loan_" .
+                                         intval($firstProductVariation["repayment_loan_interval_type_id"]) . "_rep_perc_" .intval($firstProductVariation["repayment_percent_interval_type_id"]))
+
+                                        @php($unique_options_and_search_params  =   $unique_options."*"."_cost_".$car_cost."_prepayment_".$prepayment."_term_".$loan_term_search_in_days)
+
+                                        @php($unique_options_and_search_params    =   str_rot13($unique_options_and_search_params))
+
+                                        @php($unique_options    =   md5($unique_options))
+
+                                        <button type="button" data-options="{{$unique_options}}"
+                                                data-belongingId="{{$belonging_id}}"
+                                                data-product-id='{{$currProduct["id"]}}'
+                                                data-cost="{{$car_cost}}"
+                                                data-prepayment="{{$prepayment}}"
+                                                data-term="{{$loan_term_search_in_days}}"
+                                                class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
                                             <i class="icon icon-left  icon-add"></i>
-                                            <span>
-                                                համեմատել
-                                            </span>
+                                            <span>համեմատել</span>
                                         </button>
-                                        <a href="{{url('/car-loan-product/'.$companyProducts->first()->id)}}" class="btn btn-more">
+                                        <a href="{{url('/car-loan-product/'.$unique_options.'/'.$car_cost.'/'.$prepayment_final.'/'.$time_type.'/'.$loan_term)}}"
+                                           class="btn btn-more">
                                             <span>ավելին</span>
                                             <i class="icon icon-right  icon-arrow-right"></i>
                                         </a>
                                     </div>
                                     <div class="right">
                                         <button type="button" class="btn btn-pink other_suggestions_open_close">
-                                            <section>{{$companyProducts->count()-1}}</section>
-                                            <span>
-                                            այլ առաջարկ
-                                    </span>
+                                            <section>{{count($currProduct["variations"])-1}}</section>
+                                            <span>այլ առաջարկ</span>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
                                     </div>
                                 </div>
 
                                 <section class="hide-show">
-                                    @if($companyProducts->count() > 1)
-                                        @php(
-                                           $companyProductsFiltered = $companyProducts->filter(function ($value, $key) {
-                                               return $key > 1;
-                                           })
-                                       )
-                                        @foreach($companyProductsFiltered as $companyProductCurr)
+
+                                    @if(count($currProduct["variations"]) > 1)
+                                        @php( $currProductVariations = $currProduct["variations"])
+
+                                        @php( array_shift($currProductVariations))
+
+                                        @foreach($currProductVariations as $currProductCurrVariation)
                                             <div class="add-result pading">
                                                 <div class="listing-title">
                                                     <div class="left">
                                                         <div class="category-title">
-                                                            {{$companyProductCurr->name}}
+                                                            {{$currProduct["name"]}}
                                                         </div>
                                                     </div>
+
                                                     <div class="right">
-                                                        <div class="category-logo">
+                                                        <a target="_blank" href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}" class="category-logo">
                                                             <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">
-                                                        </div>
+                                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="table">
                                                     <div class="table-pise-wrapper">
+
+                                                        <div class="table-pise">
+                                                            <div class="table-pise-title">
+                                                                Կազմակերպություն
+                                                            </div>
+                                                            <div class="table-pise-text">
+                                                                {{$currProduct["companyInfo"]->name}}
+                                                            </div>
+                                                        </div>
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
                                                                 Անվանական տոկոսադրույք
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                98%
+                                                                {{$currProductCurrVariation["percentage"]}}
                                                             </div>
                                                         </div>
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Պարտադիր ճարներ <i
-                                                                        class="icon icon-right  icon-question"></i>
+                                                                Ընդամենը պարտադիր վճարներ
+                                                                <i class="icon icon-right  icon-question"></i>
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                2 000 000
+                                                                {{$currProductCurrVariation["require_payments"] }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="table-pise-wrapper">
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Հետ վճարվող գումար
+                                                                Ընդամենը հետ վճարվող գումար
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                2 000 000 <i class="icons "></i>
+                                                                {{$currProductCurrVariation["sum_payments"] }}
+                                                                <i class="icons "></i>
                                                             </div>
                                                         </div>
-                                                        <div class="table-pise">
-                                                            <div class="table-pise-title">
-                                                                Անվանական տոկոսադրույք
-                                                            </div>
-                                                            <div class="table-pise-text">
-                                                                98%
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                     <div class="table-pise-wrapper">
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Անվանական
+                                                                Փաստացի տոկոսադրույք
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                98%
+                                                                {{round($currProductCurrVariation["factual_percentage"], 2) }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="listing-title">
                                                     <div class="left">
-                                                        <button type="button" class="btn btn-red">
-                                                            <i class="icon icon-left  icon-add"></i>
-                                                            <span>
-                                                    համեմատել
-                                            </span>
+                                                        @php($unique_options    =   "bel_".$belonging_id."_prod_".$currProduct["id"]."_prov_" .$currProductCurrVariation["providing_type"]."_perc_".
+                                                        $currProductCurrVariation["percentage_type"]."_rep_" . $currProductCurrVariation["repayment_type"]."_rep_loan_" .
+                                                         intval($currProductCurrVariation["repayment_loan_interval_type_id"]) . "_rep_perc_" .intval($currProductCurrVariation["repayment_percent_interval_type_id"]))
+
+                                                        @php($unique_options_and_search_params  =   $unique_options."*"."_cost_".$car_cost."_prepayment_".$prepayment."_term_".$loan_term_search_in_days)
+
+                                                        @php($unique_options_and_search_params    =   str_rot13($unique_options_and_search_params))
+
+                                                        @php($unique_options    =   md5($unique_options))
+
+                                                        <button type="button" data-options="{{$unique_options}}"
+                                                                data-belongingId="{{$belonging_id}}"
+                                                                data-product-id='{{$currProduct["id"]}}'
+                                                                data-cost="{{$car_cost}}"
+                                                                data-prepayment="{{$prepayment}}"
+                                                                data-term="{{$loan_term_search_in_days}}"
+                                                                class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
+                                                            <i class="icon icon-left icon-add"></i>
+                                                            <span>համեմատել</span>
                                                         </button>
-                                                        <a href="?p=prod-page" class="btn btn-more">
-                                                    <span>
-                                                            ավելին
-                                                    </span>
+                                                        <a href="{{url('/car-loan-product/'.$unique_options.'/'.$car_cost.'/'.$prepayment_final.'/'.$time_type.'/'.$loan_term)}}"
+                                                           class="btn btn-more">
+                                                            <span>ավելին</span>
                                                             <i class="icon icon-right  icon-arrow-right"></i>
                                                         </a>
                                                     </div>
@@ -548,11 +628,14 @@
                                 </section>
                             </div>
                         @endforeach
+                        <div class="pagination_sexion product_variations_results_pagination">
+                            {{ $productsWithVariations->appends([])->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
 
-                    <div class="change_item">
+                    <div class="change_item change_item_product_variations_grouped_by_company_results">
 
-                        <div class="table-wrap">
+                        <div class="table-wrap head_grouped_by_company">
                             <div class="td">
                                 <span>Կազմակերպության անվանում</span>
                             </div>
@@ -581,62 +664,130 @@
                             </div>
                             <div class="td"></div>
                         </div>
-                        @foreach($productsGroupByCompany as $productsGroupByCompanyCurr)
+                        @foreach($productsWithVariationsGroupByCompany as $productsWithVariationsGroupByCompanyCurr)
+
+                            @php( $currCompanyImg   =  $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image)
+
+                            @php( $currCompanyId   =  $productsWithVariationsGroupByCompanyCurr[0]["company_id"])
 
                             <div class="wrapper min-pading">
                                 <div class="table-wrapper">
-                                    <div class="th"><img
-                                                src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
+                                    <div class="th">
+                                        <a target="_blank"
+                                           href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
+                                            <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                        </a>
                                     </div>
 
-                                    <div class="th"><span>98</span></div>
+                                    <div class="th">
+                                        <span>{{$productsWithVariationsGroupByCompanyCurr[0]["percentage"]}}</span>
+                                    </div>
 
-                                    <div class="th"><span>2 000 000</span></div>
+                                    <div class="th">
+                                        <span>{{$productsWithVariationsGroupByCompanyCurr[0]["require_payments"]}}</span>
+                                    </div>
 
-                                    <div class="th"><span>2 000 000</span></div>
+                                    <div class="th">
+                                        <span>{{$productsWithVariationsGroupByCompanyCurr[0]["sum_payments"]}}</span>
+                                    </div>
 
-                                    <div class="th"><span>98</span></div>
+                                    <div class="th">
+                                        <span>{{round($productsWithVariationsGroupByCompanyCurr[0]["factual_percentage"], 2) }}</span>
+                                    </div>
 
                                     <div class="th flex-wrapper">
-                                        <button class="btn btn-pink">
-                                            <section>{{$productsGroupByCompanyCurr->count()-1}}</section>
+                                        <button class="btn btn-pink other_suggestions_open_close">
+                                            <section>{{count($productsWithVariationsGroupByCompanyCurr)-1}}</section>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
 
-                                        <button class="btn btn-red"><i class="icon  icon-add"></i></button>
+                                        @php($firstProductVariation =    $productsWithVariationsGroupByCompanyCurr[0])
 
-                                        <a href="" class="btn btn-more"><i
-                                                    class="icon icon-right  icon-arrow-right"></i></a>
+                                        @php($unique_options    =   "bel_".$belonging_id."_prod_".$firstProductVariation["product_id"]."_prov_" .$firstProductVariation["providing_type"]."_perc_".
+                                        $firstProductVariation["percentage_type"]."_rep_" . $firstProductVariation["repayment_type"]."_rep_loan_" .
+                                         intval($firstProductVariation["repayment_loan_interval_type_id"]) . "_rep_perc_" .intval($firstProductVariation["repayment_percent_interval_type_id"]))
+
+                                        @php($unique_options_and_search_params  =   $unique_options."*"."_cost_".$car_cost."_prepayment_".$prepayment."_term_".$loan_term_search_in_days)
+
+                                        @php($unique_options_and_search_params    =   str_rot13($unique_options_and_search_params))
+
+                                        @php($unique_options    =   md5($unique_options))
+
+                                        <button type="button" data-options="{{$unique_options}}"
+                                                data-belongingId="{{$belonging_id}}"
+                                                data-product-id='{{$firstProductVariation["product_id"]}}'
+                                                data-cost="{{$car_cost}}"
+                                                data-prepayment="{{$prepayment}}"
+                                                data-term="{{$loan_term_search_in_days}}"
+                                                class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+                                            <i class="icon icon-add icon-add-mini"></i>
+                                        </button>
+
+                                        <a href="{{url('/car-loan-product/'.$unique_options.'/'.$car_cost.'/'.$prepayment_final.'/'.$time_type.'/'.$loan_term)}}"
+                                           class="btn btn-more">
+                                            <i class="icon icon-right icon-arrow-right"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="hide-show">
-                                    @if($productsGroupByCompanyCurr->count() > 1)
-                                        @php(
-                                           $productsGroupByCompanyCurrFiltered = $productsGroupByCompanyCurr->filter(function ($value, $key) {
-                                               return $key > 1;
-                                           })
-                                       )
 
-                                        @foreach($productsGroupByCompanyCurrFiltered as $companyOtherProduct)
+                                <div class="hide-show">
+                                    @if(count($productsWithVariationsGroupByCompanyCurr) > 1)
+                                        @php( $productsWithVariationsGroupByCompanyCurr =   $productsWithVariationsGroupByCompanyCurr->toArray())
+
+                                        @php( array_shift($productsWithVariationsGroupByCompanyCurr))
+
+                                        @foreach($productsWithVariationsGroupByCompanyCurr as $productsWithVariationsGroupByCompanyCurrVariationCurr)
                                             <div class="table-wrapper">
                                                 <div class="th">
-                                                    <span><img src="{{backend_asset('savedImages/'.$companyOtherProduct->companyInfo->image )}}"></span>
+                                                    <a target="_blank"
+                                                       href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
+                                                        <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                                    </a>
                                                 </div>
 
-                                                <div class="th"><span> 98 </span></div>
+                                                <div class="th">
+                                                    <span>{{$productsWithVariationsGroupByCompanyCurrVariationCurr["percentage"]}}</span>
+                                                </div>
 
-                                                <div class="th"><span>2 000 000</span></div>
+                                                <div class="th">
+                                                    <span> {{$productsWithVariationsGroupByCompanyCurrVariationCurr["require_payments"]}}</span>
+                                                </div>
 
-                                                <div class="th"><span>2 000 000</span></div>
+                                                <div class="th">
+                                                    <span> {{$productsWithVariationsGroupByCompanyCurrVariationCurr["sum_payments"]}}</span>
+                                                </div>
 
-                                                <div class="th"><span>98</span></div>
+                                                <div class="th">
+                                                    <span>{{round($productsWithVariationsGroupByCompanyCurrVariationCurr["factual_percentage"], 4) }}</span>
+                                                </div>
 
                                                 <div class="th flex-wrapper ">
 
-                                                    <button class="btn btn-red"><i class="icon  icon-add"></i></button>
+                                                    @php($unique_options    =   "bel_".$belonging_id."_prod_".$productsWithVariationsGroupByCompanyCurrVariationCurr["product_id"]."_prov_" .$productsWithVariationsGroupByCompanyCurrVariationCurr["providing_type"]."_perc_".
+                                                    $productsWithVariationsGroupByCompanyCurrVariationCurr["percentage_type"]."_rep_" . $productsWithVariationsGroupByCompanyCurrVariationCurr["repayment_type"]."_rep_loan_" .
+                                                     intval($productsWithVariationsGroupByCompanyCurrVariationCurr["repayment_loan_interval_type_id"]) . "_rep_perc_" .intval($productsWithVariationsGroupByCompanyCurrVariationCurr["repayment_percent_interval_type_id"]))
 
-                                                    <a href="" class="btn btn-more"><i
-                                                                class="icon  icon-arrow-right"></i></a>
+                                                    @php($unique_options_and_search_params  =   $unique_options."*"."_cost_".$car_cost."_prepayment_".$prepayment."_term_".$loan_term_search_in_days)
+
+                                                    @php($unique_options_and_search_params    =   str_rot13($unique_options_and_search_params))
+
+                                                    @php($unique_options    =   md5($unique_options))
+
+                                                    <button type="button" data-options="{{$unique_options}}"
+                                                            data-belongingId="{{$belonging_id}}"
+                                                            data-product-id='{{$productsWithVariationsGroupByCompanyCurrVariationCurr["product_id"]}}'
+                                                            data-cost="{{$car_cost}}"
+                                                            data-prepayment="{{$prepayment}}"
+                                                            data-term="{{$loan_term_search_in_days}}"
+                                                            class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
+                                                        <i class="icon icon-add icon-add-mini"></i>
+                                                    </button>
+
+                                                    <a href="{{url('/car-loan-product/'.$unique_options.'/'.$car_cost.'/'.$prepayment_final.'/'.$time_type.'/'.$loan_term)}}"
+                                                       class="btn btn-more">
+                                                        <i class="icon  icon-arrow-right"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -644,7 +795,9 @@
                                 </div>
                             </div>
                         @endforeach
-
+                        <div class="pagination_sexion product_variations_grouped_by_company_results_pagination">
+                            {{ $productsWithVariationsGroupByCompany->appends([])->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
 
                 </div>
@@ -669,7 +822,25 @@
         $(".filter_product").click(function () {
 
             filter_products("{{url('/car-loans-filters/')}}");
+
+            //filter_products("{{$belonging_id}}", "{{url('/car-loans-filters/')}}");
         });
+
+        $(document).on('click', '.product_variations_results_pagination a', function (e) {
+            e.preventDefault();
+
+            page = $(this).attr('href').split('page=')[1];
+
+
+            if ($(".product_variations_grouped_by_company_results_pagination .pagination").length == 0) {
+                page_by_company = 1;
+            }
+            else {
+                page_by_company = $(".product_variations_grouped_by_company_results_pagination .pagination .active span").text();
+            }
+
+            filter_products("{{url('/car-loans-filters/')}}", page, page_by_company);
+        })
     });
 </script>
 

@@ -100,10 +100,10 @@
                                        class="input no_negative_value">
 
                                 <input type="hidden" id="money_transfer_amount_min"
-                                       value="{{$money_transfer_amount_min}}">
+                                       value="0">
 
                                 <input type="hidden" id="money_transfer_amount_max"
-                                       value="{{$money_transfer_amount_max}}">
+                                       value="10000000">
 
 
                                 <div id="slider-range-money-transfer"></div>
@@ -158,8 +158,8 @@
                                 <div class="check-drop-title">
                                     <span>Փոխանցման ձև</span>
                                 </div>
-                                <div class="check-drop-down">
-                                    <div class="custom-select wrapper">
+                                <div class="check-drop-down transfer-type-check-drop-down">
+                                    <div class="custom-select-second wrapper transfer_type_custom_select">
                                         <select id="transfer_type" name="transfer_type"
                                                 class="filter_product filter_selectbox filter_transfer_type">
                                             <option value="">Փոխանցման ձև</option>

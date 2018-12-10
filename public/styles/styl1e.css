@@ -1,4 +1,4 @@
-.btn, .more-info i, .btn-pink i, .filter-home-atr:hover, .select-selected:after, .filter-home-atr > .custom-select > .select-selected:after, .select-items div, .select-items div:hover, .check-drop-down-wrapper.active > .check-drop-down, .btn-pink > .icon-right, .product-inform {
+.btn, .more-info i, .btn-pink i, .filter-home-atr:hover, .select-selected:after, .filter-home-atr > .custom-select-second > .select-selected:after, .select-items div, .select-items div:hover, .check-drop-down-wrapper.active > .check-drop-down, .btn-pink > .icon-right, .product-inform {
     -webkit-transition: all 0.15s linear;
     -moz-transition: all 0.15s linear;
     -ms-transition: all 0.15s linear;
@@ -590,14 +590,14 @@ a {
     line-height: 80px;
 }
 
-.filter-home > .one > .custom-select > .select-items {
+.filter-home > .one > .custom-select-second > .select-items {
     column-count: 3;
     padding: 15px;
     align-items: center;
     overflow: inherit;
 }
 
-.filter-home > .one > .custom-select > .select-items > div {
+.filter-home > .one > .custom-select-second > .select-items > div {
     margin: 0;
     width: max-content;
     padding: 6px 20px 6px 6px;
@@ -769,12 +769,12 @@ input:active, :hover, :focus {
     margin: 30px 0px 30px 20px;
 }
 
-.custom-select {
+.custom-select-second {
     position: relative;
     display: inline-flex;
 }
 
-.custom-select select {
+.custom-select-second select {
     display: none;
 }
 
@@ -793,11 +793,11 @@ input:active, :hover, :focus {
     align-items: center;
 }
 
-.filter-home-atr > .custom-select > .select-selected:after {
+.filter-home-atr > .custom-select-second > .select-selected:after {
     font-size: 11px;
 }
 
-.custom-select.wrapper {
+.custom-select-second.wrapper {
     position: relative;
     display: inline-flex;
     width: 100%;

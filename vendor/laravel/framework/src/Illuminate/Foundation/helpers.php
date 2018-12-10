@@ -644,22 +644,7 @@ if (! function_exists('public_path')) {
         return app()->make('path.public').($path ? DIRECTORY_SEPARATOR.ltrim($path, DIRECTORY_SEPARATOR) : $path);
     }
 }
-if (!function_exists('backend_asset')) {
-    function backend_asset($path)
-    {
-        $backend_path = env('BACKEND_URL');
 
-        return rtrim($backend_path) .'/'. ltrim($path, '/');
-    }
-}
-if (!function_exists('backend_asset_path')) {
-    function backend_asset_path()
-    {
-        $backend_path = env('BACKEND_URL');
-
-        return rtrim($backend_path) .'/';
-    }
-}
 if (! function_exists('redirect')) {
     /**
      * Get an instance of the redirector.

@@ -1,84 +1,299 @@
-.belonging_icon{
-	width: 80px;
+body {
+    font-size: 16px !important;
+    line-height: 1.5;
 }
-.company_icon{
-	max-width: 160px;
-	max-height: 96px;
+
+.displayNone {
+    display: none;
 }
-#exportBranchesAtmsList{
+
+.service_on_company_website {
+    overflow-wrap: break-word;
+}
+
+.compare-info-popup-menu {
+    left: 50% !important;
+    transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+}
+
+/* compare-inner-page */
+.compare_name_title {
+    min-height: 147px;
+    padding: 12px;
+}
+
+.compare-item img {
+    max-width: 80px;
+    max-height: 80px;
+    object-fit: contain;
+}
+
+.compare_name_podtitle_large {
+    height: 123px;
+}
+
+.compare_name_podtitle_mid {
+    height: 96px;
+}
+
+.servis_name_mid {
+    height: 96px;
+}
+
+.servis_name_large {
+    height: 123px;
+}
+
+.servis_name_percentage {
+    height: 82px;
+}
+
+.servis_name_repayment_type {
+    height: 123px;
+}
+
+.servis_name_privileged_term {
+    height: 101px;
+}
+
+.percentage_podtitle {
+    height: 82px;
+}
+
+.repayment_podtitle {
+    height: 123px;
+}
+
+.privileged_term_podtitle {
+    height: 101px;
+}
+
+.other_payments_podtitle, .car_salons_podtitle {
+    height: 138px;
+}
+
+.more_information_podtitle {
+    height: 162px;
+}
+
+.servis_name_other_payments, .servis_name_car_salons {
+    height: 138px;
+    overflow: auto;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.servis_name_more_information {
+    height: 162px;
+    overflow: auto;
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.other_payments_info_sexion, .car_salons_info_sexion, .more_information_info_sexion {
+    height: 100%;
+}
+
+.servis_name_scroll {
+    overflow: auto;
+    display: inline-block;
+    width: 100%;
+}
+
+/* compare-inner-page */
+
+/*product page*/
+.repayment-info-text {
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.chenge-wrap > .chenge_req {
+    color: #616161;
+    padding: 0px;
+    text-transform: initial;
+    font-family: "FedraSansArm-Medium";
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.chenge-wrap > .chenge_req.active {
+    color: #dc2341;
+    background-color: #fce9ec;
+    border-radius: 50px;
+    padding: 13px 20px;
+}
+
+/*product page*/
+
+.belonging_icon {
+    width: 80px;
+}
+
+.company_icon {
+    max-width: 160px;
+    max-height: 96px;
+}
+
+.pagination_sexion ul {
+    width: max-content;
+    margin: 0 auto;
+}
+
+i.icon {
+    width: auto;
+    height: auto;
+    font-family: inherit;
+}
+
+.icon-add {
+    margin: 0 10px 0 0;
+}
+
+.icon-add-mini {
+    margin: 0 !important;
+}
+
+#exportBranchesAtmsList {
     cursor: pointer;
 }
-.branch_bankomat_show_address{
-	cursor: pointer;
+
+.branch_bankomat_show_address {
+    cursor: pointer;
 }
-.not-allowed{
-	cursor: not-allowed;
+
+.not-allowed {
+    cursor: not-allowed;
 }
-.err-field{
-	color: red;
+
+.err-field {
+    color: red;
 }
-.about_content{
-	min-height: 296px;
+
+.about_content {
+    min-height: 296px;
 }
-.gold_pledge_type_selectbox{
-	/*min-width: 257px;*/
-	line-height: 50px !important;
-	height: 50px;
-	margin: 0 !important;
+
+.gold_pledge_type_selectbox {
+    /*min-width: 257px;*/
+    line-height: 50px !important;
+    height: 50px;
+    margin: 0 !important;
 }
-.btn_compare{
+
+th .btn_compare, .left .btn_compare {
     margin: 18px;
 }
 
-.btn_compare:hover{
-    background-color: #dc2341;
-    color:white;
+.btn_compare {
+    padding: 14px 20px;
+    text-transform: uppercase;
+    font-family: "FedraSansArm-Bold";
+    font-size: 14px;
+    /*letter-spacing: 1.5px;*/
 }
-.compare_act_button_checked{
+
+.listing-title .btn_compare {
+    letter-spacing: 1.5px;
+}
+
+.btn_compare:hover {
+    background-color: #dc2341;
+    color: white;
+}
+
+.compare_act_button_checked {
     background-color: #dc2341;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.24);
 }
 
-.compare_act_button_checked{
-    color:white;
+.compare_act_button_checked {
+    color: white;
+}
+
+.come-back:hover {
+    color: white;
+}
+
+html {
+    font-size: 15.5px;
+}
+
+.dropDownSemantic {
+    font-size: 14px;
+}
+
+main {
+    min-height: 76%;
+}
+
+.single_filter_count {
+    float: right;
+    font-weight: bold;
+}
+
+.deposit_type_selectbox, .currency_type_selectbox {
+    line-height: 50px !important;
+    height: 50px;
+    margin: 0;
+}
+
+.prodCompanyImg img {
+    max-width: 120px;
+    max-height: 120px;
+}
+
+.transfer_type_custom_select .select-selected {
+    padding-right: 0;
+}
+
+.transfer-type-check-drop-down {
+    padding: 10px 16px;
+}
+
+.fill-available-width {
+    width: -webkit-fill-available;
 }
 
 /*semantic*/
-.ui.search.dropdown>input.search{
-	font-family: inherit;
-	font-size: 14px;
+.ui.search.dropdown > input.search {
+    font-family: inherit;
+    font-size: 14px;
 }
-.ui.selection.active.dropdown .menu{
-	max-width: 100% !important;
-	box-shadow: 0 2px 2px 0 rgba(34,36,38,.15);  !important;
+
+.ui.selection.active.dropdown .menu {
+    max-width: 100% !important;
+    box-shadow: 0 2px 2px 0 rgba(34, 36, 38, .15);
+!important;
 }
-.ui.dropdown .menu>.item{
-	font-size: 14px;
+
+.ui.dropdown .menu > .item {
+    font-size: 14px;
 }
+
 /*semantic*/
 
-.come-back:hover{
-	color:white;
+.ui.dropdown .menu::-webkit-scrollbar-track-piece {
+    background-color: transparent !important;
 }
-html{
-	font-size: 15.5px;
+
+.ui.dropdown .menu::-webkit-scrollbar-button {
+    background-color: transparent !important;
 }
-.dropDownSemantic{
-	font-size: 14px;
+
+.ui.dropdown .menu::-webkit-scrollbar-thumb {
+    height: auto !important;
 }
-main{
-	min-height: 76%;
-}
-.single_filter_count{
-	float: right;
-	font-weight: bold;
-}
-.deposit_type_selectbox,.currency_type_selectbox{
-	line-height: 50px !important;
-	height: 50px;
-	margin: 0;
-}
-.prodCompanyImg{
-	max-width: 100px;
-	max-height: 100px;
+
+.ui.dropdown .menu::-webkit-scrollbar {
+    /*width:	0 !important;*/
 }

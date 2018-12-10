@@ -463,14 +463,14 @@ a{
     line-height: 80px;
 }
 
-.filter-home>.one>.custom-select>.select-items{
+.filter-home>.one>.custom-select-second>.select-items{
     column-count: 3;
     padding: 15px;
     align-items: center;
     overflow: inherit;
 }
 
-.filter-home > .one > .custom-select > .select-items > div {
+.filter-home > .one > .custom-select-second > .select-items > div {
     margin: 0;
     width: max-content;
     padding: 6px 20px 6px 6px;
@@ -600,11 +600,11 @@ input:active, :hover, :focus {
 }
 
 /*the container must be positioned relative:*/
-.custom-select {
+.custom-select-second {
     position: relative;
     display: inline-flex;
   }
-  .custom-select select {
+  .custom-select-second select {
     display: none; /*hide original SELECT element:*/
   }
   /*style the arrow inside the select element:*/
@@ -624,14 +624,14 @@ input:active, :hover, :focus {
     @extend %trans;
 
   }
-  .filter-home-atr>.custom-select>.select-selected:after {
+  .filter-home-atr>.custom-select-second>.select-selected:after {
 
     font-size: 11px;
 
     @extend %trans;
 
   }
-  .custom-select.wrapper{
+  .custom-select-second.wrapper{
     position: relative;
     display: inline-flex;
     width: 100%;

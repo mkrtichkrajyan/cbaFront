@@ -42,7 +42,8 @@ $(document).ready(function () {
 
     $(".btn-pink").click(function () {
         $(this).children("i").toggleClass("active");
-        $(this).parent().parent().nextAll(".hide-show").slideToggle(300);return false;
+        $(this).parent().parent().nextAll(".hide-show").slideToggle(300);
+        return false;
     });
     // $(".btn-pink").click(function () {
     //     console
@@ -94,8 +95,8 @@ $(document).ready(function () {
     });
 
     var x, i, j, selElmnt, a, b, c;
-    /*look for any elements with the class "custom-select":*/
-    x = document.getElementsByClassName("custom-select");
+    /*look for any elements with the class "custom-select-second":*/
+    x = document.getElementsByClassName("custom-select-second");
     for (i = 0; i < x.length; i++) {
         selElmnt = x[i].getElementsByTagName("select")[0];
         /*for each element, create a new DIV that will act as the selected item:*/
@@ -167,36 +168,74 @@ $(document).ready(function () {
         $(this).parent().children(".check-drop-down").slideToggle(200);
     });
 
-    $( function() {
+    $(function () {
 
-        deposit_money_min    =   parseInt( $('#deposit_money_min').val());
+        min_age = parseInt($('#min_age').val());
 
-        deposit_money_max    =   parseInt($('#deposit_money_max').val());
+        max_age = parseInt($('#max_age').val());
 
-      $( "#slider-range-deposit" ).slider({
-        range: "min",
-       // value: 37,
-        min: deposit_money_min,
-        max: deposit_money_max,
-        slide: function( event, ui ) {
-          $( "#loan_amount" ).val( ui.value );
+        if (isNaN(min_age)) {
+            min_age = 0;
         }
-      });
 
-      // $( "#slider-range-max" ).slider({
-      //     //$( "#slider-range-cost" ).slider({
-      //   range: "min",
-      //   //value: 37,
-      //   min: car_cost_min,
-      //   max: car_cost_max,
-      //   slide: function( event, ui ) {
-      //     $( "#car_cost" ).val(  ui.value );
-      //   }
-      // });
-      // $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
-      //
-      // $( "#amount" ).val($( "#slider-range-max" ).slider( "value" ) );
-    } );
+        if (isNaN(max_age)) {
+            max_age = 100;
+        }
+
+        if (parseInt($('#age').val()) == 0 || isNaN(parseInt($('#age').val()))) {
+            age_val = min_age;
+        }
+        else {
+            age_val = parseInt($('#age').val());
+        }
+
+        console.log("min_age == " + min_age + " max_age== " + max_age + " age_val== " + age_val);
+
+        $("#slider-range-insurance-ages").slider({
+            range: "min",
+            value: age_val,
+            min: min_age,
+            max: max_age,
+            slide: function (event, ui) {
+                $("#age").val(ui.value);
+            }
+        });
+
+        $("#age").keyup(function (e) {
+            //console.log(1)
+        });
+    });
+
+    $(function () {
+
+        deposit_money_min = parseInt($('#deposit_money_min').val());
+
+        deposit_money_max = parseInt($('#deposit_money_max').val());
+
+        $("#slider-range-deposit").slider({
+            range: "min",
+            // value: 37,
+            min: deposit_money_min,
+            max: deposit_money_max,
+            slide: function (event, ui) {
+                $("#loan_amount").val(ui.value);
+            }
+        });
+
+        // $( "#slider-range-max" ).slider({
+        //     //$( "#slider-range-cost" ).slider({
+        //   range: "min",
+        //   //value: 37,
+        //   min: car_cost_min,
+        //   max: car_cost_max,
+        //   slide: function( event, ui ) {
+        //     $( "#car_cost" ).val(  ui.value );
+        //   }
+        // });
+        // $( "#amount" ).val($( "#slider-range-min" ).slider( "value" ) );
+        //
+        // $( "#amount" ).val($( "#slider-range-max" ).slider( "value" ) );
+    });
 
 
     $(function () {
@@ -218,18 +257,18 @@ $(document).ready(function () {
         //     }
         // });
 
-       //  $("#slider-range-max").slider({
-       //      range: "min",
-       //     // value: 37,
-       //      min: prepayment_from_min,
-       //      max: prepayment_to_max,
-       //      slide: function (event, ui) {
-       //         // console.log(ui.value);
-       //          $("#maximum").val(ui.value);
-       //      }
-       //  });
-       // /*$("#amount").val($("#slider-range-min").slider("value"));*/
-       //  $("#amount").val($("#slider-range-max").slider("value"));
+        //  $("#slider-range-max").slider({
+        //      range: "min",
+        //     // value: 37,
+        //      min: prepayment_from_min,
+        //      max: prepayment_to_max,
+        //      slide: function (event, ui) {
+        //         // console.log(ui.value);
+        //          $("#maximum").val(ui.value);
+        //      }
+        //  });
+        // /*$("#amount").val($("#slider-range-min").slider("value"));*/
+        //  $("#amount").val($("#slider-range-max").slider("value"));
     });
 
     $(".chenge-time-active").click(function () {
@@ -243,7 +282,7 @@ $(document).ready(function () {
 
     $(".chenge").click(function () {
         //alert($(this).index());
-       // console.log($(".chenge").eq($(this).index())[0]);
+        // console.log($(".chenge").eq($(this).index())[0]);
         $(".chenge").removeClass("active").eq($(this).index()).addClass("active");
         $(".change_item").hide().eq($(this).index()).show()
     }).eq(0).addClass("active");
@@ -253,7 +292,6 @@ $(document).ready(function () {
 
         $(this).parent().find(".change_item").hide().eq($(this).index()).show()
     }).eq(0).addClass("active");
-
 
     $('.owl-carousel').owlCarousel({
         loop: false,

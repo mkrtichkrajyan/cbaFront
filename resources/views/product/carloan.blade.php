@@ -1,10 +1,25 @@
 @extends('layouts.default')
 
-@include('layouts.headProduct')
+{{--@include('layouts.headProduct')--}}
 
-@include('layouts.header')
+@include('layouts.head')
+
+@include('layouts.headerCompare')
 
 <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path">
+
+@php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
+
+@if($product_variation->percentage_type == 2)
+    @php($percentage    =   $product_variation->percentage)
+@else
+    @php($percentage    =   $product->percentage_changing_from.@$productPercentageTypesArr[$product->percentage_changing_in].$product->percentage_changing_to)
+
+    @if($product->percentage_changing_2 == 1 )
+        @php($percentage.= ",".$product->percentage_changing_from_2.$productPercentageTypesArr[$product->percentage_changing_in_2].$product->percentage_changing_to_2)
+    @endif
+@endif
+
 
 <main>
     <div class="row" style="position: relative;">
@@ -28,6 +43,7 @@
                 </div>
             </div>
         </div>
+
         <div class="columns large-12 medium-12 small-12">
             <div class="listing-title product-wrapper">
                 <div class="left">
@@ -41,9 +57,7 @@
                         </div>
                         <div class="more-info">
                             <button class="btn-text-blue">
-                            <span>
-                                    ավելին
-                            </span>
+                                <span>ավելին</span>
                                 <i class="icon icon-arrow-down"></i>
                             </button>
                         </div>
@@ -51,20 +65,34 @@
                 </div>
                 <div class="right">
                     <div class="add-functions">
-                        <button class="btn btn-red">
+                        @php($unique_options    =   "bel_".$belonging_id."_prod_".$product->id."_prov_" .$product_variation->providing_type."_perc_".
+                         $product_variation->percentage_type."_rep_" . $product_variation->repayment_type."_rep_loan_" .
+                         intval($product_variation->repayment_loan_interval_type_id) . "_rep_perc_" .intval($product_variation->repayment_percent_interval_type_id))
+
+                        @php($unique_options_and_search_params  =   $unique_options."*"."_cost_".$car_cost."_prepayment_".$prepayment."_term_".$loan_term_search_in_days)
+
+                        @php($unique_options_and_search_params    =   str_rot13($unique_options_and_search_params))
+
+                        @php($unique_options    =   md5($unique_options))
+
+                        <button type="button" data-options="{{$unique_options}}"
+                                data-options_and_search_params="{{$unique_options_and_search_params}}"
+                                data-belongingId="{{$belonging_id}}"
+                                data-product-id="{{$product->id}}"
+                                data-cost="{{$car_cost}}"
+                                data-prepayment="{{$prepayment}}"
+                                data-term="{{$loan_term_search_in_days}}"
+                                class="btn btn_compare btn-white  @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
                             <i class="icon icon-left  icon-add"></i>
-                            <span>
-                                համեմատել
-                        </span>
+                            <span>համեմատել</span>
                         </button>
                         <a href="?p=bank_list" class="btn btn-more">
                             <section class="right-border">
                                 <i class="icon icon-location">
-
-                                </i></section>
-                            <span>
-                            Մասնաճյուղեր և Բանկոմատներ
-                        </span>
+                                </i>
+                            </section>
+                            <span>Մասնաճյուղեր և Բանկոմատներ</span>
                         </a>
                     </div>
                 </div>
@@ -106,37 +134,25 @@
                 </div>
                 <div class="price-wrap">
                     <div class="all-price">
-                        <div class="all-price-title">
-                            Վարկի գումար
-                        </div>
+                        <div class="all-price-title">Վարկի գումար</div>
                         <div class="all-total-price">
-                        <span>
-                        20 000 000
-                        </span>
+                            <span>{{$loan_amount}}</span>
                             <i class=" icon icon-dram"></i>
                         </div>
                     </div>
                     <div class="pircent-price">
-                        <div class="all-price-title">
-                            Ավել վճարվուղ գումար
-                        </div>
+                        <div class="all-price-title">Ավել վճարվուղ գումար</div>
                         <div class="all-total-price">
-                        <span>
-                        5 000 000
-                        </span>
+                            <span>{{$more_payment_amount}}</span>
                             <i class=" icon icon-dram"></i>
                         </div>
                     </div>
                 </div>
                 <div class="end-price">
                     <div>
-                        <div class="all-price-title">
-                            Ընդամենը հետ վճարվող գումար
-                        </div>
+                        <div class="all-price-title">Ընդամենը հետ վճարվող գումար</div>
                         <div class="all-total-price">
-                        <span>
-                        25 000 000
-                        </span>
+                            <span>{{$sum_payments}}</span>
                             <i class=" icon icon-dram"></i>
                         </div>
                     </div>
@@ -144,23 +160,15 @@
             </div>
             <div class="final-settlement">
                 <div class="actual-percent">
-                    <div class="all-price-title">
-                        Փաստացի տոկոսադրույք
-                    </div>
+                    <div class="all-price-title">Փաստացի տոկոսադրույք</div>
                     <div class="all-total-price">
-                    <span class="chart-count-1">
-                    25%
-                    </span>
+                        <span class="chart-count-1">{{$factual_percentage}}</span>
                     </div>
                 </div>
                 <div class="nominal-percent">
-                    <div class="all-price-title">
-                        Անվանական տոկոսադրույք
-                    </div>
+                    <div class="all-price-title">Անվանական տոկոսադրույք</div>
                     <div class="all-total-price">
-                    <span class="chart-count-2">
-                        0.5%
-                    </span>
+                        <span class="chart-count-2">{{$percentage}}%</span>
                     </div>
                 </div>
             </div>
@@ -171,131 +179,189 @@
                 <div class="listing-title">
                     <div class="left">
                         <div class="document-title">
-                        <span>
-                            Պարտադիր վճարներ
-                        </span>
+                            <span>Պարտադիր վճարներ</span>
                         </div>
                     </div>
+
                     <div class="right">
                         <div class="chenge-wrap">
-                            <button class="chenge">
-                            <span>
-                                    Տարեկան
-                            </span>
+                            <button class="chenge_req">
+                                <span>Տարեկան</span>
                             </button>
-                            <button class="chenge">
-                            <span>
-                                    Ընդհանուր
-                            </span>
+                            <button class="chenge_req">
+                                <span>Ընդհանուր</span>
                             </button>
                         </div>
                     </div>
                 </div>
-                <div class="prise-cont ">
-                    <div class="product-prise-wrapper">
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Վարկային հայտի ուսումնասիրության վճար (միանվագ)
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
+
+
+                <div class="change_item_req">
+                    <div class="prise-cont ">
+                        <div class="product-prise-wrapper">
+
+                            @foreach($require_payments_schedule_annually_and_summary as $curr_require_payments_schedule_annually_and_summary)
+
+                                <div class="prise-title">
+                                    <div class="left product-prise">
+                                        <span>{{$curr_require_payments_schedule_annually_and_summary["name"]}}</span>
+                                    </div>
+                                    <div class="right product-prise">
+                                        <span>{{$curr_require_payments_schedule_annually_and_summary["anually"]}}</span>
+                                        <i class="icon  icon-dram"></i>
+                                    </div>
+                                </div>
+
+                            @endforeach
+
                         </div>
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Վարկի սպասարկման վճար (տարեկան)
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
+                    </div>
+                    <div class="total-prise-title">
+                        <div class="left total-prise">
+                            <span>Ընդհանուր գումար</span>
                         </div>
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Գրավի գնահատման վճար (միանվագ)
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Կանխիկացման վճար
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Գրավի ապահովագրության վճար (տարեկան)
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left product-prise">
-                            <span>
-                                Նոտարական վավերացման վճար (միանվագ)
-                            </span>
-                            </div>
-                            <div class="right product-prise">
-                            <span>
-                                1200
-                            </span>
-                                <i class="icon  icon-dram"></i>
-                            </div>
+                        <div class="right total-prise">
+                            <span>1200</span>
+                            <i class="icon  icon-dram"></i>
                         </div>
                     </div>
                 </div>
-                <div class="total-prise-title">
-                    <div class="left total-prise">
-                    <span>
-                            Ընդհանուր գումար
-                    </span>
+
+                <div class="change_item_req">
+                    <div class="prise-cont ">
+                        <div class="product-prise-wrapper">
+
+                            @foreach($require_payments_schedule_annually_and_summary as $curr_require_payments_schedule_annually_and_summary)
+
+                                <div class="prise-title">
+                                    <div class="left product-prise">
+                                        <span>{{$curr_require_payments_schedule_annually_and_summary["name"]}}</span>
+                                    </div>
+                                    <div class="right product-prise">
+                                        <span>{{$curr_require_payments_schedule_annually_and_summary["summary"]}}</span>
+                                        <i class="icon  icon-dram"></i>
+                                    </div>
+                                </div>
+
+                            @endforeach
+
+                        </div>
                     </div>
-                    <div class="right total-prise">
-                    <span>
-                        1200
-                    </span>
-                        <i class="icon  icon-dram"></i>
+                    <div class="total-prise-title">
+                        <div class="left total-prise">
+                            <span>Ընդհանուր գումար</span>
+                        </div>
+                        <div class="right total-prise">
+                            <span>1200</span>
+                            <i class="icon  icon-dram"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="more-info">
-                    <button class="btn-text-blue">
-                    <span>
-                            ավելին
-                    </span>
-                        <i class="icon icon-arrow-down"></i>
-                    </button>
-                </div>
+
+                {{--<div class="change_item_req">--}}
+                {{--<div class="prise-cont ">--}}
+                {{--<div class="product-prise-wrapper">--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Վարկային հայտի ուսումնասիրության վճար (միանվագ)--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Վարկի սպասարկման վճար (տարեկան)--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Գրավի գնահատման վճար (միանվագ)--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Կանխիկացման վճար--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Գրավի ապահովագրության վճար (տարեկան)--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="prise-title">--}}
+                {{--<div class="left product-prise">--}}
+                {{--<span>--}}
+                {{--Նոտարական վավերացման վճար (միանվագ)--}}
+                {{--</span>--}}
+                {{--</div>--}}
+                {{--<div class="right product-prise">--}}
+                {{--<span>--}}
+                {{--1200--}}
+                {{--</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="total-prise-title">--}}
+                {{--<div class="left total-prise">--}}
+                {{--<span>Ընդհանուր գումար</span>--}}
+                {{--</div>--}}
+                {{--<div class="right total-prise">--}}
+                {{--<span>1200</span>--}}
+                {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="more-info">--}}
+                {{--<button class="btn-text-blue">--}}
+                {{--<span>ավելին</span>--}}
+                {{--<i class="icon icon-arrow-down"></i>--}}
+                {{--</button>--}}
+                {{--</div>--}}
+                {{--</div>--}}
+
+
             </div>
         </div>
+
 
         <div class="columns large-12 medium-12 small-12">
             <div class="wrapper margins">
@@ -329,8 +395,16 @@
                                 <div class="left  other-info-title">
                                     <span>Մարման եղանակ</span>
                                 </div>
-                                <div class="right other-info-text">
-                                    <span>հավասարաչափ, ոչ հավասարաչափ՝ իր բոլոր ենթատարբերակներով</span>
+                                <div class="right other-info-text repayment-info-text">
+                                    <span>{{@$product_variation->repaymentTypeInfo->name}}</span></br>
+
+                                    @if($product_variation->repayment_type == 3)
+                                        <span class="standart_p">
+                                            Վարկ: {{$repayment_loan_interval_types->find($product_variation->repayment_loan_interval_type_id)->name}}</span>
+
+                                        <span class="standart_p">
+                                            Տոկոս: {{$repayment_percent_interval_types->find($product_variation->repayment_percent_interval_type_id)->name}}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="prise-title">
@@ -338,7 +412,7 @@
                                     <span>Տրամադրման եղանակ</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>{{@$product->providingTypeInfo->name}}</span>
+                                    <span>{{@$product_variation->providingTypeInfo->name}}</span>
                                 </div>
                             </div>
                         </div>
@@ -348,11 +422,13 @@
                                     <span>Ապահովվածություն</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>
-                                          @foreach($product->securityTypes as $key=>$productSecurityType)
-                                            {{ $productSecurityType->securityTypeInfo->name}} @if($product->securityTypes->count()>1 && $productSecurityType->keys()->first()), @endif
-                                        @endforeach
-                                    </span>
+
+                                    @php($securityTypesArr  =   [])
+
+                                    @foreach($product->securityTypes as $key=>$productSecurityType)
+                                        @php($securityTypesArr[]  =  $productSecurityType->securityTypeInfo->name )
+                                    @endforeach
+                                    <span>{{implode(',',$securityTypesArr)}}</span>
                                 </div>
                             </div>
                             <div class="prise-title">
@@ -360,7 +436,12 @@
                                     <span>Ծառայությունը ընկերության կայքէջում</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>{{$product->loan_pledge_ratio}}</span>
+                                    @if(strlen($product->service_on_company_website) > 0)
+                                        <a target="_blank"
+                                           href="{{$product->service_on_company_website}}">{{$product->service_on_company_website}}</a>
+                                    @else
+                                        -
+                                    @endif
                                 </div>
                             </div>
 
@@ -369,7 +450,7 @@
                                     <span>Տոկոսադրույք</span>
                                 </div>
                                 <div class="right other-info-text">
-                                    <span>հաստատուն՝ 6</span>
+                                    <span>{{@$product_variation->percentageTypeInfo->name}}՝ {{$percentage}}</span>
                                 </div>
                             </div>
                         </div>
@@ -418,146 +499,48 @@
 
                             </th>
                         </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
+
+                        @foreach($getCalculation["schedule"] as $key => $currSchedule)
+
+                            @php($currScheduleOtherPaymentsFilterNoKeys = ["principal_balance","monthly_interest","monthly_principal_amount","loan_pay_day"])
+
+                            @php($currScheduleSumPaymentsFilterNoKeys = ["principal_balance","loan_pay_day"])
+
+                            @php($currScheduleCollect = collect($currSchedule))
+
+                            @php($currScheduleOtherPayments = $currScheduleCollect->filter(function ($value, $key) use ($currScheduleOtherPaymentsFilterNoKeys){
+                                    return !in_array($key,$currScheduleOtherPaymentsFilterNoKeys);
+                                })
+                            )
+
+                            @php($currScheduleCopy = $currScheduleCollect->filter(function ($value, $key) use ($currScheduleSumPaymentsFilterNoKeys){
+                                    return !in_array($key,$currScheduleSumPaymentsFilterNoKeys);
+                                })
+                            )
+
+                            <tr>
+                                <th>
+                                    {{$key + 1}}
+                                </th>
+                                <th>
+                                    {{$currSchedule["principal_balance"]}}
+                                </th>
+                                <th>
+                                    {{$currSchedule["monthly_interest"]}}
+                                </th>
+                                <td>
+                                    {{$currSchedule["monthly_principal_amount"]}}
+                                </td>
+                                <td>
+                                    {{$currScheduleOtherPayments->sum()}}
+                                </td>
+                                <td>
+                                    {{$currScheduleCopy->sum()}}
+                                </td>
+                            </tr>
+                        @endforeach
+
+
                     </table>
                 </div>
 
@@ -565,22 +548,13 @@
                     <table class="prise-table">
                         <tr>
                             <th>
-                                Ամիս
+                                Սրահի անվանում
                             </th>
                             <th>
-                                Վարկի Մնացորդ
+                                Հասցե
                             </th>
                             <th>
-                                Վճարվող Տոկոսագումար
-                            </th>
-                            <th>
-                                Մարում Վարկից
-                            </th>
-                            <th>
-                                Այլ վճարներ
-                            </th>
-                            <th>
-                                Ընդամենը Վճարում
+                                Հեռ. համար
                             </th>
                         </tr>
                         <tr class="highlight">
@@ -603,154 +577,28 @@
 
                             </th>
                         </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                12
-                            </td>
-                            <td>
-                                456
-                            </td>
-                            <td>
-                                4567890
-                            </td>
-                            <td>
-                                123456789
-                            </td>
-                            <td>
-                                098765
-                            </td>
-                            <td>
-                                8754365434
-                            </td>
-                        </tr>
+
+                        @foreach($product->carSalons as $carSalon)
+                            <tr>
+                                <th>
+                                    {{$carSalon->name}}
+                                </th>
+                                <th>
+                                    {{$carSalon->address}}
+                                </th>
+                                <th>
+                                    {{$carSalon->phone}}
+                                </th>
+                            </tr>
+                        @endforeach
                     </table>
                 </div>
 
                 <div class="more-info">
                     <button class="btn-text-blue">
-                    <span>
-                            ավելին
-                    </span>
+                   <span>
+                           ավելին
+                   </span>
                         <i class="icon icon-arrow-down"></i>
                     </button>
                 </div>
@@ -765,234 +613,183 @@
                 <div class="listing-title">
                     <div class="left">
                         <div class="document-title">
-                        <span>
-                            Տույժ/տուգանք
-                        </span>
+                            <span>Տույժ/տուգանք</span>
                         </div>
                     </div>
-                    {{--<div class="right">--}}
-                        {{--<div class="chenge-wrap">--}}
-                            {{--<button class="chenge">--}}
-                            {{--<span>--}}
-                                    {{--Տարեկան--}}
-                            {{--</span>--}}
-                            {{--</button>--}}
-                            {{--<button class="chenge">--}}
-                            {{--<span>--}}
-                                    {{--Ընդհանուր--}}
-                            {{--</span>--}}
-                            {{--</button>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
                 </div>
                 <div class="prise-cont ">
                     <div class="product-prise-wrapper">
                         <div class="prise-title">
                             <div class="left product-prise">
-                            <span>
-                               Վարկի մայր գումարը չվճարելու դեպքում
-                            </span>
+                                <span>Վարկի մայր գումարը չվճարելու դեպքում</span>
                             </div>
                             <div class="right product-prise">
-                                <span>ֆգդֆգդֆգդֆ գֆգդֆգ դֆգֆգ</span>
-                                {{--<i class="icon  icon-dram"></i>--}}
+                                <span>{{$product->loan_main_amount_non_payment_case}}</span>
                             </div>
                         </div>
                         <div class="prise-title">
                             <div class="left product-prise">
-                            <span>
-                                Տոկոսագումարները չվճարելու դեպքում
-                            </span>
+                                <span>Տոկոսագումարները չվճարելու դեպքում</span>
                             </div>
                             <div class="right product-prise">
-                            <span>
-                                ֆդգդֆգդֆգդֆգդֆգ ֆդգդֆգդֆգ
-                            </span>
-                                {{--<i class="icon  icon-dram"></i>--}}
+                                <span>{{$product->percentage_sum_non_payment_case}}</span>
                             </div>
                         </div>
                         <div class="prise-title">
                             <div class="left product-prise">
-                            <span>
-                                Այլ վճարները չկատարելու դեպքում
-                            </span>
+                                <span>Այլ վճարները չկատարելու դեպքում</span>
                             </div>
                             <div class="right product-prise">
-                            <span>
-                                սյդյասլկյդայսդ ւհիըւի
-                            </span>
-                                {{--<i class="icon  icon-dram"></i>--}}
+                           <span>
+                               {{$product->another_non_payments_case}}
+                           </span>
                             </div>
                         </div>
 
                         <div class="prise-title">
                             <div class="left product-prise">
-                            <span>
-                                Այլ
-                            </span>
+                                <span>Այլ</span>
                             </div>
                             <div class="right product-prise">
-                            <span>
-                                սյդյասլկյդայսդ դֆգֆգֆգ
-                            </span>
-                                {{--<i class="icon  icon-dram"></i>--}}
+                           <span>
+                              {{$product->other_non_payment}}
+                           </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{--<div class="total-prise-title">--}}
-                    {{--<div class="left total-prise">--}}
-                    {{--<span>--}}
-                            {{--Ընդհանուր գումար--}}
-                    {{--</span>--}}
+            </div>
+        </div>
+
+        {{--<div class="columns large-12 medium-12 small-12 other_information">--}}
+            {{--<div class="wrapper margins show-wrap">--}}
+                {{--<div class="listing-title">--}}
+                    {{--<div class="left">--}}
+                        {{--<div class="document-title">--}}
+                       {{--<span>--}}
+                           {{--Այլ տվյալներ--}}
+                       {{--</span>--}}
+                        {{--</div>--}}
                     {{--</div>--}}
-                    {{--<div class="right total-prise">--}}
-                    {{--<span>--}}
-                        {{--1200--}}
-                    {{--</span>--}}
-                        {{--<i class="icon  icon-dram"></i>--}}
+                {{--</div>--}}
+                {{--<div class="prise-cont other-info-wrapper">--}}
+                    {{--<div class="product-prise-wrapper other-info">--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--հավասարաչափ, ոչ հավասարաչափ՝ իր բոլոր ենթատարբերակներով--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Տրամադրման--}}
+                                   {{--եղանակ--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
                     {{--</div>--}}
+                    {{--<div class="product-prise-wrapper other-info">--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--հավասարաչափ, ոչ հավասարաչափ՝ իր բոլոր ենթատարբերակներով--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Ավտոմեքենա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                        {{--<div class="prise-title">--}}
+                            {{--<div class="left  other-info-title">--}}
+                           {{--<span>--}}
+                                   {{--Տրամադրման--}}
+                                   {{--եղանակ--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                            {{--<div class="right other-info-text">--}}
+                           {{--<span>--}}
+                                   {{--առաջնային շուկա, երկրորդային շուկա--}}
+                           {{--</span>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+
+                {{--<div class="blurring">--}}
                 {{--</div>--}}
                 {{--<div class="more-info">--}}
                     {{--<button class="btn-text-blue">--}}
-                    {{--<span>--}}
-                            {{--ավելին--}}
-                    {{--</span>--}}
+                   {{--<span>--}}
+                           {{--ավելին--}}
+                   {{--</span>--}}
                         {{--<i class="icon icon-arrow-down"></i>--}}
                     {{--</button>--}}
                 {{--</div>--}}
-            </div>
-        </div>
-
-        <div class="columns large-12 medium-12 small-12">
-            <div class="wrapper margins show-wrap">
-                <div class="listing-title">
-                    <div class="left">
-                        <div class="document-title">
-                        <span>
-                            Այլ տվյալներ
-                        </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="prise-cont other-info-wrapper">
-                    <div class="product-prise-wrapper other-info">
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    հավասարաչափ, ոչ հավասարաչափ՝ իր բոլոր ենթատարբերակներով
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Տրամադրման
-                                    եղանակ
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-prise-wrapper other-info">
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    հավասարաչափ, ոչ հավասարաչափ՝ իր բոլոր ենթատարբերակներով
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Ավտոմեքենա
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                        <div class="prise-title">
-                            <div class="left  other-info-title">
-                            <span>
-                                    Տրամադրման
-                                    եղանակ
-                            </span>
-                            </div>
-                            <div class="right other-info-text">
-                            <span>
-                                    առաջնային շուկա, երկրորդային շուկա
-                            </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="blurring">
-                </div>
-                <div class="more-info">
-                    <button class="btn-text-blue">
-                    <span>
-                            ավելին
-                    </span>
-                        <i class="icon icon-arrow-down"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+            {{--</div>--}}
+        {{--</div>--}}
 
 
         <div class="columns large-12 medium-12 small-12">
@@ -1005,85 +802,85 @@
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
-                    </div>
-
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                            Դիմումի ձեւ
-                        </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                            Դիմումի ձեւ
-                        </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                            Դիմումի ձեւ
-                        </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
 
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
                     <div class="document">
                         <i class="icon  icon-doc"></i>
                         <span>
-                            Դիմումի ձեւ
-                        </span>
+                           Դիմումի ձեւ
+                       </span>
+                    </div>
+
+                    <div class="document">
+                        <i class="icon  icon-doc"></i>
+                        <span>
+                           Դիմումի ձեւ
+                       </span>
+                    </div>
+                    <div class="document">
+                        <i class="icon  icon-doc"></i>
+                        <span>
+                           Դիմումի ձեւ
+                       </span>
+                    </div>
+                    <div class="document">
+                        <i class="icon  icon-doc"></i>
+                        <span>
+                           Դիմումի ձեւ
+                       </span>
+                    </div>
+                    <div class="document">
+                        <i class="icon  icon-doc"></i>
+                        <span>
+                           Դիմումի ձեւ
+                       </span>
                     </div>
 
                     <div class="blurring"></div>
                 </div>
                 <div class="more-info">
                     <button class="btn-text-blue">
-                    <span>
-                            ավելին
-                    </span>
+                   <span>
+                           ավելին
+                   </span>
                         <i class="icon icon-arrow-down"></i>
                     </button>
                 </div>

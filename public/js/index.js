@@ -7,7 +7,8 @@ Object.size = function (obj) {
 };
 
 
-function filter_products(backend_url) {
+function filter_products(backend_url, page = 1, page_by_company = 1) {
+
     request_results_count = $("#request_results_count").val();
 
     filter_car_types = [];
@@ -81,15 +82,13 @@ function filter_products(backend_url) {
 
     loan_term_search = $("#loan_term_search").val();
 
-    car_cost = $("#car_cost").val();
+    car_cost_search = $("#car_cost_search").val();
 
-    prepayment = $("#prepayment").val();
+    prepayment_search = $("#prepayment_search").val();
 
-    //console.log(backend_url);
     if (request_results_count > 0) {
-        //alert(1);
-        $.ajax({
 
+        $.ajax({
             type: 'get',
 
             url: backend_url,
@@ -99,9 +98,9 @@ function filter_products(backend_url) {
 
                 'loan_term_search': loan_term_search,
 
-                'car_cost': car_cost,
+                'car_cost': car_cost_search,
 
-                'prepayment': prepayment,
+                'prepayment': prepayment_search,
 
                 'car_types': filter_car_types,
 
@@ -120,116 +119,476 @@ function filter_products(backend_url) {
                 'repayment_loan_interval_type': repayment_loan_interval_type,
 
                 'repayment_percent_interval_type': repayment_percent_interval_type,
+
+                'page': page,
+
+                'page_by_company': page_by_company,
             },
 
             success: function (data) {
-                data = JSON.parse(data);
 
-                backend_asset_path = $("#backend_asset_path").val();
+                belonging_id = data.belonging_id;
 
-                $(".product_results").empty();
+                productsWithVariations = data.productsWithVariations;
 
-                result_listing_title = '<div class="listing-title">' +
-                    '<div class="left"> Գտնվել է <span id="count_searched_products"></span> առաջարկ</div>' +
-                    '<div class="right"><div class="listing-icon"><div class="add-function">' +
-                    '<a href="" download=""> <i class="icon icon-right  icon-download"></i></a> <a href=""> <i class="icon icon-right  icon-more"></i></a>' +
-                    '<a href=""> <i class="icon icon-right icon-print"></i></a></div>' +
-                    '<div class="btn-icon-blue"><i class="chenge icon icon-right icon-list"></i><i class="chenge icon icon-right icon-list-tow active"></i>' +
-                    '</div></div></div></div>';
+                links = data.links;
 
-                $(".product_results").append(result_listing_title);
+                productsWithVariationsGroupByCompany = data.productsWithVariationsGroupByCompany;
 
-                count_searched_products = 0;
+                links_grouped_by_company = data.links_grouped_by_company;
 
-                product_results = '<div class="change_item">';
+                request_results_count = data.request_results_count;
 
-                $.each(data, function (index, valGroupedByCompany) {
-                    //console.log(typeof valGroupedByCompany);
+                checked_variations = data.checked_variations;
 
-                    count_searched_products = count_searched_products + Object.size(valGroupedByCompany);
-
-                    if (Object.size(valGroupedByCompany) > 1) {
-                        //console.log(Object.values(valGroupedByCompany));
-
-                        firstObject = Object.values(valGroupedByCompany)[0];
-
-                        other_suggestions_exist = 1;
-                    }
-
-                    else {
-                        firstObject = valGroupedByCompany[0];
-
-                        other_suggestions_exist = 0;
-                    }
-
-                    other_suggestions = Object.size(valGroupedByCompany) - 1;
-
-                    product_results +=
-                        '<div class="wrapper pading">' +
-                        '<div class="listing-title"><div class="left"><div class="category-title">' + firstObject.name + '</div></div><div class="right"><div class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + firstObject.company_info.image + '"></div></div></div>' +
-
-                        '<div class="table">' +
-
-                        '<div class="table-pise-wrapper">' +
-                        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98% </div></div>' +
-                        '<div class="table-pise"><div class="table-pise-title">Պարտադիր ճարներ<i class="icon icon-right  icon-question"></i></div><div class="table-pise-text"> 2 000 000 </div></div>' +
-                        '</div>' +
-
-                        '<div class="table-pise-wrapper">' +
-                        '<div class="table-pise"><div class="table-pise-title">Հետ վճարվող գումար </div><div class="table-pise-text"> 2 000 000 <i class="icons "></i></div></div>' +
-                        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text"> 98%</div></div>' +
-                        '</div>' +
-
-                        '<div class="table-pise-wrapper"><div class="table-pise"><div class="table-pise-title">Անվանական</div><div class="table-pise-text">98%</div></div></div></div>' +
-
-                        '<div class="listing-title"><div class="left"><button type="button" class="btn btn-red"><i class="icon icon-left  icon-add"></i><span>համեմատել</span></button>' +
-                        '<a href="?p=prod-page" class="btn btn-more"><span>ավելին</span><i class="icon icon-right  icon-arrow-right"></i></a></div>' +
-                        '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span><i class="icon icon-arrow-down"></i></button></div></div>' +
-                        '</div>';
-
-                    product_results += '<section className="hide-show">';
-
-                    if (other_suggestions_exist == 1) {
-
-                        $.each(valGroupedByCompany, function (key, groupedByCompanyOtherProduct) {
-                            console.log(groupedByCompanyOtherProduct);
-                            console.log(groupedByCompanyOtherProduct);
-
-                        });
-
-                    }
-
-                    product_results += '</section>';
-
-                });
-
-
-                console.log(product_results);
-
-                $(".product_results").append(product_results);
-
-                $("#count_searched_products").text(count_searched_products);
-
+                makeProductsHtml(belonging_id, productsWithVariations, links, productsWithVariationsGroupByCompany, links_grouped_by_company, request_results_count, checked_variations);
             }
         });
     }
 }
 
+function drawProdGroupedByCompanyCurrMainVariationHtml(belonging_id, company_path, companyInfo, currVariation, other_suggestions, checked_variations) {
+
+    if (checked_variations.indexOf(currVariation.unique_options) != -1) {
+        compare_act_button_checked = "compare_act_button_checked";
+    }
+    else {
+        compare_act_button_checked = "";
+    }
+
+    cost = $("#prod_cost").val();
+
+    prepayment = isNaN(parseInt($("#prod_prepayment").val())) ? 0 : parseInt($("#prod_prepayment").val());
+
+    term = $("#prod_loan_term_search_in_days").val();
+
+    time_type_search = $("#time_type_search").val();
+
+    loan_term_search = $("#loan_term_search").val();
+
+    prod_page_path = $("#prod_page_path").val() + '/' + currVariation.unique_options + '/' + cost + '/' + prepayment + '/' + time_type_search + '/' + loan_term_search;
+
+
+    curr_prod_variation_result =
+        '<div class="table-wrapper"><div class="th"> ' +
+        '<a target="_blank" href="' + company_path + '/' + companyInfo.id + '"><img src="' + backend_asset_path + 'savedImages/' + companyInfo.image + '" />' + '</a>' +
+        '</div>' +
+
+        '<div class="th"><span>' + currVariation.percentage + '</span></div>' +
+        '<div class="th"><span>' + currVariation.require_payments + '</span></div>' +
+        '<div class="th"><span>' + currVariation.sum_payments + '</span></div>' +
+        '<div class="th"><span>' + currVariation.factual_percentage.toFixed(2) + '</span></div>' +
+        '<div class="th flex-wrapper"><button class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section> <i class="icon icon-arrow-down"></i></button>' +
+        '<button type="button" data-options="' + currVariation.unique_options + '" data-belongingid="' + belonging_id + '"  data-product-id="' + currVariation.product_id + '" class="btn btn_compare btn-white ' + compare_act_button_checked + '">' +
+        '<i class="icon icon-add icon-add-mini"></i></button><a href="' + prod_page_path + '" class="btn btn-more"><i class="icon icon-right icon-arrow-right"></i></a>' +
+        '</div></div>';
+
+    return curr_prod_variation_result;
+}
+
+
+function drawProdGroupedByCompanyCurrOtherVariationHtml(belonging_id, company_path, companyInfo, currVariation, checked_variations) {
+
+    if (checked_variations.indexOf(currVariation.unique_options) != -1) {
+        compare_act_button_checked = "compare_act_button_checked";
+    }
+    else {
+        compare_act_button_checked = "";
+    }
+
+    cost = $("#prod_cost").val();
+
+    prepayment = isNaN(parseInt($("#prod_prepayment").val())) ? 0 : parseInt($("#prod_prepayment").val());
+
+    term = $("#prod_loan_term_search_in_days").val();
+
+    time_type_search = $("#time_type_search").val();
+
+    loan_term_search = $("#loan_term_search").val();
+
+    prod_page_path = $("#prod_page_path").val() + '/' + currVariation.unique_options + '/' + cost + '/' + prepayment + '/' + time_type_search + '/' + loan_term_search;
+
+
+    curr_prod_variation_result =
+        '<div class="table-wrapper"><div class="th"> ' +
+        '<a target="_blank" href="' + company_path + '/' + companyInfo.id + '"><img src="' + backend_asset_path + 'savedImages/' + companyInfo.image + '" />' + '</a>' +
+        '</div>' +
+
+        '<div class="th"><span>' + currVariation.percentage + '</span></div>' +
+        '<div class="th"><span>' + currVariation.require_payments + '</span></div>' +
+        '<div class="th"><span>' + currVariation.sum_payments + '</span></div>' +
+        '<div class="th"><span>' + currVariation.factual_percentage.toFixed(2) + '</span></div>' +
+        '<div class="th flex-wrapper"><button type="button"  data-options="' + currVariation.unique_options + '" data-belongingid="' + belonging_id + '"  data-product-id="' + currVariation.product_id + '" class="btn btn_compare btn-white ' + compare_act_button_checked + '">' +
+        '<i class="icon icon-add icon-add-mini"></i></button><a href="' + prod_page_path + '" class="btn btn-more"><i class="icon icon-right icon-arrow-right"></i></a>' +
+        '</div></div>';
+
+    return curr_prod_variation_result;
+}
+
+
+function drawProdCurrMainVariationHtml(belonging_id, currProduct, company_path, companyInfo, currVariation, other_suggestions, checked_variations) {
+
+    if (checked_variations.indexOf(currVariation.unique_options) != -1) {
+        compare_act_button_checked = "compare_act_button_checked";
+    }
+    else {
+        compare_act_button_checked = "";
+    }
+
+    cost = $("#prod_cost").val();
+
+    prepayment = isNaN(parseInt($("#prod_prepayment").val())) ? 0 : parseInt($("#prod_prepayment").val());
+
+    term = $("#prod_loan_term_search_in_days").val();
+
+    time_type_search = $("#time_type_search").val();
+
+    loan_term_search = $("#loan_term_search").val();
+
+    prod_page_path = $("#prod_page_path").val() + '/' + currVariation.unique_options + '/' + cost + '/' + prepayment + '/' + time_type_search + '/' + loan_term_search;
+
+
+    curr_prod_variation_result +=
+        '<div class="listing-title"><div class="left"><div class="category-title">' + currProduct.name + '</div></div><div class="right">' +
+        '<a target="_blank" href="' + company_path + '/' + companyInfo.id + '"  class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + companyInfo.image + '" />' + '</a>' +
+        '</div></div>' +
+
+        '<div class="table">' +
+        '<div class="table-pise-wrapper">' +
+        '<div class="table-pise"><div class="table-pise-title">Կազմակերպություն</div><div class="table-pise-text">' + companyInfo.name + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text">' + currVariation.percentage + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Ընդամենը պարտադիր վճարներ</div><div class="table-pise-text">' + currVariation.require_payments + '</div></div>' +
+        '</div>' +
+
+        '<div class="table-pise-wrapper">' +
+        '<div class="table-pise"><div class="table-pise-title">Ընդամենը հետ վճարվող գումար </div><div class="table-pise-text">' + currVariation.sum_payments + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Փաստացի տոկոսադրույք</div><div class="table-pise-text">' + currVariation.factual_percentage.toFixed(2) + '</div></div>' +
+        '</div></div>' +
+
+        '<div class="listing-title"><div class="left"><button type="button" data-options="' + currVariation.unique_options + '" data-belongingid="' + belonging_id + '"  data-product-id="' + currProduct.id + '" class="btn btn_compare btn-white ' + compare_act_button_checked + '" >' +
+        '<i class="icon icon-left icon-add"></i><span>համեմատել</span></button><a href="' + prod_page_path + '" class="btn btn-more"><span>ավելին</span><i class="icon icon-right icon-arrow-right"></i></a></div>';
+
+    if (other_suggestions >= 0) {
+        curr_prod_variation_result += '<div class="right"><button type="button" class="btn btn-pink other_suggestions_open_close"><section>' + other_suggestions + '</section><span>այլ առաջարկ</span>' +
+            '<i class="icon icon-arrow-down"></i></button></div>';
+    }
+
+    curr_prod_variation_result += '</div>';
+
+    return curr_prod_variation_result;
+}
+
+function drawProdCurrOtherVariationHtml(belonging_id, currProduct, company_path, companyInfo, currVariation) {
+
+    if (checked_variations.indexOf(currVariation.unique_options) != -1) {
+        compare_act_button_checked = "compare_act_button_checked";
+    }
+    else {
+        compare_act_button_checked = "";
+    }
+
+    cost = $("#prod_cost").val();
+
+    prepayment = isNaN(parseInt($("#prod_prepayment").val())) ? 0 : parseInt($("#prod_prepayment").val());
+
+    term = $("#prod_loan_term_search_in_days").val();
+
+    time_type_search = $("#time_type_search").val();
+
+    loan_term_search = $("#loan_term_search").val();
+
+    prod_page_path = $("#prod_page_path").val() + '/' + currVariation.unique_options + '/' + cost + '/' + prepayment + '/' + time_type_search + '/' + loan_term_search;
+
+
+    curr_prod_variation_result =
+        '<div class="listing-title"><div class="left"><div class="category-title">' + currProduct.name + '</div></div><div class="right">' +
+        '<a target="_blank" href="' + company_path + '/' + companyInfo.id + '" + class="category-logo"><img style="max-width: 80px;" src="' + backend_asset_path + 'savedImages/' + companyInfo.image + '" />' + '</a>' +
+        '</div></div>' +
+
+        '<div class="table">' +
+        '<div class="table-pise-wrapper">' +
+        '<div class="table-pise"><div class="table-pise-title">Կազմակերպություն</div><div class="table-pise-text">' + companyInfo.name + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Անվանական տոկոսադրույք</div><div class="table-pise-text">' + currVariation.percentage + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Ընդամենը պարտադիր վճարներ</div><div class="table-pise-text">' + currVariation.require_payments + '</div></div>' +
+        '</div>' +
+
+        '<div class="table-pise-wrapper">' +
+        '<div class="table-pise"><div class="table-pise-title">Ընդամենը հետ վճարվող գումար </div><div class="table-pise-text">' + currVariation.sum_payments + '</div></div>' +
+        '<div class="table-pise"><div class="table-pise-title">Փաստացի տոկոսադրույք</div><div class="table-pise-text">' + currVariation.factual_percentage.toFixed(2) + '</div></div>' +
+        '</div></div>' +
+
+        '<div class="listing-title"><div class="left"><button type="button" data-options="' + currVariation.unique_options + '" data-belongingid="' + belonging_id + '"  data-product-id="' + currProduct.id + '" class="btn btn_compare btn-white ' + compare_act_button_checked + '" >' +
+        '<i class="icon icon-left icon-add"></i><span>համեմատել</span></button><a href="' + prod_page_path + '" class="btn btn-more"><span>ավելին</span><i class="icon icon-right icon-arrow-right"></i></a></div></div>';
+
+    //curr_prod_variation_result += '</div>';
+
+    return curr_prod_variation_result;
+}
+
+function makeProductsHtml(belonging_id, productsWithVariations, links, productsWithVariationsGroupByCompany, links_grouped_by_company, request_results_count, checked_variations) {
+
+    backend_asset_path = $("#backend_asset_path").val();
+
+    prod_page_path = $("#prod_page_path").val();
+
+    company_path = $("#company_path").val();
+
+    result_listing_title = $(".result_listing_title").clone();
+
+    head_grouped_by_company = $(".head_grouped_by_company")[0].outerHTML;//$(".head_grouped_by_company").clone();
+
+    product_variations_results_pagination = $(".product_variations_results_pagination").clone();
+
+    $(".product_results").empty();
+
+    $(".product_results").append(result_listing_title);
+
+
+    product_results = '<div class="change_item change_item_product_variations_results">';
+
+    data = productsWithVariations.data;
+
+    $.each(data, function (index, currProduct) {
+
+        companyInfo = currProduct.companyInfo;
+
+        firstObject = currProduct.variations[0]; //Object.values(valGroupedByCompany)[0];
+
+        if (currProduct.variations.length > 1) {
+            other_suggestions_exist = 1;
+        }
+
+        else {
+            other_suggestions_exist = 0;
+        }
+
+        other_suggestions = currProduct.variations.length - 1; // Object.size(valGroupedByCompany) - 1;
+
+        curr_prod_variation_result = '<div class="wrapper pading">';
+
+        curr_prod_variation_result += drawProdCurrMainVariationHtml(belonging_id, currProduct, company_path, companyInfo, firstObject, other_suggestions, checked_variations);
+
+        product_results += curr_prod_variation_result;
+
+        product_results += '<section class="hide-show">';
+
+        if (other_suggestions_exist == 1) {
+
+            firstKey = Object.keys(currProduct.variations)[0];
+
+            $.each(currProduct.variations, function (key, currProductCurrVariation) {
+                if (key > firstKey) {
+
+                    curr_prod_variation_result = '<div class="add-result pading">';
+
+                    curr_prod_variation_result += drawProdCurrOtherVariationHtml(belonging_id, currProduct, company_path, companyInfo, currProductCurrVariation, checked_variations);
+
+                    curr_prod_variation_result += '</div>';
+
+                    product_results += curr_prod_variation_result;
+                }
+            });
+        }
+
+        product_results += '</section></div>';
+    });
+
+    $(".product_results").append(product_results);
+
+    $(".product_results").append(product_variations_results_pagination);
+
+    $('.product_variations_results_pagination').html(links);
+
+    $(".change_item_product_variations_results").append(product_variations_results_pagination);
+
+
+    data_grouped_by_company = productsWithVariationsGroupByCompany.data;
+
+    product_results_grouped_by_company = '<div class="change_item change_item_product_variations_grouped_by_company_results">';
+
+    product_results_grouped_by_company += head_grouped_by_company;
+
+    $.each(data_grouped_by_company, function (index, currProductVariations) {
+
+        companyInfo = currProductVariations[0].companyInfo;
+
+        firstObject = currProductVariations[0];
+
+        if (currProductVariations.length > 1) {
+            other_suggestions_exist = 1;
+        }
+
+        else {
+            other_suggestions_exist = 0;
+        }
+
+        other_suggestions = currProductVariations.length - 1;
+
+        product_results_grouped_by_company += '<div class="wrapper min-pading">';
+
+        curr_prod_variation_result = drawProdGroupedByCompanyCurrMainVariationHtml(belonging_id, company_path, companyInfo, firstObject, other_suggestions, checked_variations);
+
+        product_results_grouped_by_company += curr_prod_variation_result;
+
+        product_results_grouped_by_company += '<div class="hide-show">';
+
+        if (other_suggestions_exist == 1) {
+
+            firstKey = Object.keys(currProductVariations)[0];
+
+            $.each(currProductVariations, function (key, currProductCurrVariation) {
+                if (key > firstKey) {
+
+                    product_results_grouped_by_company += drawProdGroupedByCompanyCurrOtherVariationHtml(belonging_id, company_path, companyInfo, currProductCurrVariation, checked_variations);
+                }
+            });
+        }
+
+        product_results_grouped_by_company += '</div></div>';
+
+        product_results_grouped_by_company += '</div>';
+
+        $(".product_results").append(product_results_grouped_by_company);
+    });
+
+    $(".result_listing_title .chenge").first().click();
+
+
+    $(".count_searched_products").text(request_results_count);
+}
+
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+
+function loanAmountAutomatic() {
+
+    var cost = parseFloat($("#cost").val().trim());
+
+    var prepayment = parseFloat($("#maximum").val().trim());
+
+    if ($("#maximum").val().trim().length == 0 && $("#cost").val().trim().length > 0) {
+
+        loan_amount_automatic = cost;
+    }
+    else if ($("#maximum").val().trim().length > 0 && $("#cost").val().trim().length > 0) {
+
+        prepayment = parseFloat($("#maximum").val().trim());
+
+        loan_amount_automatic = cost - prepayment;
+    }
+    else {
+        loan_amount_automatic = "";
+
+        $("#slider-range-max").slider("destroy");
+    }
+
+    $("#loan_amount").val(loan_amount_automatic);
+}
+
 $(document).ready(function () {
+    $(".change_item_req").not(":first").hide();
+
+    /* require payments blok chenge_req */
+    $(".chenge_req").click(function () {
+        $(".chenge_req").removeClass("active").eq($(this).index()).addClass("active");
+        $(".change_item_req").hide().eq($(this).index()).show()
+    }).eq(0).addClass("active");
+
+    $(".chenge_req").click(function () {
+        $(this).parent().find(".chenge_req").removeClass("active").eq($(this).index()).addClass("active");
+
+        $(this).parent().find(".change_item_req").hide().eq($(this).index()).show()
+    }).eq(0).addClass("active");
+    /* require payments blok chenge_req */
+
+
+    $(document).on('click', '.other_suggestions_open_close', function (e) {
+        $(this).children("i").toggleClass("active");
+
+        $(this).parent().parent().nextAll(".hide-show").slideToggle(300);
+        return false;
+    });
+
+    $(document).on('click', '.chenge', function (e) {
+        $(".chenge").removeClass("active").eq($(this).index()).addClass("active");
+        $(".change_item").hide().eq($(this).index()).show()
+    }).eq(0).addClass("active");
+
+    $(document).on('click', '.chenge', function (e) {
+        $(this).parent().find(".chenge").removeClass("active").eq($(this).index()).addClass("active");
+
+        $(this).parent().find(".change_item").hide().eq($(this).index()).show()
+    }).eq(0).addClass("active");
+
+    $("#seachProductFormSubmitCheck").click(function () {
+
+        $("#seachProductForm").submit();
+    });
 
     if ($(".multiple_select").length > 0) {
         $(".multiple_select").dropdown();
     }
 
+    /* no negative value*/
     $(".no_negative_value").keydown(function (e) {
 
-        console.log(e.key);
+        // console.log(e.key);
 
         if (e.key == "-") {
+            return false;
+        }
+    });
+    /* no negative value*/
+
+    /* no plus allow */
+    $('.no_plus_allow').keydown(function (e) {
+        if (e.key == "+") {
 
             return false;
         }
     });
+    /* no plus allow */
+
+    /* number not more than element max attribute */
+    $('.number_not_more_than').keyup(function (e) {
+
+        max = parseInt($(this).attr('max'));
+
+        max_length = $(this).attr('max').length;
+
+        if ($(this).val() > max) {
+
+            allowed_val = $(this).val().substr(0, max_length);
+
+            if (allowed_val > max) {
+                allowed_val = $(this).val().substr(0, max_length - 1);
+            }
+
+            $(this).val(allowed_val);
+        }
+    });
+    /* number not more than element max attribute */
 
     $("#deposit_type").parent().find('.select-selected').bind("DOMSubtreeModified", function () {
 
@@ -243,47 +602,86 @@ $(document).ready(function () {
         console.log($("#deposit_type").val());
     });
 
-    $(".btn_compare").click(function () {
+    /* btn_compare */
+    $(document).on('click', '.btn_compare', function () {
 
-        // curr_product_id = $(this).attr('data-id');
-        //
-        // if ($("#product_ids").val().trim().length > 0) {
-        //
-        //     product_ids = $("#product_ids").val().split(',')
-        // }
-        // else {
-        //     product_ids = [];
-        // }
-        if ($(this).hasClass('compare_act_button_checked')) {
+        exdays = 2;
 
-            $(this).removeClass('compare_act_button_checked');
+        curr_variation_options = $(this).attr('data-options');
 
-            // curr_product_index = product_ids.indexOf(curr_product_id);
-            //
-            // if (curr_product_index != -1) {
-            //
-            //     product_ids.splice(curr_product_index, 1);
-            // }
+        //curr_variation_options_and_search_params = $(this).attr('data-options_and_search_params');
+
+        curr_belonging_id = $(this).attr('data-belongingId');
+
+        curr_belonging_cookie = getCookie("belonging_" + curr_belonging_id);
+
+        product_id = $(this).attr('data-product-id');
+
+        if ($("#prod_cost").length > 0) {
+
+            cost = $("#prod_cost").val();
+
+            prepayment = $("#prod_prepayment").val();
+
+            term = $("#prod_loan_term_search_in_days").val();
         }
         else {
-            $(this).addClass('compare_act_button_checked');
+            cost = $(this).attr('data-cost');
 
-            // if (product_ids.indexOf(curr_product_id) == -1) {
-            //
-            //     product_ids.push(curr_product_id);
-            // }
+            prepayment = $(this).attr('data-prepayment');
+
+            term = $(this).attr('data-term');
         }
-        //
-        // console.log(product_ids.toString());
-        //
-        // compareProductsCount = product_ids.length;
-        //
-        // console.log(compareProductsCount);
-        //
-        // $("#product_ids").val(product_ids.toString());
-        //
-        // $("#compareProductsCount").text(compareProductsCount);
+
+        /* building curr_data */
+        curr_data = {};
+
+        curr_data.product_id = product_id;
+
+        curr_data.cost = cost;
+
+        curr_data.prepayment = prepayment;
+
+        curr_data.term = term;
+
+        curr_data.curr_variation_options = curr_variation_options;
+
+        /* building curr_data */
+
+        if ($(this).hasClass('compare_act_button_checked')) {
+
+            $(".btn_compare[data-options=" + curr_variation_options + "]").removeClass('compare_act_button_checked');
+
+            curr_belonging_cookie = JSON.parse(curr_belonging_cookie);
+
+            delete curr_belonging_cookie[curr_variation_options];
+        }
+        else {
+            $(".btn_compare[data-options=" + curr_variation_options + "]").addClass('compare_act_button_checked');
+
+            if (curr_belonging_cookie.length == 0) {
+
+                curr_belonging_cookie = {};
+
+                curr_belonging_cookie[curr_variation_options] = curr_data;
+            }
+            else {
+                curr_belonging_cookie = JSON.parse(curr_belonging_cookie);
+
+                curr_belonging_cookie[curr_variation_options] = curr_data;
+            }
+        }
+
+        curr_belonging_cookie_stringify = JSON.stringify(curr_belonging_cookie);
+
+        setCookie("belonging_" + curr_belonging_id, curr_belonging_cookie_stringify, exdays);
+
+        compare_count = Object.keys(curr_belonging_cookie).length;
+
+        $(".self-messeng-indicator").text(compare_count);
     });
+    /* btn_compare */
+
     if ($("#slider-range-money-transfer").length > 0) {
 
         money_transfer_amount_min = parseFloat($("#money_transfer_amount_min").val().trim());
@@ -300,6 +698,7 @@ $(document).ready(function () {
             }
         });
     }
+
     if ($("#slider-range-mortgage").length > 0) {
 
         loan_amount_min = parseFloat($("#loan_amount_min").val().trim());
@@ -327,27 +726,16 @@ $(document).ready(function () {
             range: "min",
             min: 0,
             max: cost,
-            step: 0.1,
+            step: 1,
+            value: prepayment,
             slide: function (event, ui) {
                 $("#maximum").val(ui.value);
+
+                loanAmountAutomatic();
             }
         });
 
-        if ($("#maximum").val().trim().length == 0 && $("#cost").val().trim().length > 0) {
-
-            loan_amount_automatic = cost;
-        }
-        else if ($("#maximum").val().trim().length > 0 && $("#cost").val().trim().length > 0) {
-
-            loan_amount_automatic = cost - prepayment;
-        }
-        else {
-            loan_amount_automatic = "";
-
-            $("#slider-range-max").slider("destroy");
-        }
-
-        $("#loan_amount").val(loan_amount_automatic);
+        loanAmountAutomatic();
     });
 
     $("#cost").keyup(function (e) {
@@ -360,28 +748,42 @@ $(document).ready(function () {
             range: "min",
             min: 0,
             max: cost,
-            step: 0.1,
+            step: 1,
+            value: prepayment,
             slide: function (event, ui) {
                 $("#maximum").val(ui.value);
+
+                loanAmountAutomatic();
             }
         });
 
-        if ($("#maximum").val().trim().length == 0 && $("#cost").val().trim().length > 0) {
-
-            loan_amount_automatic = cost;
-        }
-        else if ($("#maximum").val().trim().length > 0 && $("#cost").val().trim().length > 0) {
-
-            loan_amount_automatic = cost - prepayment;
-        }
-        else {
-            loan_amount_automatic = "";
-
-            $("#slider-range-max").slider("destroy");
-        }
-
-        $("#loan_amount").val(loan_amount_automatic);
+        loanAmountAutomatic();
     });
+
+    if ($("#cost").length > 0 && $("#slider-range-max").length > 0) {
+
+        cost = parseFloat($("#cost").val().trim());
+
+        prepayment = parseFloat($("#maximum").val().trim());
+
+        if (cost > 0) {
+            $("#slider-range-max").slider({
+                range: "min",
+                min: 0,
+                max: cost,
+                step: 1,
+                value: prepayment,
+                slide: function (event, ui) {
+                    $("#maximum").val(ui.value);
+
+                    loanAmountAutomatic();
+                }
+            });
+
+            loanAmountAutomatic();
+        }
+    }
+
 
     $(".no_plus_symbol").keydown(function (e) {
 
@@ -391,11 +793,6 @@ $(document).ready(function () {
 
             return false;
         }
-    });
-
-    $("#seachProductFormSubmitCheck").click(function () {
-
-        $("#seachProductForm").submit();
     });
 
     $(".curr_all_checkboxes_check_uncheck").click(function () {
@@ -523,4 +920,5 @@ $(document).ready(function () {
 
         initMap();
     });
-});
+})
+;

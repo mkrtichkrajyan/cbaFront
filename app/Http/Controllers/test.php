@@ -1,1163 +1,342 @@
 <?php
 
-array:2 [
-    0 => array:1 [
-    0 => array:115 [
-    "id" => 6
-      "company_id" => 34
-      "name" => "ավտովարկ test 2"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 2
-      "prepayment" => "1"
-      "loan_amount_from" => "1"
-      "loan_amount_to" => "1"
-      "prepayment_to" => null
-      "prepayment_from" => null
-      "loan_term_from" => "1"
-      "loan_term_to" => "1"
-      "loan_term_to_in_days" => "30"
-      "loan_term_from_in_days" => "1"
-      "loan_term_from_periodicity_type" => 1
-      "loan_term_to_periodicity_type" => 2
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "2"
-      "providing_type" => 2
-      "percentage_type" => 1
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbapro/edit-product/1/1"
-      "loan_main_amount_non_payment_case" => "Վարկի մայր գումարը չվճարելու դեպքում"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "Տոկոսագումարները չվճարելու դեպքում"
-      "another_non_payments_case" => "Այլ վճարները չկատարելու դեպքում"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "Այլ"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => null
-      "notarial_ratification_pay" => "1"
-      "notarial_ratification_pay_from" => "1"
-      "notarial_ratification_pay_to" => "1"
-      "pledge_insurance_pay_type" => 2
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => "1"
-      "pledge_insurance_pay_to" => "1"
-      "loan_service_pay_type" => 1
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => "1"
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => "1"
-      "pledge_assessment_pay_to" => "1"
-      "cashing_pay_type" => null
-      "cashing_pay_from" => "1"
-      "cashing_pay_to" => "1"
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => "1"
-      "loan_application_survey_pay_to" => "1"
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => null
-      "activate_date" => null
-      "active_date" => null
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-07-27 15:49:46"
-      "updated_at" => "2018-07-27 15:49:46"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => "2"
-      "percentage_changing_from" => "4"
-      "percentage_changing_to" => "2"
-      "percentage_changing_in" => "3"
-      "percentage_changing_concret_to" => "6"
-      "percentage_changing_concret_from" => "2"
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "njhhhgjghj"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,2"
-      "loan_application_absolute_amount" => "1"
-      "loan_service_absolute_amount" => "1"
-      "pledge_assessment_absolute_amount" => "1"
-      "cashing_pay_absolute_amount" => "1"
-      "pledge_insurance_absolute_amount" => "1"
-      "company_info" => array:33 [
-    "id" => 34
-        "around_the_clock_working" => null
-        "name" => "qqqqqqqqqqqqqqqqqqqqqqqq"
-        "type" => 1
-        "company_superadmin_id" => 90
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "qqqqqqqqqqqqqqqqqqqqqqqqqqqq"
-        "phone_number" => null
-        "phone_number_2" => null
-        "image" => "company/1523285816.jpg"
-        "email" => "qqqqqqqqqqqqqqqqqqqqqq@gmail.com"
-        "website" => "http://cbaproject/create-company"
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-23 06:36:04"
-        "updated_at" => "2018-06-23 06:36:04"
-      ]
-      "car_info" => array:6 [
-    "id" => 2
-        "name" => "երկրորդային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => array:6 [
-    "id" => 1
-        "name" => "Օր"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_to_periodicity_type_info" => array:6 [
-    "id" => 2
-        "name" => "Ամիս"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-    ]
-  ]
-  1 => array:6 [
-    1 => array:115 [
-    "id" => 7
-      "company_id" => 33
-      "name" => "aaa"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2,3"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 2
-      "prepayment" => null
-      "loan_amount_from" => "1"
-      "loan_amount_to" => "2"
-      "prepayment_to" => null
-      "prepayment_from" => null
-      "loan_term_from" => "1"
-      "loan_term_to" => "2"
-      "loan_term_to_in_days" => "60"
-      "loan_term_from_in_days" => "1"
-      "loan_term_from_periodicity_type" => 1
-      "loan_term_to_periodicity_type" => 2
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "2"
-      "providing_type" => 1
-      "percentage_type" => 3
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbaproject/create-product/8"
-      "loan_main_amount_non_payment_case" => "Վարկի մայր գումարը չվճարելու դեպքում 1"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "Տոկոսագումարները չվճարելու դեպքում 1"
-      "another_non_payments_case" => "Այլ վճարները չկատարելու դեպքում 1"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "Այլ"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => null
-      "notarial_ratification_pay" => "1"
-      "notarial_ratification_pay_from" => "1"
-      "notarial_ratification_pay_to" => "1"
-      "pledge_insurance_pay_type" => 1
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => "1"
-      "pledge_insurance_pay_to" => "1"
-      "loan_service_pay_type" => 1
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => "1"
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => "1"
-      "pledge_assessment_pay_to" => "1"
-      "cashing_pay_type" => null
-      "cashing_pay_from" => "1"
-      "cashing_pay_to" => "1"
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => "1"
-      "loan_application_survey_pay_to" => "1"
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => "e"
-      "activate_date" => null
-      "active_date" => null
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-05 22:20:17"
-      "updated_at" => "2018-08-05 22:20:17"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => "3"
-      "percentage_changing_to" => "2"
-      "percentage_changing_in" => "3"
-      "percentage_changing_concret_to" => "5"
-      "percentage_changing_concret_from" => "1"
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "aaaaaaaaaaaa"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,3"
-      "loan_application_absolute_amount" => "1"
-      "loan_service_absolute_amount" => "1"
-      "pledge_assessment_absolute_amount" => "1"
-      "cashing_pay_absolute_amount" => "1"
-      "pledge_insurance_absolute_amount" => "1"
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => array:6 [
-    "id" => 2
-        "name" => "երկրորդային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => array:6 [
-    "id" => 1
-        "name" => "Օր"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_to_periodicity_type_info" => array:6 [
-    "id" => 2
-        "name" => "Ամիս"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-    ]
-    2 => array:115 [
-    "id" => 8
-      "company_id" => 33
-      "name" => "sevagir ԱՎՏՈՎԱՐԿ"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2,3"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 1
-      "prepayment" => null
-      "loan_amount_from" => "1"
-      "loan_amount_to" => null
-      "prepayment_to" => null
-      "prepayment_from" => null
-      "loan_term_from" => "0"
-      "loan_term_to" => "0"
-      "loan_term_to_in_days" => null
-      "loan_term_from_in_days" => null
-      "loan_term_from_periodicity_type" => 0
-      "loan_term_to_periodicity_type" => 0
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "3"
-      "providing_type" => 2
-      "percentage_type" => null
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbaproject/create-product/8"
-      "loan_main_amount_non_payment_case" => "Վարկի մայր գումարը չվճարելու դեպքում 1"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "Տոկոսագումարները չվճարելու դեպքում 1"
-      "another_non_payments_case" => "Այլ վճարները չկատարելու դեպքում 1"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "Այլ"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => "aaaaaaaaaaaaaaaaaa"
-      "notarial_ratification_pay" => null
-      "notarial_ratification_pay_from" => null
-      "notarial_ratification_pay_to" => null
-      "pledge_insurance_pay_type" => null
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => null
-      "pledge_insurance_pay_to" => null
-      "loan_service_pay_type" => null
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => null
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => null
-      "pledge_assessment_pay_to" => null
-      "cashing_pay_type" => null
-      "cashing_pay_from" => null
-      "cashing_pay_to" => null
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => null
-      "loan_application_survey_pay_to" => null
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => "aaaaaaaaaaaaaaaaaaaaa"
-      "activate_date" => 0
-      "active_date" => "08/06/2018"
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-05 22:59:45"
-      "updated_at" => "2018-08-05 22:59:45"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => null
-      "percentage_changing_to" => null
-      "percentage_changing_in" => null
-      "percentage_changing_concret_to" => "0"
-      "percentage_changing_concret_from" => "0"
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "ԱՎՏՈՎԱՐԿ pastatuxt"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,2"
-      "loan_application_absolute_amount" => null
-      "loan_service_absolute_amount" => null
-      "pledge_assessment_absolute_amount" => null
-      "cashing_pay_absolute_amount" => null
-      "pledge_insurance_absolute_amount" => null
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => array:6 [
-    "id" => 1
-        "name" => "առաջնային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => null
-      "loan_term_to_periodicity_type_info" => null
-    ]
-    3 => array:115 [
-    "id" => 12
-      "company_id" => 33
-      "name" => "sevagir ԱՎՏՈՎԱՐԿ 2"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2,3"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 1
-      "prepayment" => null
-      "loan_amount_from" => "1"
-      "loan_amount_to" => null
-      "prepayment_to" => "7"
-      "prepayment_from" => "3"
-      "loan_term_from" => "0"
-      "loan_term_to" => "0"
-      "loan_term_to_in_days" => null
-      "loan_term_from_in_days" => null
-      "loan_term_from_periodicity_type" => 0
-      "loan_term_to_periodicity_type" => 0
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "3"
-      "providing_type" => 2
-      "percentage_type" => null
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbaproject/create-product/8"
-      "loan_main_amount_non_payment_case" => "Վարկի մայր գումարը չվճարելու դեպքում 1"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "Տոկոսագումարները չվճարելու դեպքում 1"
-      "another_non_payments_case" => "Այլ վճարները չկատարելու դեպքում 1"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "Այլ"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => "aaaaaaaaaaaaaaaaaa"
-      "notarial_ratification_pay" => null
-      "notarial_ratification_pay_from" => null
-      "notarial_ratification_pay_to" => null
-      "pledge_insurance_pay_type" => null
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => null
-      "pledge_insurance_pay_to" => null
-      "loan_service_pay_type" => null
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => null
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => null
-      "pledge_assessment_pay_to" => null
-      "cashing_pay_type" => null
-      "cashing_pay_from" => null
-      "cashing_pay_to" => null
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => null
-      "loan_application_survey_pay_to" => null
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => "aaaaaaaaaaaaaaaaaaaaa"
-      "activate_date" => 0
-      "active_date" => "08/06/2018"
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-05 22:59:45"
-      "updated_at" => "2018-08-05 22:59:45"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => null
-      "percentage_changing_to" => null
-      "percentage_changing_in" => null
-      "percentage_changing_concret_to" => "0"
-      "percentage_changing_concret_from" => "0"
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "ԱՎՏՈՎԱՐԿ pastatuxt"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,2"
-      "loan_application_absolute_amount" => null
-      "loan_service_absolute_amount" => null
-      "pledge_assessment_absolute_amount" => null
-      "cashing_pay_absolute_amount" => null
-      "pledge_insurance_absolute_amount" => null
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => array:6 [
-    "id" => 1
-        "name" => "առաջնային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => null
-      "loan_term_to_periodicity_type_info" => null
-    ]
-    4 => array:115 [
-    "id" => 13
-      "company_id" => 33
-      "name" => "ԱՎՏՈՎԱՐԿ security test"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2,3"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 1
-      "prepayment" => null
-      "loan_amount_from" => "1"
-      "loan_amount_to" => "2"
-      "prepayment_to" => null
-      "prepayment_from" => null
-      "loan_term_from" => "1"
-      "loan_term_to" => "2"
-      "loan_term_to_in_days" => "60"
-      "loan_term_from_in_days" => "1"
-      "loan_term_from_periodicity_type" => 1
-      "loan_term_to_periodicity_type" => 2
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "3"
-      "providing_type" => 2
-      "percentage_type" => 2
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbapro/edit-product/1/1"
-      "loan_main_amount_non_payment_case" => "Վարկի մայր գումարը չվճարելու դեպքում"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "Տոկոսագումարները չվճարելու դեպքում"
-      "another_non_payments_case" => "Այլ վճարները չկատարելու դեպքում"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "Այլ"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => null
-      "notarial_ratification_pay" => "1"
-      "notarial_ratification_pay_from" => "1"
-      "notarial_ratification_pay_to" => "1"
-      "pledge_insurance_pay_type" => 1
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => "1"
-      "pledge_insurance_pay_to" => "1"
-      "loan_service_pay_type" => 1
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => "1"
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => "1"
-      "pledge_assessment_pay_to" => "1"
-      "cashing_pay_type" => null
-      "cashing_pay_from" => "1"
-      "cashing_pay_to" => "1"
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => "1"
-      "loan_application_survey_pay_to" => "1"
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => null
-      "activate_date" => null
-      "active_date" => "08/10/2018"
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-10 12:25:18"
-      "updated_at" => "2018-08-10 12:25:18"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => null
-      "percentage_changing_to" => null
-      "percentage_changing_in" => "1"
-      "percentage_changing_concret_to" => null
-      "percentage_changing_concret_from" => null
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "ԱՎՏՈՎԱՐԿ security test"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,2"
-      "loan_application_absolute_amount" => "1"
-      "loan_service_absolute_amount" => "1"
-      "pledge_assessment_absolute_amount" => "1"
-      "cashing_pay_absolute_amount" => "1"
-      "pledge_insurance_absolute_amount" => "1"
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => array:6 [
-    "id" => 1
-        "name" => "առաջնային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => array:6 [
-    "id" => 1
-        "name" => "Օր"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_to_periodicity_type_info" => array:6 [
-    "id" => 2
-        "name" => "Ամիս"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-    ]
-    5 => array:115 [
-    "id" => 14
-      "company_id" => 33
-      "name" => "aaaaaaaaaaaaaaaaaaaaaaaaaa"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => null
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => null
-      "prepayment" => null
-      "loan_amount_from" => null
-      "loan_amount_to" => null
-      "prepayment_to" => null
-      "prepayment_from" => null
-      "loan_term_from" => "0"
-      "loan_term_to" => "0"
-      "loan_term_to_in_days" => null
-      "loan_term_from_in_days" => null
-      "loan_term_from_periodicity_type" => 0
-      "loan_term_to_periodicity_type" => 0
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => null
-      "providing_type" => 0
-      "percentage_type" => null
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => null
-      "loan_main_amount_non_payment_case" => null
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => null
-      "another_non_payments_case" => null
-      "another_non_payments_case_old" => null
-      "other_non_payment" => null
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => null
-      "notarial_ratification_pay" => null
-      "notarial_ratification_pay_from" => null
-      "notarial_ratification_pay_to" => null
-      "pledge_insurance_pay_type" => null
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => null
-      "pledge_insurance_pay_to" => null
-      "loan_service_pay_type" => null
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => null
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => null
-      "pledge_assessment_pay_to" => null
-      "cashing_pay_type" => null
-      "cashing_pay_from" => null
-      "cashing_pay_to" => null
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => null
-      "loan_application_survey_pay_to" => null
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => null
-      "activate_date" => null
-      "active_date" => "08/22/2018"
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-22 17:55:30"
-      "updated_at" => "2018-08-22 17:55:30"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => null
-      "percentage_changing_to" => null
-      "percentage_changing_in" => null
-      "percentage_changing_concret_to" => "0"
-      "percentage_changing_concret_from" => "0"
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => null
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => null
-      "checked_repayment_percent_interval_types" => null
-      "other_payments_checked" => null
-      "checked_security_types" => null
-      "loan_application_absolute_amount" => null
-      "loan_service_absolute_amount" => null
-      "pledge_assessment_absolute_amount" => null
-      "cashing_pay_absolute_amount" => null
-      "pledge_insurance_absolute_amount" => null
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => null
-      "loan_term_from_periodicity_type_info" => null
-      "loan_term_to_periodicity_type_info" => null
-    ]
-    6 => array:115 [
-    "id" => 15
-      "company_id" => 33
-      "name" => "sadasdsad"
-      "copy" => null
-      "edit" => null
-      "status" => 1
-      "curr_row_old_data" => null
-      "active_time_type" => null
-      "checked_special_projects" => null
-      "checked_documents_types" => "2,3"
-      "checker_admin_id" => null
-      "author_id" => 89
-      "belonging_id" => 1
-      "car_type" => 1
-      "prepayment" => "NULL"
-      "loan_amount_from" => "1"
-      "loan_amount_to" => "2"
-      "prepayment_to" => "4"
-      "prepayment_from" => "1"
-      "loan_term_from" => "1"
-      "loan_term_to" => "2"
-      "loan_term_to_in_days" => "60"
-      "loan_term_from_in_days" => "1"
-      "loan_term_from_periodicity_type" => 1
-      "loan_term_to_periodicity_type" => 2
-      "privileged_term" => null
-      "privileged_term_loan" => null
-      "privileged_term_loan_time_type" => null
-      "privileged_term_percentage_time_type" => null
-      "privileged_term_percentage" => null
-      "checked_repayment_types" => "2"
-      "providing_type" => 2
-      "percentage_type" => 2
-      "percentage_rate_type" => null
-      "nominal_percentage_rate" => null
-      "car_salone_loan_phone" => null
-      "car_salone_loan_address" => null
-      "car_salone_loan_name" => null
-      "service_on_company_website" => "http://cbapro/edit-product/1/1"
-      "loan_main_amount_non_payment_case" => "aaaaaaaaaaaaa"
-      "loan_main_amount_non_payment_case_old" => null
-      "percentage_sum_non_payment_case" => "bbbbbbbbbbbbbbbbbbb"
-      "another_non_payments_case" => "cccccccc"
-      "another_non_payments_case_old" => null
-      "other_non_payment" => "ddddddddddddddddd"
-      "security" => null
-      "special_projects" => 0
-      "special_project_name" => null
-      "more_information" => null
-      "notarial_ratification_pay" => "6%"
-      "notarial_ratification_pay_from" => "1"
-      "notarial_ratification_pay_to" => "2"
-      "pledge_insurance_pay_type" => null
-      "pledge_insurance_pay_for_type" => null
-      "pledge_insurance_pay_from" => null
-      "pledge_insurance_pay_to" => null
-      "loan_service_pay_type" => null
-      "loan_service_pay_for_type" => null
-      "loan_service_pay_from" => null
-      "loan_service_pay_to" => null
-      "pledge_assessment_pay_once_type" => null
-      "pledge_assessment_pay_from" => null
-      "pledge_assessment_pay_to" => null
-      "cashing_pay_type" => null
-      "cashing_pay_from" => null
-      "cashing_pay_to" => null
-      "loan_application_survey_pay_type" => null
-      "loan_application_survey_pay_from" => null
-      "loan_application_survey_pay_to" => null
-      "other_payments_sum_type" => null
-      "security_type" => null
-      "other_payments_sum_percent_type" => null
-      "other_payments_name" => null
-      "other_payments_periodicity" => 0
-      "other_payments_absolute_amount" => null
-      "other_payments_to" => null
-      "other_payments_from" => null
-      "documents_list_area" => null
-      "more_special_projects" => null
-      "deposit_message" => null
-      "activate_date" => 1
-      "active_date" => "08/31/2018"
-      "auto_show_name" => null
-      "auto_show_address" => null
-      "auto_show_phone" => null
-      "created_at" => "2018-08-23 14:27:51"
-      "updated_at" => "2018-08-23 14:27:51"
-      "repayment_loan_interval_types" => null
-      "repayment_percent_interval_types" => null
-      "percentage_fixed" => null
-      "percentage_changing_from" => null
-      "percentage_changing_to" => null
-      "percentage_changing_in" => "1"
-      "percentage_changing_concret_to" => null
-      "percentage_changing_concret_from" => null
-      "security_types" => null
-      "other_payments" => null
-      "car_salons" => null
-      "special_project_percent" => null
-      "documents_list" => null
-      "document_name" => "sdasdasdasd"
-      "privileged_term_checked" => null
-      "checked_repayment_loan_interval_types" => "0"
-      "checked_repayment_percent_interval_types" => "0"
-      "other_payments_checked" => null
-      "checked_security_types" => "1,2"
-      "loan_application_absolute_amount" => "1"
-      "loan_service_absolute_amount" => "2"
-      "pledge_assessment_absolute_amount" => "3"
-      "cashing_pay_absolute_amount" => "4"
-      "pledge_insurance_absolute_amount" => "5"
-      "company_info" => array:33 [
-    "id" => 33
-        "around_the_clock_working" => null
-        "name" => "ccccccccccccccc"
-        "type" => 1
-        "company_superadmin_id" => 85
-        "city" => null
-        "extra" => ""
-        "identity" => "1"
-        "address" => "cccccccccc"
-        "phone_number" => "sdfsdf"
-        "phone_number_2" => null
-        "image" => "company/1526046056.jpg"
-        "email" => "dd@gmai.com"
-        "website" => null
-        "workingDays" => null
-        "sundayWorkEndTime" => null
-        "sundayWorkStartTime" => null
-        "saturdayWorkEndTime" => null
-        "saturdayWorkStartTime" => null
-        "fridayWorkEndTime" => null
-        "fridayWorkStartTime" => null
-        "thursdayWorkEndTime" => null
-        "thursdayWorkStartTime" => null
-        "wednesdayWorkEndTime" => null
-        "wednesdayWorkStartTime" => null
-        "tuesdayWorkEndTime" => null
-        "tuesdayWorkStartTime" => null
-        "mondayWorkEndTime" => null
-        "mondayWorkStartTime" => null
-        "stateEnd" => null
-        "stateStart" => null
-        "created_at" => "2018-06-18 18:28:56"
-        "updated_at" => "2018-06-19 14:51:55"
-      ]
-      "car_info" => array:6 [
-    "id" => 1
-        "name" => "առաջնային շուկա"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_from_periodicity_type_info" => array:6 [
-    "id" => 1
-        "name" => "Օր"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-      "loan_term_to_periodicity_type_info" => array:6 [
-    "id" => 2
-        "name" => "Ամիս"
-        "icon" => null
-        "extra" => null
-        "created_at" => null
-        "updated_at" => null
-      ]
-    ]
-  ]
-]
+/**
+ * compare Car Loans.
+ *
+ * @return \Illuminate\Http\Response
+ */
+public
+function compareCarLoans(Request $request)
+{
+    $belonging_id = 1;
+
+    $currProductByBelongingsView = ProductByBelongingsView::where("belonging_id", $belonging_id)->first();
+
+    $belongings = Belonging::with('productsByBelongingInfo')->get();
+
+    $time_types = TimeType::all();
+
+    $yes_no_answers = YesNo::all();
+
+    $repayment_loan_interval_types = RepaymentLoanIntervalType::all();
+
+    $repayment_percent_interval_types = RepaymentPercentIntervalType::all();
+
+    $car_cost_max_query = DB::table('car_loans')->select(DB::raw('max(loan_amount_to + prepayment_to) as cost'))->first();
+
+    $car_cost_min_query = DB::table('car_loans')->select(DB::raw('min(loan_amount_from + prepayment_from) as cost'))->first();
+
+    $car_cost_min = $car_cost_min_query->cost;
+
+    $car_cost_max = $car_cost_max_query->cost;
+
+    $loan_term_from_periodicity_type = $request->input('loan_term_from_periodicity_type');
+
+    $productPercentageTypesArr = ["1" => "+", "2" => "-", "3" => "±"];
+
+    $time_type = $request->time_type;
+
+    $car_cost = $request->car_cost;
+
+    $prepayment = $request->prepayment;
+
+    $loan_term = $request->loan_term;
+
+    if (is_null($prepayment)) {
+        $prepayment_final = 0;
+    } else {
+        $prepayment_final = $prepayment;
+    }
+
+    if (!is_null($car_cost)) {
+        $loan_amount = $car_cost - $prepayment_final;
+    } else {
+        $loan_amount = NULL;
+    }
+
+    if ($time_type == 1 || $time_type == "" || is_null($time_type)) {
+
+        $loan_term_search_in_days = $loan_term;
+    } else if ($time_type == 2) {
+
+        $loan_term_search_in_days = $loan_term * 30;
+    } else if ($time_type == 3) {
+
+        $loan_term_search_in_days = $loan_term * 365;
+    }
+
+    if ($car_cost > 0) {
+        $prepayment_percent = 100 * $prepayment_final / $car_cost;
+    } else {
+        $prepayment_percent = null;
+    }
+
+
+    if (count($request->all()) > 0) {
+        $validator = Validator::make($request->all(), [
+            'car_cost' => 'required|numeric|min:1',
+
+            'loan_term' => 'required|numeric',
+
+            'prepayment' => 'nullable|numeric',
+        ]);
+
+        $errors = $validator->errors();
+
+        if ($errors->count() > 0) {
+
+            $products = NULL;
+
+            $productsWithVariationsGroupByCompany = NULL;
+
+            $productsWithVariations = NULL;
+
+            $request_results_count = 0;
+
+            $car_types = NULL;
+
+            $percentage_types = NULL;
+
+            $providing_types = NULL;
+
+            $security_types = NULL;
+
+            $repayment_types = NULL;
+
+            $privileged_term_statuses = null;
+
+            $special_project_statuses = null;
+        } else {
+            $products = CarLoan::with('companyInfo')
+                ->with('securityTypes')->with('otherPayments')->withCount('variations')
+                ->where('status', 2)
+                ->has('variations', '>', 0);
+
+            if (!is_null($loan_term_search_in_days)) {
+                $products->where(function ($query) use ($loan_term_search_in_days) {
+                    $query->where('loan_term_from_in_days', '<=', (float)$loan_term_search_in_days);
+
+                    $query->where('loan_term_to_in_days', '>=', (float)$loan_term_search_in_days);
+                });
+            }
+
+            if (!is_null($loan_amount)) {
+                $products->where(function ($query) use ($loan_amount) {
+                    $query->where('loan_amount_from', '<=', (float)$loan_amount);
+                });
+
+                $products = $products->where(function ($query) use ($loan_amount) {
+                    $query->where('loan_amount_to', '>=', (float)$loan_amount)
+                        ->orWhere(function ($query) use ($loan_amount) {
+                            $query->where('loan_amount_to', '=', 0);
+                        });
+                });
+            }
+
+            $products = $products->get();
+
+            $productsWithVariations = [];
+
+            $productsWithVariationsGroupByCompany = [];
+
+            foreach ($products as $product) {
+
+                $productsWithVariationsCurr = [];
+
+                $productsWithVariationsCurr["id"] = $product->id;
+
+                $productsWithVariationsCurr["name"] = $product->name;
+
+                $productsWithVariationsCurr["company_id"] = $product->company_id;
+
+                $productsWithVariationsCurr["companyInfo"] = $product->companyInfo;
+
+                $curr_variations = [];
+
+                foreach ($product->variations as $product_variation) {
+
+                    $curr_variation = [];
+
+                    $getCalculation = $this->getCalculation($product, $product_variation, $car_cost, $loan_amount, $loan_term_search_in_days, $prepayment_percent);//calculate factual_percentage and other
+
+                    $factual_percentage = 100 * $getCalculation["xirr"];
+
+                    $require_payments = $getCalculation["require_payments"];
+
+                    $sum_payments = $getCalculation["sum_payments"];
+
+                    $curr_variation["id"] = $product_variation->id;
+
+                    $curr_variation["product_id"] = $product->id;
+
+                    $curr_variation["providing_type"] = $product_variation->providing_type;
+
+                    $curr_variation["percentage_type"] = $product_variation->percentage_type;
+
+                    $curr_variation["percentage"] = $product_variation->percentage;
+
+                    $curr_variation["repayment_type"] = $product_variation->repayment_type;
+
+                    $curr_variation["repayment_loan_interval_type_id"] = $product_variation->repayment_loan_interval_type_id;
+
+                    $curr_variation["repayment_percent_interval_type_id"] = $product_variation->repayment_percent_interval_type_id;
+
+                    $curr_variation["factual_percentage"] = $factual_percentage;
+
+                    $curr_variation["require_payments"] = $require_payments;
+
+                    $curr_variation["sum_payments"] = $sum_payments;
+
+                    $curr_variations[$product_variation->id] = $curr_variation;
+
+
+                    $productsWithVariationsGroupByCompanyCurr = $curr_variation;
+
+                    $productsWithVariationsGroupByCompanyCurr["name"] = $product->name;
+
+                    $productsWithVariationsGroupByCompanyCurr["company_id"] = $product->company_id;
+
+                    $productsWithVariationsGroupByCompanyCurr["companyInfo"] = $product->companyInfo;
+
+                    $productsWithVariationsGroupByCompany[] = $productsWithVariationsGroupByCompanyCurr;
+                }
+
+                $curr_variations = $this->arrayMultisort($curr_variations, "factual_percentage");
+
+                $productsWithVariationsCurr["variations"] = $curr_variations;
+
+                $min_factual_percentage = min(array_column($curr_variations, 'factual_percentage'));
+
+                $productsWithVariationsCurr["min_factual_percentage"] = $min_factual_percentage;
+
+                $productsWithVariations[] = $productsWithVariationsCurr;
+            }
+
+            $productsWithVariationsGroupByCompany = $this->arrayMultisort($productsWithVariationsGroupByCompany, "factual_percentage");
+
+            $productsWithVariationsGroupByCompany = collect($productsWithVariationsGroupByCompany)->groupBy('company_id');
+
+            $productsWithVariationsGroupByCompany = $this->paginateCollection($productsWithVariationsGroupByCompany, 1, 'page_by_company');
+
+
+            $productsWithVariations = collect($productsWithVariations)->sortBy('min_factual_percentage');
+
+            $productsWithVariations = $this->paginateCollection($productsWithVariations, 1);
+
+            $request_results_count = $products->sum('variations_count');
+
+            $productsFiltersSingleCounts = $this->compareProductsGetSomeFilters($belonging_id, $products);
+
+            $car_types = $productsFiltersSingleCounts["car_types"];
+
+            $percentage_types = $productsFiltersSingleCounts["percentage_types"];
+
+            $providing_types = $productsFiltersSingleCounts["providing_types"];
+
+            $security_types = $productsFiltersSingleCounts["security_types"];
+
+            $repayment_types = $productsFiltersSingleCounts["repayment_types"];
+
+            $privileged_term_statuses = $productsFiltersSingleCounts["privileged_term_statuses"];
+
+            $special_project_statuses = $productsFiltersSingleCounts["special_project_statuses"];
+        }
+    }
+    else {
+        $validator = Validator::make($request->all(), []);
+
+        $products = NULL;
+
+        $productsWithVariationsGroupByCompany = NULL;
+
+        $productsWithVariations = NULL;
+
+        $request_results_count = 0;
+
+        $car_types = NULL;
+
+        $percentage_types = NULL;
+
+        $providing_types = NULL;
+
+        $security_types = NULL;
+
+        $repayment_types = NULL;
+
+        $privileged_term_statuses = null;
+
+        $special_project_statuses = null;
+    }
+
+    $errors = $validator->errors();
+
+    $previousUrl = $this->loansPreviousUrl($request);
+
+    $getCompareInfo = $this->getCompareInfo();
+
+    return view('compare.compareCarLoans',
+        [
+            "belongings" => $belongings,
+
+            "currProductByBelongingsView" => $currProductByBelongingsView,
+
+            "belonging_id" => $belonging_id,
+
+            "repayment_loan_interval_types" => $repayment_loan_interval_types,
+
+            "repayment_percent_interval_types" => $repayment_percent_interval_types,
+
+            "car_cost_max" => $car_cost_max,
+
+            "car_cost_min" => $car_cost_min,
+
+            "time_types" => $time_types,
+
+            "yes_no_answers" => $yes_no_answers,
+
+            "productPercentageTypesArr" => $productPercentageTypesArr,
+
+            "loan_amount" => $loan_amount,
+
+            "loan_term_from_periodicity_type" => $loan_term_from_periodicity_type,
+
+            "time_type" => $time_type,
+
+            "car_cost" => $car_cost,
+
+            "prepayment" => $prepayment,
+
+            "loan_term" => $loan_term,
+
+            "loan_term_search_in_days" => $loan_term_search_in_days,
+
+            "products" => $products,
+
+            "productsWithVariations" => $productsWithVariations,
+
+            "productsWithVariationsGroupByCompany" => $productsWithVariationsGroupByCompany,
+
+            "errors" => $errors,
+
+            "request_results_count" => $request_results_count,
+
+            "previousUrl" => $previousUrl,
+
+            "car_types" => $car_types,
+
+            "percentage_types" => $percentage_types,
+
+            "providing_types" => $providing_types,
+
+            "security_types" => $security_types,
+
+            "repayment_types" => $repayment_types,
+
+            "special_project_statuses" => $special_project_statuses,
+
+            "privileged_term_statuses" => $privileged_term_statuses,
+
+
+            "getCompareInfo" => $getCompareInfo,
+        ]);
+}

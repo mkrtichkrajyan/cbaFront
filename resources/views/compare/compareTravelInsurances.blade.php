@@ -2,7 +2,10 @@
 
 @include('layouts.head')
 
-@include('layouts.header')
+@include('layouts.headerCompare')
+
+@php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
+
 
 <main>
     <div class="back-fon" style="background-image: url({{asset('img/blue-fon.png')}});height: 150px;">
@@ -66,13 +69,21 @@
                         <div class="columns large-3 medium-6 small-12">
                             <label class="label" for="amount">Տարիք</label>
                             <div class="rel">
-                                <input type="number" class="no_negative_value" id="age" name="age" value="{{$age}}"
+                                <input type="number" class="no_negative_value number_not_more_than no_plus_allow"
+                                       max="{{$max_age}}" id="age" name="age" value="{{$age}}"
                                        class="input">
 
-                                <input type="hidden" name="loan_amount_search" id="age_search"
+                                <input type="hidden" name="age_search" id="age_search"
                                        value="{{$age}}">
 
-                                <i class="icon icon-right icon-dram"></i>
+
+                                <input type="hidden" id="min_age" name="min_age"
+                                       value="{{$min_age}}">
+
+                                <input type="hidden" id="max_age" name="max_age"
+                                       value="{{$max_age}}">
+
+                                <div id="slider-range-insurance-ages"></div>
                             </div>
 
                             @if ($errors->has('loan_amount'))
@@ -97,7 +108,7 @@
                                 <input type="hidden" name="time_type_search" id="time_type_search"
                                        value="{{$time_type}}">
 
-                                <div class="chenge-time">
+                                <div class="chenge-time" style="display: none;">
                                     @if(is_null($time_type))
                                         @php($time_type = $time_types->first()->id)
                                     @endif
@@ -120,7 +131,7 @@
 
                         <div class="right">
                             <button id="seachProductFormSubmitCheck" type="button" class="btn btn-red">
-                                <i class="icon icon-left  icon-search"></i>
+                                <i class="icon icon-left icon-search"></i>
                                 <span>Որոնել</span>
                             </button>
                         </div>
@@ -148,92 +159,62 @@
                 </div>
             </div>
 
-            @if(!is_null($productsGroupByCompany))
+            @if(!is_null($productsWithVariations))
 
                 <div class="margin-top none columns large-3 medium-3 small-12">
 
                     <div class="wrapper check-box-panel-wrapper  popup">
                         <form>
+                            @if($non_recoverable_expenses_answers[3]["count"] > 0)
+                                <div class="check-drop-down-wrapper">
+                                    <div class="check-drop-title">
+                                        <span>Չհատուցվող գումար</span>
+                                    </div>
+                                    <div class="check-drop-down">
 
-                            {{--<div class="check-drop-down-wrapper">--}}
-                            {{--<div class="check-drop-title">--}}
-                            {{--<span>Տոկոսադրույք</span>--}}
-                            {{--<i></i>--}}
-                            {{--</div>--}}
-                            {{--<div class="check-drop-down">--}}
+                                        @foreach($non_recoverable_expenses_answers as $non_recoverable_expenses_answer)
 
-                            {{--@foreach($percentage_types as $percentage_type)--}}
-                            {{--@if($percentage_type->id   !=  1)--}}
-                            {{--<label class="container">{{$percentage_type->name}}--}}
-                            {{--<input type="checkbox" id="percentage_type_{{$percentage_type->id}}"--}}
-                            {{--data-id="{{$percentage_type->id}}"--}}
-                            {{--name="percentage_type_{{$percentage_type->id}}"--}}
-                            {{--value="1"--}}
-                            {{--class="filter_product filter_checkbox filter_percentage_type">--}}
-                            {{--<span class="checkmark"></span>--}}
-                            {{--</label>--}}
-                            {{--@endif--}}
-                            {{--@endforeach--}}
-                            {{--</div>--}}
-                            {{--</div>--}}
+                                            <label class="container">{{$non_recoverable_expenses_answer["info"]->name}}
+                                                <input type="checkbox"
+                                                       id="non_recoverable_expense_answer_{{$non_recoverable_expenses_answer["id"]}}"
+                                                       name="non_recoverable_expense_answer_{{$non_recoverable_expenses_answer["id"]}}"
+                                                       value="1"
+                                                       data-id="{{$non_recoverable_expenses_answer["id"]}}"
+                                                       class="filter_product filter_checkbox filter_non_recoverable_expense">
+                                                <span class="checkmark"></span>
+                                                <span class="single_filter_count non_recoverable_amount_having_products_filter_count">{{$non_recoverable_expenses_answer["count"]}}</span>
+                                            </label>
 
+                                        @endforeach
 
-                            <div class="check-drop-down-wrapper">
-                                <div class="check-drop-title">
-                                    <span>Չհատուցվող գումար</span>
-                                    <i></i>
+                                    </div>
                                 </div>
-                                <div class="check-drop-down">
-
-                                    @foreach($yes_no_answers as $yes_no_answer)
-
-                                        <label class="container">{{$yes_no_answer->name}}
-                                            <input type="checkbox"
-                                                   id="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
-                                                   name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
-                                                   value="1"
-                                                   data-id="{{$yes_no_answer->id}}"
-                                                   class="filter_product filter_checkbox filter_non_recoverable_expense">
-                                            <span class="checkmark"></span>
-                                            @if($yes_no_answer->id == 1)
-                                                <span class="single_filter_count non_recoverable_amount_having_products_filter_count">{{$non_recoverable_amount_having_products_count}}</span>
-                                            @else
-                                                <span class="single_filter_count non_recoverable_amount_no_having_products_filter_count">{{$non_recoverable_amount_no_having_products_count}}</span>
-                                            @endif
-                                        </label>
-                                    @endforeach
-                                </div>
-                            </div>
+                            @endif
 
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Մուտքերի քանակ</span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
-                                    <label class="container">Մեկ
-                                        <input type="checkbox"
-                                               id="term_inputs_quantity_1"
-                                               name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
-                                               value="1"
-                                               data-id="{{$yes_no_answer->id}}"
-                                               class="filter_product filter_checkbox filter_term_inputs_quantity">
-                                        <span class="checkmark"></span>
-                                        <span class="single_filter_count term_inputs_quantity_filter_count">2</span>
 
-                                    </label>
-                                    <label class="container">Մեկից ավել
-                                        <input type="checkbox"
-                                               id="term_inputs_quantity_1"
-                                               name="non_recoverable_expense_answer_{{$yes_no_answer->id}}"
-                                               value="1"
-                                               data-id="{{$yes_no_answer->id}}"
-                                               class="filter_product filter_checkbox filter_term_inputs_quantity">
-                                        <span class="checkmark"></span>
-                                        <span class="single_filter_count term_inputs_quantity_filter_count">1</span>
-                                    </label>
+                                    @foreach($term_inputs_quantities as  $key => $term_inputs_quantity_curr)
+
+                                        <label class="container">{{$term_inputs_quantity_curr["info"]}}
+                                            <input type="checkbox"
+                                                   id="term_inputs_quantity_{{$key}}"
+                                                   name="term_inputs_quantity_{{$key}}"
+                                                   value="1"
+                                                   data-id="{{$key}}"
+                                                   class="filter_product filter_checkbox filter_term_inputs_quantity">
+                                            <span class="checkmark"></span>
+                                            <span class="single_filter_count term_inputs_quantity_filter_count">{{$term_inputs_quantity_curr["count"]}}</span>
+                                        </label>
+
+                                    @endforeach
+
                                 </div>
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -242,7 +223,7 @@
 
                     <div class="listing-title">
                         <div class="left">
-                            Գտնվել է <span>{{$products->count()}}</span> առաջարկ
+                            Գտնվել է <span class="count_searched_products">{{$request_results_count}}</span> առաջարկ
                         </div>
                         <div class="right">
                             <div class="listing-icon">
@@ -265,88 +246,72 @@
                         </div>
                     </div>
 
-                    <div class="change_item">
-                        @foreach($productsGroupByCompany as $companyProducts)
+                    <div class="change_item change_item_product_variations_results">
+                        @foreach($productsWithVariations as $currProduct)
 
 
                             <div class="wrapper pading">
                                 <div class="listing-title">
                                     <div class="left">
                                         <div class="category-title">
-                                            {{$companyProducts->first()->name}}
+                                            {{$currProduct["name"]}}
                                         </div>
                                     </div>
                                     <div class="right">
-                                        <div class="category-logo">
-                                            <img style="max-width: 80px;" src="{{ backend_asset('savedImages/'.@$companyProducts->first()->companyInfo->image )}}">
-                                        </div>
+                                        <a target="_blank"
+                                           href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}"
+                                           class="category-logo">
+                                            <img style="max-width: 80px;"
+                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                        </a>
                                     </div>
                                 </div>
 
                                 <div class="table">
-                                    <div class="table-pise-wrapper">
+                                    <div class="table-pise-wrapper fill-available-width">
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
+                                                Կազմակերպություն
                                             </div>
                                             <div class="table-pise-text">
-                                                98%
+                                                {{$currProduct["companyInfo"]->name}}
                                             </div>
                                         </div>
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                                Ապահովագրավճար
                                             </div>
                                             <div class="table-pise-text">
-                                                2 000 000
+                                                {{$currProduct["variations"][0]["insurance_fee"]}}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Հետ վճարվող գումար
-                                            </div>
-                                            <div class="table-pise-text">
-                                                2 000 000 <i class="icons "></i>
-                                            </div>
-                                        </div>
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
+
                                 <div class="listing-title">
                                     <div class="left">
-                                        <button type="button" class="btn btn-white btn_compare">
+
+                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term_search_in_days."_currency_".$currProduct["variations"][0]["currency"])
+
+                                        <button data-options="{{$unique_options}}"
+                                                data-product-id='{{$currProduct["id"]}}'
+                                                data-variation-id='{{$currProduct["variations"][0]["id"]}}'
+                                                type="button" class="btn btn_compare btn-white">
                                             <i class="icon icon-left  icon-add"></i>
-                                            <span>
-                                            համեմատել
-                                    </span>
+                                            <span>համեմատել</span>
                                         </button>
-                                        <a href="?p=prod-page" class="btn btn-more">
+                                        <a href="{{url('loan'.$currProduct["id"])}}"
+                                           class="btn btn-more">
                                             <span>ավելին</span>
                                             <i class="icon icon-right  icon-arrow-right"></i>
                                         </a>
                                     </div>
                                     <div class="right">
                                         <button type="button" class="btn btn-pink other_suggestions_open_close">
-                                            <section>{{$companyProducts->count()-1}}</section>
+                                            <section>{{count($currProduct["variations"])-1}}</section>
                                             <span>այլ առաջարկ</span>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
@@ -354,86 +319,60 @@
                                 </div>
 
                                 <section class="hide-show">
+                                    @if(count($currProduct["variations"]) > 1)
+                                        @php( $currProductVariations = $currProduct["variations"])
 
-                                    @if($companyProducts->count() > 1)
-                                        @php(
-                                           $companyProductsFiltered = $companyProducts->filter(function ($value, $key) use($companyProducts) {
-                                               return $key > $companyProducts->keys()->first();
-                                           })
-                                       )
+                                        @php( array_shift($currProductVariations))
 
-                                        @foreach($companyProductsFiltered as $companyProductCurr)
+                                        @foreach($currProductVariations as $currProductCurrVariation)
                                             <div class="add-result pading">
                                                 <div class="listing-title">
                                                     <div class="left">
                                                         <div class="category-title">
-                                                            {{$companyProductCurr->name}}
+                                                            {{$currProduct["name"]}}
                                                         </div>
                                                     </div>
+
                                                     <div class="right">
                                                         <div class="category-logo">
                                                             <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.@$companyProductCurr->companyInfo->image )}}">
+                                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="table">
-                                                    <div class="table-pise-wrapper">
+                                                    <div class="table-pise-wrapper fill-available-width">
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Անվանական տոկոսադրույք
+                                                                Կազմակերպություն
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                98%
+                                                                {{$currProduct["companyInfo"]->name}}
                                                             </div>
                                                         </div>
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                                                Ապահովագրավճար
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                2 000 000
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="table-pise-wrapper">
-                                                        <div class="table-pise">
-                                                            <div class="table-pise-title">
-                                                                Հետ վճարվող գումար
-                                                            </div>
-                                                            <div class="table-pise-text">
-                                                                2 000 000 <i class="icons "></i>
-                                                            </div>
-                                                        </div>
-                                                        <div class="table-pise">
-                                                            <div class="table-pise-title">
-                                                                Անվանական տոկոսադրույք
-                                                            </div>
-                                                            <div class="table-pise-text">
-                                                                98%
+                                                                {{$currProductCurrVariation["insurance_fee"]}}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="table-pise-wrapper">
-                                                        <div class="table-pise">
-                                                            <div class="table-pise-title">
-                                                                Անվանական
-                                                            </div>
-                                                            <div class="table-pise-text">
-                                                                98%
-                                                            </div>
-                                                        </div>
-                                                    </div>
+
                                                 </div>
                                                 <div class="listing-title">
                                                     <div class="left">
-                                                        <button type="button" class="btn btn-white btn_compare">
-                                                            <i class="icon icon-left  icon-add"></i>
+                                                        <button type="button" class="btn btn_compare btn-white">
+                                                            <i class="icon icon-left icon-add"></i>
                                                             <span>համեմատել</span>
                                                         </button>
-                                                        <a href="?p=prod-page" class="btn btn-more">
+                                                        <a href="{{url('/car-loan-product/'.$currProduct["id"])}}"
+                                                           class="btn btn-more">
                                                             <span>ավելին</span>
-                                                            <i class="icon icon-right  icon-arrow-right"></i>
+                                                            <i class="icon icon-right icon-arrow-right"></i>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -445,96 +384,77 @@
                         @endforeach
                     </div>
 
-                    <div class="change_item">
+                    <div class="change_item change_item_product_variations_grouped_by_company_results">
 
-                        <div class="table-wrap">
-                            <div class="td">
+                        <div class="table-wrap head_grouped_by_company">
+                            <div class="td fill-available-width">
                                 <span>Կազմակերպության անվանում</span>
                             </div>
 
-                            <div class="td">
-                                <span>Անվանական տոկոսադրույք</span><i></i>
+                            <div class="td fill-available-width">
+                                <span> Ապահովագրավճար </span>
                             </div>
-
-                            <div class="td">
-                                <span>Պարտադիր վճարներ </span>
-                            </div>
-
-                            <div class="td">
-                                <div class="flex-wrapper">
-                                    <span>Հետ վճարվող գումար </span>
-                                    <span>
-                                        <div class="come-back-icon">
-                                            <i class="icon icon-arrow-right"></i>
-                                        </div>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="td">
-                                <span> Փաստացի տոկոսադրույք </span>
-                            </div>
-                            <div class="td"></div>
+                            <div class="td fill-available-width"></div>
                         </div>
-                        @foreach($productsGroupByCompany as $productsGroupByCompanyCurr)
+                        @foreach($productsWithVariationsGroupByCompany as $productsWithVariationsGroupByCompanyCurr)
+
+                            @php( $currCompanyImg   =  $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image)
+
+                            @php( $currCompanyId   =  $productsWithVariationsGroupByCompanyCurr[0]["company_id"])
 
                             <div class="wrapper min-pading">
                                 <div class="table-wrapper">
-                                    <div class="th"><img
-                                                src="{{backend_asset('savedImages/'.@$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
+                                    <div class="th fill-available-width">
+                                        <a target="_blank"
+                                           href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
+                                            <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                        </a>
                                     </div>
 
-                                    <div class="th"><span>98</span></div>
+                                    <div class="th fill-available-width">
+                                        <span>{{round($productsWithVariationsGroupByCompanyCurr[0]["insurance_fee"], 4) }}</span>
+                                    </div>
 
-                                    <div class="th"><span>2 000 000</span></div>
-
-                                    <div class="th"><span>2 000 000</span></div>
-
-                                    <div class="th"><span>98</span></div>
-
-                                    <div class="th flex-wrapper">
-                                        <button class="btn btn-pink">
-                                            <section>{{$productsGroupByCompanyCurr->count()-1}}</section>
+                                    <div class="th flex-wrapper fill-available-width">
+                                        <button class="btn btn-pink other_suggestions_open_close">
+                                            <section>{{count($productsWithVariationsGroupByCompanyCurr)-1}}</section>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
 
-                                        <button class="btn btn-white btn_compare"><i class="icon  icon-add"></i>
-                                        </button>
+                                        <button class="btn btn-red"><i class="icon icon-add"></i></button>
 
-                                        <a href="" class="btn btn-more"><i
-                                                    class="icon icon-right  icon-arrow-right"></i></a>
+                                        <a href="{{url('/car-loan-product/'.$currProduct["id"])}}" class="btn btn-more">
+                                            <i class="icon icon-right icon-arrow-right"></i>
+                                        </a>
                                     </div>
                                 </div>
+
                                 <div class="hide-show">
+                                    @if(count($productsWithVariationsGroupByCompanyCurr) > 1)
+                                        @php( $productsWithVariationsGroupByCompanyCurr =   $productsWithVariationsGroupByCompanyCurr->toArray())
 
-                                    @if($productsGroupByCompanyCurr->count() > 1)
-                                        @php(
-                                           $productsGroupByCompanyCurrFiltered = $productsGroupByCompanyCurr->filter(function ($value, $key) use($productsGroupByCompanyCurr) {
-                                               return $key > $productsGroupByCompanyCurr->keys()->first();
-                                           })
-                                       )
+                                        @php( array_shift($productsWithVariationsGroupByCompanyCurr))
 
-                                        @foreach($productsGroupByCompanyCurrFiltered as $companyOtherProduct)
+                                        @foreach($productsWithVariationsGroupByCompanyCurr as $productsWithVariationsGroupByCompanyCurrVariationCurr)
                                             <div class="table-wrapper">
-                                                <div class="th">
-                                                    <span><img src="{{backend_asset('savedImages/'.@$companyOtherProduct->companyInfo->image )}}"></span>
+                                                <div class="th fill-available-width">
+                                                    <a target="_blank"
+                                                       href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
+                                                        <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                                    </a>
                                                 </div>
 
-                                                <div class="th"><span> 98 </span></div>
+                                                <div class="th fill-available-width">
+                                                    <span>{{$productsWithVariationsGroupByCompanyCurrVariationCurr["insurance_fee"]}}</span>
+                                                </div>
 
-                                                <div class="th"><span>2 000 000</span></div>
+                                                <div class="th flex-wrapper fill-available-width">
 
-                                                <div class="th"><span>2 000 000</span></div>
+                                                    <button class="btn btn-red"><i class="icon  icon-add"></i></button>
 
-                                                <div class="th"><span>98</span></div>
-
-                                                <div class="th flex-wrapper ">
-
-                                                    <button class="btn btn-white btn_compare"><i
-                                                                class="icon  icon-add"></i></button>
-
-                                                    <a href="" class="btn btn-more"><i
-                                                                class="icon  icon-arrow-right"></i></a>
+                                                    <a href="" class="btn btn-more">
+                                                        <i class="icon  icon-arrow-right"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -542,8 +462,8 @@
                                 </div>
                             </div>
                         @endforeach
-
                     </div>
+
 
                 </div>
             @endif

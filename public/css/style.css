@@ -1,4 +1,4 @@
-.btn, .more-info i, .btn-pink i, .click-ther:hover, .click-ther i, .filter-home-atr:hover, .offer, .offer .icon, .offert-title, .select-selected:after, .filter-home-atr > .custom-select > .select-selected:after, .select-items div, .select-items div:hover, .open-more-button i, .check-drop-down-wrapper.active > .check-drop-down, .btn-pink > .icon-right, .product-inform {
+.btn, .more-info i, .btn-pink i, .click-ther:hover, .click-ther i, .filter-home-atr:hover, .offer, .offer .icon, .offert-title, .select-selected:after, .filter-home-atr > .custom-select-second > .select-selected:after, .select-items div, .select-items div:hover, .open-more-button i, .check-drop-down-wrapper.active > .check-drop-down, .btn-pink > .icon-right, .product-inform {
     -webkit-transition: all 0.15s linear;
     -moz-transition: all 0.15s linear;
     -ms-transition: all 0.15s linear;
@@ -34,7 +34,7 @@
     justify-content: center
 }
 
-.btn, .btn-text-blue, .btn-icon-blue, header, .messeng-indicator, .inform-link a, .filter-home > .one > .custom-select > .select-items, .offer, .select-selected:after, .come-back, .open-more-button, .come-back-icon, .left, .right, .read-more, .checkmark, span, .add-function, .add-function a, .th, .flex-wrapper > .btn, .compare_name_title, .all-conditions, .menu-header, .warning > .icon, .right-border, .wrapper.wrapper-diogram, .price-wrap {
+.btn, .btn-text-blue, .btn-icon-blue, header, .messeng-indicator, .inform-link a, .filter-home > .one > .custom-select-second > .select-items, .offer, .select-selected:after, .come-back, .open-more-button, .come-back-icon, .left, .right, .read-more, .checkmark, span, .add-function, .add-function a, .th, .flex-wrapper > .btn, .compare_name_title, .all-conditions, .menu-header, .warning > .icon, .right-border, .wrapper.wrapper-diogram, .price-wrap {
     -ms-align-items: center;
     align-items: center
 }
@@ -102,7 +102,7 @@
     src: url("../font/NoahTT-reg.woff")
 }
 
-::-webkit-scrollbar {
+html::-webkit-scrollbar {
     width: 0px;
     height: 0px
 }
@@ -353,7 +353,7 @@
 
 .icon {
     font-size: inherit;
-    display: inline-flex
+    display: inline-flex !important;
 }
 
 .th.flex-wrapper > .btn-pink {
@@ -606,13 +606,13 @@ a {
     line-height: 80px
 }
 
-.filter-home > .one > .custom-select > .select-items {
+.filter-home > .one > .custom-select-second > .select-items {
     column-count: 3;
     padding: 15px;
     overflow: inherit
 }
 
-.filter-home > .one > .custom-select > .select-items > div {
+.filter-home > .one > .custom-select-second > .select-items > div {
     margin: 0;
     width: max-content;
     padding: 6px 20px 6px 6px
@@ -837,12 +837,12 @@ input:active, :hover, :focus {
     margin: 30px 0px 30px 20px
 }
 
-.custom-select {
+.custom-select-second {
     position: relative;
     display: inline-flex
 }
 
-.custom-select select {
+.custom-select-second select {
     display: none
 }
 
@@ -859,11 +859,11 @@ input:active, :hover, :focus {
     margin: auto
 }
 
-.filter-home-atr > .custom-select > .select-selected:after {
+.filter-home-atr > .custom-select-second > .select-selected:after {
     font-size: 11px
 }
 
-.custom-select.wrapper {
+.custom-select-second.wrapper {
     position: relative;
     display: inline-flex;
     width: 100%;
@@ -1356,7 +1356,9 @@ i.icon.icon-down.icon-arrow-down {
 }
 
 .th img {
-    width: 80%
+    width: 80%;
+    max-width: 114px;
+    height: auto;
 }
 
 .th.flex-wrapper > .btn.btm-more > .icon-right {

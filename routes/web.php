@@ -22,11 +22,19 @@ Route::get('/loans', 'HomeController@loans')->name('loans');
 Route::get('', 'HomeController@index')->name('home');
 
 /* products compare */
-foreach(\App\Models\ProductByBelongingsView::all() as $products_by_belongings_views){
+foreach (\App\Models\ProductByBelongingsView::all() as $products_by_belongings_views) {
 
-    \Illuminate\Support\Facades\Route::any($products_by_belongings_views->compare_url,'HomeController@'.$products_by_belongings_views->compare_action);
+    \Illuminate\Support\Facades\Route::any($products_by_belongings_views->compare_url, 'HomeController@' . $products_by_belongings_views->compare_action);
 }
 /* products compare */
+
+/* compare inner page */
+foreach (\App\Models\ProductByBelongingsView::all() as $products_by_belongings_views) {
+
+    \Illuminate\Support\Facades\Route::any($products_by_belongings_views->compare_inner_url, 'HomeController@' . $products_by_belongings_views->compare_inner_action);
+}
+/* compare inner page */
+
 
 Route::get('/company-branches-and-bankomats/{company_id}', 'CompaniesController@companyBranchesBankomats');
 
@@ -47,8 +55,5 @@ Route::get('/how-to-use/', 'ExtraController@howToUse');
 
 Route::get('/site-map/', 'ExtraController@sitemap');
 
-Route::get('/createSelectBox', 'HomeController@createSelectBox');
 
-
-
-Route::get('/car-loan-product/{id}', 'HomeController@carLoanProduct');
+Route::get('/car-loan-product/{unique_options}/{cost}/{prepayment}/{time_type}/{term}', 'HomeController@carLoanProduct');

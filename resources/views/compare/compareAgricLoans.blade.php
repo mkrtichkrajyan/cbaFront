@@ -40,7 +40,7 @@
 
                         <div class="columns large-3 medium-6 small-12">
                             <label class="label" for="currency">Արժույթ</label>
-                            <div class="custom-select wrapper currency_type_selectbox">
+                            <div class="custom-select-second wrapper currency_type_selectbox">
                                 <select id="currency" name="currency"
                                         class="filter_product filter_currency">
                                     <option value="">Արժույթ</option>
@@ -159,7 +159,7 @@
                                 <div class="check-drop-down">
 
                                     @foreach($purposeTypes as $purposeType)
-                                        @if($purposeType['id']  !=  1)
+
                                         <label class="container">{{$purposeType["info"]->name}}
                                             <input type="checkbox" id="purpose_type_{{$purposeType['id']}}"
                                                    data-id="{{$purposeType['id']}}"
@@ -167,9 +167,9 @@
                                                    value="1"
                                                    class="filter_product filter_checkbox filter_purpose_type">
                                             <span class="checkmark"></span>
+
                                             <span class="single_filter_count purpose_type_filter_count">{{$purposeType["count"]}}</span>
                                         </label>
-                                        @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -177,7 +177,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Տոկոսադրույք</span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
                                     @foreach($percentage_types as $percentage_type)
@@ -197,7 +196,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Մարման եղանակ </span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
 
@@ -215,7 +213,7 @@
                                 </div>
 
                                 <div class="check-box check-drop-down">
-                                    <div class="custom-select wrapper">
+                                    <div class="custom-select-second wrapper">
                                         <select id="repayment_loan_interval_type" name="repayment_loan_interval_type"
                                                 class="filter_product filter_selectbox filter_repayment_loan_interval_type">
                                             <option value="">Վարկ</option>
@@ -224,7 +222,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="custom-select wrapper">
+                                    <div class="custom-select-second wrapper">
                                         <select id="repayment_percent_interval_type"
                                                 name="repayment_percent_interval_type"
                                                 class="filter_product filter_selectbox filter_repayment_percent_interval_type">
@@ -235,7 +233,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="check-drop-down-wrapper">
@@ -262,7 +259,6 @@
                             <div class="check-drop-down-wrapper">
                                 <div class="check-drop-title">
                                     <span>Ապահովվածություն </span>
-                                    <i></i>
                                 </div>
                                 <div class="check-drop-down">
                                     @foreach($security_types as $security_type)
@@ -279,14 +275,12 @@
                                 </div>
                             </div>
 
-                            @if($special_projects_having_products_count > 0)
+                            @if($special_project_statuses[1]["count"] > 0)
                                 <div class="check-drop-down-wrapper">
                                     <div class="check-drop-title">
                                         <span>Հատուկ Ծրագիր  </span>
-                                        <i></i>
                                     </div>
                                     <div class="check-drop-down">
-
                                         @foreach($yes_no_answers as $yes_no_answer)
 
                                             <label class="container">{{$yes_no_answer->name}}
@@ -296,22 +290,18 @@
                                                        value="1" data-id="{{$yes_no_answer->id}}"
                                                        class="filter_product filter_checkbox filter_special_project">
                                                 <span class="checkmark"></span>
-                                                @if($yes_no_answer->id == 1)
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$special_projects_having_products_count}}</span>
-                                                @else
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$special_projects_no_having_products_count}}</span>
-                                                @endif
+                                                <span class="single_filter_count repayment_type_filter_count">{{$special_project_statuses[$yes_no_answer->id]["count"]}}</span>
                                             </label>
                                         @endforeach
                                     </div>
                                 </div>
                             @endif
 
-                            @if($privileged_term_having_products_count > 0)
+                            {{--@if($privileged_term_having_products_count > 0)--}}
+                            @if($privileged_term_statuses[1]["count"] > 0)
                                 <div class="check-drop-down-wrapper">
                                     <div class="check-drop-title">
                                         <span>Արտոնյալ ժամկետ</span>
-                                        <i></i>
                                     </div>
                                     <div class="check-drop-down">
 
@@ -324,11 +314,7 @@
                                                        data-id="{{$yes_no_answer->id}}"
                                                        class="filter_product filter_checkbox filter_privileged_term">
                                                 <span class="checkmark"></span>
-                                                @if($yes_no_answer->id == 1)
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_having_products_count}}</span>
-                                                @else
-                                                    <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_no_having_products_count}}</span>
-                                                @endif
+                                                <span class="single_filter_count repayment_type_filter_count">{{$privileged_term_statuses[$yes_no_answer->id]["count"]}}</span>
                                             </label>
                                         @endforeach
                                     </div>
@@ -342,7 +328,7 @@
 
                     <div class="listing-title">
                         <div class="left">
-                            Գտնվել է <span>{{$products->count()}}</span> առաջարկ
+                            Գտնվել է <span>{{$request_results_count}}</span> առաջարկ
                         </div>
                         <div class="right">
                             <div class="listing-icon">
@@ -358,93 +344,95 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="change_item">
-                        @foreach($productsGroupByCompany as $companyProducts)
-
-
+                        @foreach($productsWithVariations as $currProduct)
                             <div class="wrapper pading">
                                 <div class="listing-title">
                                     <div class="left">
                                         <div class="category-title">
-                                            {{$companyProducts->first()->name}}
+                                            {{$currProduct["name"]}}
                                         </div>
                                     </div>
                                     <div class="right">
                                         <div class="category-logo">
                                             <img style="max-width: 80px;"
-                                                 src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
+                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="table">
                                     <div class="table-pise-wrapper">
+
+                                        <div class="table-pise">
+                                            <div class="table-pise-title">
+                                                Կազմակերպություն
+                                            </div>
+                                            <div class="table-pise-text">
+                                                {{$currProduct["companyInfo"]->name}}
+                                            </div>
+                                        </div>
+
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
                                                 Անվանական տոկոսադրույք
                                             </div>
                                             <div class="table-pise-text">
-                                                98%
+                                                {{$currProduct["variations"][0]["percentage"]}}
                                             </div>
                                         </div>
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Պարտադիր ճարներ <i class="icon icon-right  icon-question"></i>
+                                                Ընդամենը պարտադիր ճարներ
+                                                <i class="icon icon-right  icon-question"></i>
                                             </div>
                                             <div class="table-pise-text">
-                                                2 000 000
+                                                x
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="table-pise-wrapper">
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Հետ վճարվող գումար
+                                                Ընդամենը հետ վճարվող գումար
                                             </div>
                                             <div class="table-pise-text">
-                                                2 000 000 <i class="icons "></i>
+                                                y <i class="icons "></i>
                                             </div>
                                         </div>
+
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Անվանական տոկոսադրույք
+                                                Փաստացի տոկոսադրույք
                                             </div>
                                             <div class="table-pise-text">
-                                                98%
+                                                {{$currProduct["variations"][0]["factual_percentage"]}}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="table-pise-wrapper">
-                                        <div class="table-pise">
-                                            <div class="table-pise-title">
-                                                Անվանական
-                                            </div>
-                                            <div class="table-pise-text">
-                                                98%
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="listing-title">
                                     <div class="left">
-                                        <button type="button" class="btn btn-white btn_compare">
+                                        <button data-product-id='{{$currProduct["id"]}}'
+                                                data-variation-id='{{$currProduct["variations"][0]["id"]}}'
+                                                type="button" class="btn btn-red">
                                             <i class="icon icon-left  icon-add"></i>
-                                            <span>
-                                            համեմատել
-                                    </span>
+                                            <span>համեմատել</span>
                                         </button>
-                                        <a href="?p=prod-page" class="btn btn-more">
-                                    <span>
-                                            ավելին
-                                    </span>
+                                        <a href="{{url('loan'.$currProduct["id"])}}"
+                                           class="btn btn-more">
+                                            <span>ավելին</span>
                                             <i class="icon icon-right  icon-arrow-right"></i>
                                         </a>
                                     </div>
                                     <div class="right">
                                         <button type="button" class="btn btn-pink other_suggestions_open_close">
-                                            <section>{{$companyProducts->count()-1}}</section>
-                                            <span>
-                                            այլ առաջարկ
-                                    </span>
+                                            <section>{{count($currProduct["variations"])-1}}</section>
+                                            <span>այլ առաջարկ</span>
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
                                     </div>
@@ -452,42 +440,52 @@
 
                                 <section class="hide-show">
 
-                                    @if($companyProducts->count() > 1)
-                                        @php(
-                                           $companyProductsFiltered = $companyProducts->filter(function ($value, $key) use($companyProducts) {
-                                               return $key > $companyProducts->keys()->first();
-                                           })
-                                       )
+                                    @if(count($currProduct["variations"]) > 1)
+                                        @php( $currProductVariations = $currProduct["variations"])
 
-                                        @foreach($companyProductsFiltered as $companyProductCurr)
+                                        @php( array_shift($currProductVariations))
+
+                                        @foreach($currProductVariations as $currProductCurrVariation)
                                             <div class="add-result pading">
                                                 <div class="listing-title">
                                                     <div class="left">
                                                         <div class="category-title">
-                                                            {{$companyProductCurr->name}}
+                                                            {{$currProduct["name"]}}
                                                         </div>
                                                     </div>
+
                                                     <div class="right">
                                                         <div class="category-logo">
                                                             <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">
+                                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="table">
                                                     <div class="table-pise-wrapper">
+
+                                                        <div class="table-pise">
+                                                            <div class="table-pise-title">
+                                                                Կազմակերպություն
+                                                            </div>
+                                                            <div class="table-pise-text">
+                                                                {{$currProduct["companyInfo"]->name}}
+                                                            </div>
+                                                        </div>
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
                                                                 Անվանական տոկոսադրույք
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                98%
+                                                                {{$currProductCurrVariation["percentage"]}}
                                                             </div>
                                                         </div>
+
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Պարտադիր ճարներ <i
-                                                                        class="icon icon-right  icon-question"></i>
+                                                                Ընդամենը պարտադիր վճարներ
+                                                                <i class="icon icon-right  icon-question"></i>
                                                             </div>
                                                             <div class="table-pise-text">
                                                                 2 000 000
@@ -497,44 +495,33 @@
                                                     <div class="table-pise-wrapper">
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Հետ վճարվող գումար
+                                                                Ընդամենը հետ վճարվող գումար
                                                             </div>
                                                             <div class="table-pise-text">
                                                                 2 000 000 <i class="icons "></i>
                                                             </div>
                                                         </div>
-                                                        <div class="table-pise">
-                                                            <div class="table-pise-title">
-                                                                Անվանական տոկոսադրույք
-                                                            </div>
-                                                            <div class="table-pise-text">
-                                                                98%
-                                                            </div>
-                                                        </div>
+
                                                     </div>
                                                     <div class="table-pise-wrapper">
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Անվանական
+                                                                Փաստացի տոկոսադրույք
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                98%
+                                                                {{$currProductCurrVariation["factual_percentage"]}}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="listing-title">
                                                     <div class="left">
-                                                        <button type="button" class="btn btn-white btn_compare">
+                                                        <button type="button" class="btn btn-red">
                                                             <i class="icon icon-left  icon-add"></i>
-                                                            <span>
-                                                    համեմատել
-                                            </span>
+                                                            <span>համեմատել</span>
                                                         </button>
                                                         <a href="?p=prod-page" class="btn btn-more">
-                                            <span>
-                                                    ավելին
-                                            </span>
+                                                            <span>ավելին</span>
                                                             <i class="icon icon-right  icon-arrow-right"></i>
                                                         </a>
                                                     </div>
@@ -545,7 +532,12 @@
                                 </section>
                             </div>
                         @endforeach
+
+                        <div class="pagination_sexion">
+                            {{ $productsWithVariations->appends([])->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
+
 
                     <div class="change_item">
 

@@ -59,7 +59,7 @@
                             </span>
                     գումարով և
                     <span class="filter-home-atr">
-                                <div class="custom-select">
+                                <div class="custom-select-second">
                                     <select>
                                         <option value="0">24 ամիս <i class="icon icon-arrow-down"></i></option>
                                         <option value="1">48 ամիս</option>

@@ -42,4 +42,10 @@ class GoldLoan extends Model
     {
         return $this->hasOne('App\Models\TimeType', 'id', 'loan_term_to_periodicity_type');
     }
+
+
+    public function variations()
+    {
+        return $this->hasMany('App\Models\ProductsVariation', 'product_id', 'id')->where('belonging_id', $this->belongingId());
+    }
 }

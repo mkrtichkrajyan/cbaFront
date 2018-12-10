@@ -8,6 +8,9 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
 
+    {{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">--}}
+    <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="{{asset('/css/plugins/foundation.min.css')}}"/>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.2/semantic.min.css" rel="stylesheet">

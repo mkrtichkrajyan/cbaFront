@@ -744,7 +744,7 @@
         font-size: 14px
     }
 
-    .filter-home-atr > .custom-select > .select-selected:after {
+    .filter-home-atr > .custom-select-second > .select-selected:after {
         font-size: 7px;
         right: -6px
     }
