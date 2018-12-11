@@ -943,7 +943,7 @@ class MainController extends Controller
     }
 
     /**
-     * return paginate Collection.
+     *  return paginate Collection.
      */
     function paginateCollection($collection, $perPage, $pageName = 'page', $fragment = null)
     {
