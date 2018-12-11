@@ -612,8 +612,7 @@ class HomeController extends MainController
                 $privileged_term_statuses = null;
 
                 $special_project_statuses = null;
-            }
-            else {
+            } else {
                 $products = CarLoan::with('companyInfo')
                     ->with('securityTypes')->with('otherPayments')->withCount('variations')
                     ->where('status', 2)
@@ -777,8 +776,7 @@ class HomeController extends MainController
 
                 $special_project_statuses = $productsFiltersSingleCounts["special_project_statuses"];
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -3609,7 +3607,7 @@ class HomeController extends MainController
 
         $min_age = TravelInsurancesVariation::min('travel_age_from');
 
-        $max_age = TravelInsurancesVariation::where('id', '>', '222')->max('travel_age_to');
+        $max_age = TravelInsurancesVariation::max('travel_age_to');
 
         $min_age = intval($min_age);
 
@@ -3782,8 +3780,7 @@ class HomeController extends MainController
 
                 $term_inputs_quantities = $productsFiltersSingleCounts["term_inputs_quantities"];
             }
-        }
-        else {
+        } else {
             $validator = Validator::make($request->all(), []);
 
             $products = NULL;
@@ -3850,7 +3847,7 @@ class HomeController extends MainController
                 "term_inputs_quantities" => $term_inputs_quantities,
 
                 "getCompareInfo" => $getCompareInfo,
-                
+
                 "previousUrl" => $previousUrl,
             ]);
     }

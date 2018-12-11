@@ -987,7 +987,7 @@ class MainController extends Controller
     public
     function calcTravelInsuranceFee($travel_insurance_amount, $currency, $travel_insurance_tariff_amount, $travel_insurance_percent, $term_coefficient, $travel_age_coefficient)
     {
-        $coefficient_amd = $this->loan_currencies_types[$currency]["coefficient_amd"];
+        $coefficient = $this->loan_currencies_types[$currency]["extra"];
 
         $insuranceFee = 0;
 
@@ -999,7 +999,7 @@ class MainController extends Controller
 
             $insurance_percent_calc_amount = $travel_insurance_amount * $travel_insurance_percent / 100;
 
-            $insurance_percent_calc_amount_converted_amd = $coefficient_amd * $insurance_percent_calc_amount;
+            $insurance_percent_calc_amount_converted_amd = $coefficient * $insurance_percent_calc_amount;
 
             $insuranceFee = $insuranceFee + $insurance_percent_calc_amount_converted_amd;
         }
