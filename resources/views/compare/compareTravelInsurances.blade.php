@@ -103,6 +103,7 @@
                                 <input type="hidden" name="loan_term_search" id="loan_term_search"
                                        value="{{$loan_term}}">
 
+                                
                                 <input type="hidden" name="time_type" id="time_type" value="{{$time_type}}">
 
                                 <input type="hidden" name="time_type_search" id="time_type_search"
