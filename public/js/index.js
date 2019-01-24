@@ -617,34 +617,54 @@ $(document).ready(function () {
 
         product_id = $(this).attr('data-product-id');
 
-        if ($("#prod_cost").length > 0) {
-
-            cost = $("#prod_cost").val();
-
-            prepayment = $("#prod_prepayment").val();
-
-            term = $("#prod_loan_term_search_in_days").val();
-        }
-        else {
-            cost = $(this).attr('data-cost');
-
-            prepayment = $(this).attr('data-prepayment');
-
-            term = $(this).attr('data-term');
-        }
-
         /* building curr_data */
         curr_data = {};
 
         curr_data.product_id = product_id;
 
-        curr_data.cost = cost;
-
-        curr_data.prepayment = prepayment;
-
-        curr_data.term = term;
-
         curr_data.curr_variation_options = curr_variation_options;
+
+        if(curr_belonging_id == 12) {
+
+            country = $(this).attr('data-country');
+
+            age =  $(this).attr('data-age');
+
+            term = $(this).attr('data-term');
+
+            currency = $(this).attr('data-term');
+
+            curr_data.country = country;
+
+            curr_data.age = age;
+
+            curr_data.term = term;
+
+            curr_data.currency = currency;
+        }
+        else{
+            if ($("#prod_cost").length > 0) {
+
+                cost = $("#prod_cost").val();
+
+                prepayment = $("#prod_prepayment").val();
+
+                term = $("#prod_loan_term_search_in_days").val();
+            }
+            else {
+                cost = $(this).attr('data-cost');
+
+                prepayment = $(this).attr('data-prepayment');
+
+                term = $(this).attr('data-term');
+            }
+
+            curr_data.cost = cost;
+
+            curr_data.prepayment = prepayment;
+
+            curr_data.term = term;
+        }
 
         /* building curr_data */
 
@@ -722,6 +742,10 @@ $(document).ready(function () {
 
         prepayment = parseFloat($("#maximum").val().trim());
 
+        if (isNaN(prepayment)) {
+            prepayment = 0;
+        }
+
         $("#slider-range-max").slider({
             range: "min",
             min: 0,
@@ -743,6 +767,10 @@ $(document).ready(function () {
         cost = parseFloat($("#cost").val().trim());
 
         prepayment = parseFloat($("#maximum").val().trim());
+
+        if (isNaN(prepayment)) {
+            prepayment = 0;
+        }
 
         $("#slider-range-max").slider({
             range: "min",
@@ -766,7 +794,12 @@ $(document).ready(function () {
 
         prepayment = parseFloat($("#maximum").val().trim());
 
+        if (isNaN(prepayment)) {
+            prepayment = 0;
+        }
+
         if (cost > 0) {
+            console.log(prepayment);
             $("#slider-range-max").slider({
                 range: "min",
                 min: 0,

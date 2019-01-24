@@ -113,6 +113,18 @@ class MainController extends Controller
         return $belongingsArr;
     }
 
+    /**
+     * Remove Current Belonging Products From Compare(Cookies) if
+     * Detect Search Parameters are changed.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function detectSearchParamsChanged($belonging_id)
+    {
+
+        //return $belongingsArr;
+    }
+
 
     public function getloanCurrenciesTypes()
     {

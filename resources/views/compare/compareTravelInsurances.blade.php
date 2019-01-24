@@ -103,7 +103,7 @@
                                 <input type="hidden" name="loan_term_search" id="loan_term_search"
                                        value="{{$loan_term}}">
 
-                                
+
                                 <input type="hidden" name="time_type" id="time_type" value="{{$time_type}}">
 
                                 <input type="hidden" name="time_type_search" id="time_type_search"
@@ -295,19 +295,30 @@
                                 <div class="listing-title">
                                     <div class="left">
 
-                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term_search_in_days."_currency_".$currProduct["variations"][0]["currency"])
+                                        @php($curr_variation_currency   =   $currProduct["variations"][0]["currency"])
+
+                                        @php($curr_variation_term_inputs_quantity   =   $currProduct["variations"][0]["term_inputs_quantity"])
+
+                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
 
                                         <button data-options="{{$unique_options}}"
+                                                data-belongingid="{{$belonging_id}}"
                                                 data-product-id='{{$currProduct["id"]}}'
                                                 data-variation-id='{{$currProduct["variations"][0]["id"]}}'
-                                                type="button" class="btn btn_compare btn-white">
+                                                data-country="{{$country}}"
+                                                data-age="{{$age}}"
+                                                data-term="{{$loan_term}}"
+                                                data-term_inputs_quantity="{{$curr_variation_term_inputs_quantity}}"
+                                                data-currency="{{$curr_variation_currency}}"
+                                                type="button"
+                                                class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
                                             <i class="icon icon-left  icon-add"></i>
                                             <span>համեմատել</span>
                                         </button>
                                         <a href="{{url('loan'.$currProduct["id"])}}"
                                            class="btn btn-more">
                                             <span>ավելին</span>
-                                            <i class="icon icon-right  icon-arrow-right"></i>
+                                            <i class="icon icon-right icon-arrow-right"></i>
                                         </a>
                                     </div>
                                     <div class="right">
@@ -366,11 +377,29 @@
                                                 </div>
                                                 <div class="listing-title">
                                                     <div class="left">
-                                                        <button type="button" class="btn btn_compare btn-white">
+
+                                                        @php($curr_variation_currency   =   $currProductCurrVariation["currency"])
+
+                                                        @php($curr_variation_term_inputs_quantity   =   $currProductCurrVariation["term_inputs_quantity"])
+
+                                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
+
+                                                        <button data-options="{{$unique_options}}"
+                                                                data-belongingid="{{$belonging_id}}"
+                                                                data-product-id='{{$currProduct["id"]}}'
+                                                                data-variation-id='{{$currProductCurrVariation["id"]}}'
+                                                                data-country="{{$country}}"
+                                                                data-age="{{$age}}"
+                                                                data-term="{{$loan_term}}"
+                                                                data-term_inputs_quantity="{{$curr_variation_term_inputs_quantity}}"
+                                                                data-currency="{{$curr_variation_currency}}"
+                                                                type="button"
+                                                                class="btn btn_compare btn-white  @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
                                                             <i class="icon icon-left icon-add"></i>
                                                             <span>համեմատել</span>
                                                         </button>
-                                                        <a href="{{url('/car-loan-product/'.$currProduct["id"])}}"
+                                                        <a href="{{url('/travel-insurance-product/'.$currProduct["id"])}}"
                                                            class="btn btn-more">
                                                             <span>ավելին</span>
                                                             <i class="icon icon-right icon-arrow-right"></i>
@@ -422,7 +451,26 @@
                                             <i class="icon icon-arrow-down"></i>
                                         </button>
 
-                                        <button class="btn btn-red"><i class="icon icon-add"></i></button>
+                                        @php($curr_variation_currency   =   $productsWithVariationsGroupByCompanyCurr[0]["currency"])
+
+                                        @php($curr_variation_term_inputs_quantity   =   $productsWithVariationsGroupByCompanyCurr[0]["term_inputs_quantity"])
+
+                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
+
+                                        <button data-options="{{$unique_options}}"
+                                                data-belongingid="{{$belonging_id}}"
+                                                data-product-id='{{$currProduct["id"]}}'
+                                                data-variation-id='{{$currProduct["variations"][0]["id"]}}'
+                                                data-country="{{$country}}"
+                                                data-age="{{$age}}"
+                                                data-term="{{$loan_term}}"
+                                                data-term_inputs_quantity="{{$curr_variation_term_inputs_quantity}}"
+                                                data-currency="{{$curr_variation_currency}}"
+                                                type="button"
+                                                class="btn btn_compare btn-white  @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+
+                                            <i class="icon icon-add icon-add-mini"></i>
+                                        </button>
 
                                         <a href="{{url('/car-loan-product/'.$currProduct["id"])}}" class="btn btn-more">
                                             <i class="icon icon-right icon-arrow-right"></i>
@@ -451,10 +499,28 @@
 
                                                 <div class="th flex-wrapper fill-available-width">
 
-                                                    <button class="btn btn-red"><i class="icon  icon-add"></i></button>
+                                                    @php($curr_variation_currency   =   $productsWithVariationsGroupByCompanyCurrVariationCurr["currency"])
+
+                                                    @php($curr_variation_term_inputs_quantity   =   $productsWithVariationsGroupByCompanyCurrVariationCurr["term_inputs_quantity"])
+
+                                                    @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
+
+                                                    <button data-options="{{$unique_options}}"
+                                                            data-belongingid="{{$belonging_id}}"
+                                                            data-product-id='{{$currProduct["id"]}}'
+                                                            data-variation-id='{{$productsWithVariationsGroupByCompanyCurrVariationCurr["id"]}}'
+                                                            data-country="{{$country}}"
+                                                            data-age="{{$age}}"
+                                                            data-term="{{$loan_term}}"
+                                                            data-term_inputs_quantity="{{$curr_variation_term_inputs_quantity}}"
+                                                            data-currency="{{$curr_variation_currency}}"
+                                                            type="button"
+                                                            class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
+                                                        <i class="icon  icon-add icon-add-mini"></i>
+                                                    </button>
 
                                                     <a href="" class="btn btn-more">
-                                                        <i class="icon  icon-arrow-right"></i>
+                                                        <i class="icon icon-arrow-right"></i>
                                                     </a>
                                                 </div>
                                             </div>
