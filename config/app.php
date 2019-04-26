@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'BACKEND_URL' => env('BACKEND_URL', 'http://cbapro'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

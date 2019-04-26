@@ -18,6 +18,16 @@ class CreditLoan extends Model
         return $this->hasOne('App\Models\Status', 'id','status');
     }
 
+    public function mainDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId());
+    }
+
+    public function customDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsCustomDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId())->orderBy('id', 'asc');
+    }
+
     public function providingTypeInfo()
     {
         return $this->hasOne('App\Models\ProvidingType', 'id', 'providing_type');

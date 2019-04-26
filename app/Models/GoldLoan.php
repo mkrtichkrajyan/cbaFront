@@ -18,9 +18,24 @@ class GoldLoan extends Model
         return 2;
     }
 
+    public function mainDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId());
+    }
+
+    public function customDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsCustomDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId())->orderBy('id', 'asc');
+    }
+
     public function companyInfo()
     {
         return $this->hasOne('App\Models\Company', 'id', 'company_id');
+    }
+
+    public function otherPayments()
+    {
+        return $this->hasMany('App\Models\ProductOtherPayment', 'product_id', 'id')->where('belonging_id', $this->belongingId())->orderBy('id', 'asc');
     }
 
     public function goldPledgeTypeInfo()
@@ -31,6 +46,11 @@ class GoldLoan extends Model
     public function goldAssayTypes()
     {
         return $this->hasMany('App\Models\ProductsGoldAssayType', 'product_id', 'id');
+    }
+
+    public function goldLoanAssessmentAssaysValues()
+    {
+        return $this->hasMany('App\Models\GoldLoanAssessmentAssay', 'product_id', 'id');
     }
 
     public function loanTermFromPeriodicityTypeInfo()

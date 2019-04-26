@@ -1,11 +1,20 @@
 @extends('layouts.default')
 
-@include('layouts.head')
+@include('layouts.headCompare')
 
 @include('layouts.headerCompare')
 
 @php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
 
+<div class="displayNone">
+    @include('layouts.parts.travel_head_grouped_by_company_hidden')
+
+    @include('layouts.parts.products_travel_datatable')
+
+    <div class="hide-show addthis_toolbox_part_hidden">
+        @include('layouts.parts.addthis')
+    </div>
+</div>
 
 <main>
     <div class="back-fon" style="background-image: url({{asset('img/blue-fon.png')}});height: 150px;">
@@ -14,6 +23,10 @@
     <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path">
 
     <input type="hidden" value="{{$request_results_count}}" id="request_results_count" name="request_results_count">
+
+    <input type="hidden" value="{{url('/travel-insurance-product/')}}" id="prod_page_path" name="prod_page_path"/>
+
+    <input type="hidden" value="{{url('/company-branches-and-bankomats/')}}" id="company_path" name="company_path"/>
 
     <form id="seachProductForm" enctype="multipart/form-data" class="form-horizontal" name="carLoanForm"
           action="{{ url($currProductByBelongingsView->compare_url) }}" method="get">
@@ -43,10 +56,12 @@
 
                         <div class="columns large-3 medium-6 small-12 dropDownSemantic">
                             <label class="label">երկիր</label>
+                            <input type="hidden" name="country_search" id="country_search" value="{{$country}}">
+
                             <div class="select_inputs">
                                 <div class="">
                                     <div class="ui fluid search selection dropdown multiple_select semantic_dropdown_simple">
-                                        <input type="hidden" name="country" value="{{$country}}">
+                                        <input type="hidden" name="travel_country" value="{{$country}}">
                                         <i class="dropdown icon"></i>
                                         <div class="default text">Ընտրել ցանկից</div>
                                         <div class="menu">
@@ -58,9 +73,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($errors->has('country'))
+                                @if ($errors->has('travel_country'))
                                     <span class="help-block err-field">
-                                        <strong>{{ $errors->first('country') }}</strong>
+                                        <strong>{{ $errors->first('travel_country') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -71,6 +86,11 @@
                             <div class="rel">
                                 <input type="number" class="no_negative_value number_not_more_than no_plus_allow"
                                        max="{{$max_age}}" id="age" name="age" value="{{$age}}"
+                                       class="input">
+
+                                <input type="number"
+                                       class="no_negative_value number_not_more_than no_plus_allow displayNone"
+                                       max="{{$max_age}}" id="age_search" name="age_search" value="{{$age}}"
                                        class="input">
 
                                 <input type="hidden" name="age_search" id="age_search"
@@ -86,9 +106,9 @@
                                 <div id="slider-range-insurance-ages"></div>
                             </div>
 
-                            @if ($errors->has('loan_amount'))
+                            @if ($errors->has('age'))
                                 <span class="help-block err-field">
-                                    <strong>{{ $errors->first('loan_amount') }}</strong>
+                                    <strong>{{ $errors->first('age') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -97,10 +117,10 @@
                             <label class="label" for="amount">Օրերի քանակ</label>
                             <div class="rel">
 
-                                <input type="number" min="0" id="loan_term" name="loan_term"
+                                <input type="number" min="0" id="loan_term" name="travel_term"
                                        value="{{$loan_term}}" class="input no_negative_value">
 
-                                <input type="hidden" name="loan_term_search" id="loan_term_search"
+                                <input type="hidden" name="term_search" id="term_search"
                                        value="{{$loan_term}}">
 
 
@@ -123,9 +143,9 @@
                                 </div>
                             </div>
 
-                            @if ($errors->has('loan_term'))
+                            @if ($errors->has('travel_term'))
                                 <span class="help-block err-field">
-                                    <strong>{{ $errors->first('loan_term') }}</strong>
+                                    <strong>{{ $errors->first('travel_term') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -222,29 +242,37 @@
 
                 <div class="margin-top columns large-9 medium-auto product_results">
 
-                    <div class="listing-title">
+                    <div class="listing-title result_listing_title">
                         <div class="left">
                             Գտնվել է <span class="count_searched_products">{{$request_results_count}}</span> առաջարկ
                         </div>
                         <div class="right">
                             <div class="listing-icon">
+                                <div class="other_suggestions_open_close_global_part">
+                                    <button class="other_suggestions_open_close_global btn btn-red" type="button"
+                                            data-open="0">{{$other_suggestions_open_close_global_open_text}}</button>
+                                </div>
                                 <div class="add-function">
-                                    <a href="" download>
+                                    <a class="travel_export_excel" href="">
                                         <i class="icon icon-right  icon-download"></i>
                                     </a>
-                                    <a href="">
+                                    <a class="share_global" href="">
                                         <i class="icon icon-right  icon-more"></i>
                                     </a>
-                                    <a href="">
+                                    <a class="travel_print_results" href="">
                                         <i class="icon icon-right icon-print"></i>
                                     </a>
                                 </div>
                                 <div class="btn-icon-blue">
-                                    <i class="chenge icon icon-right  icon-list"></i>
-                                    <i class="chenge icon icon-right  icon-list-tow"></i>
+                                    <i class="chenge icon icon-right  icon-list-tow change_item_product_variations_grouped_by_company_results_ref "></i>
+                                    <i class="chenge icon icon-right  icon-list change_item_product_variations_results_ref"></i>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="hide-show addthis_toolbox_part">
+                        @include('layouts.parts.addthis')
                     </div>
 
                     <div class="change_item change_item_product_variations_results">
@@ -285,7 +313,7 @@
                                                 Ապահովագրավճար
                                             </div>
                                             <div class="table-pise-text">
-                                                {{$currProduct["variations"][0]["insurance_fee"]}}
+                                                {{ number_format(round($currProduct["variations"][0]["insurance_fee"]), 0, ",", " ") }}
                                             </div>
                                         </div>
 
@@ -315,7 +343,7 @@
                                             <i class="icon icon-left  icon-add"></i>
                                             <span>համեմատել</span>
                                         </button>
-                                        <a href="{{url('loan'.$currProduct["id"])}}"
+                                        <a href="{{url('/travel-insurance-product/'.$currProduct["id"].'/'.$age.'/'.$loan_term.'/'.$curr_variation_currency.'/'.$country)}}"
                                            class="btn btn-more">
                                             <span>ավելին</span>
                                             <i class="icon icon-right icon-arrow-right"></i>
@@ -369,7 +397,7 @@
                                                                 Ապահովագրավճար
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                {{$currProductCurrVariation["insurance_fee"]}}
+                                                                {{ number_format(round($currProductCurrVariation["insurance_fee"]), 0, ",", " ") }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -399,7 +427,7 @@
                                                             <i class="icon icon-left icon-add"></i>
                                                             <span>համեմատել</span>
                                                         </button>
-                                                        <a href="{{url('/travel-insurance-product/'.$currProduct["id"])}}"
+                                                        <a href="{{url('/travel-insurance-product/'.$currProduct["id"].'/'.$age.'/'.$loan_term.'/'.$curr_variation_currency.'/'.$country)}}"
                                                            class="btn btn-more">
                                                             <span>ավելին</span>
                                                             <i class="icon icon-right icon-arrow-right"></i>
@@ -428,7 +456,7 @@
                         </div>
                         @foreach($productsWithVariationsGroupByCompany as $productsWithVariationsGroupByCompanyCurr)
 
-                            @php( $currCompanyImg   =  $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image)
+                            @if(!is_null($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) && strlen($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) > 0)                                 @if(!is_null($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) && strlen($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) > 0)                                 @php( $currCompanyImg   =  $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image)                             @else                                 @php( $currCompanyImg   =  backend_asset($baseline_person_img ))                             @endif                             @else                                 @php( $currCompanyImg   =  backend_asset($baseline_person_img ))                             @endif
 
                             @php( $currCompanyId   =  $productsWithVariationsGroupByCompanyCurr[0]["company_id"])
 
@@ -442,7 +470,7 @@
                                     </div>
 
                                     <div class="th fill-available-width">
-                                        <span>{{round($productsWithVariationsGroupByCompanyCurr[0]["insurance_fee"], 4) }}</span>
+                                        <span>{{ number_format(round($productsWithVariationsGroupByCompanyCurr[0]["insurance_fee"]), 0, ",", " ") }}</span>
                                     </div>
 
                                     <div class="th flex-wrapper fill-available-width">
@@ -455,11 +483,11 @@
 
                                         @php($curr_variation_term_inputs_quantity   =   $productsWithVariationsGroupByCompanyCurr[0]["term_inputs_quantity"])
 
-                                        @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
+                                        @php($unique_options    =   "product_".$productsWithVariationsGroupByCompanyCurr[0]["product_id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
 
                                         <button data-options="{{$unique_options}}"
                                                 data-belongingid="{{$belonging_id}}"
-                                                data-product-id='{{$currProduct["id"]}}'
+                                                data-product-id='{{$productsWithVariationsGroupByCompanyCurr[0]["product_id"]}}'
                                                 data-variation-id='{{$currProduct["variations"][0]["id"]}}'
                                                 data-country="{{$country}}"
                                                 data-age="{{$age}}"
@@ -471,8 +499,8 @@
 
                                             <i class="icon icon-add icon-add-mini"></i>
                                         </button>
-
-                                        <a href="{{url('/car-loan-product/'.$currProduct["id"])}}" class="btn btn-more">
+                                        <a href="{{url('/travel-insurance-product/'.$productsWithVariationsGroupByCompanyCurr[0]["product_id"].'/'.$age.'/'.$loan_term.'/'.$curr_variation_currency.'/'.$country)}}"
+                                           class="btn btn-more">
                                             <i class="icon icon-right icon-arrow-right"></i>
                                         </a>
                                     </div>
@@ -485,6 +513,7 @@
                                         @php( array_shift($productsWithVariationsGroupByCompanyCurr))
 
                                         @foreach($productsWithVariationsGroupByCompanyCurr as $productsWithVariationsGroupByCompanyCurrVariationCurr)
+
                                             <div class="table-wrapper">
                                                 <div class="th fill-available-width">
                                                     <a target="_blank"
@@ -494,7 +523,7 @@
                                                 </div>
 
                                                 <div class="th fill-available-width">
-                                                    <span>{{$productsWithVariationsGroupByCompanyCurrVariationCurr["insurance_fee"]}}</span>
+                                                    <span>{{ number_format(round($productsWithVariationsGroupByCompanyCurrVariationCurr["insurance_fee"]), 0, ",", " ") }}</span>
                                                 </div>
 
                                                 <div class="th flex-wrapper fill-available-width">
@@ -503,11 +532,11 @@
 
                                                     @php($curr_variation_term_inputs_quantity   =   $productsWithVariationsGroupByCompanyCurrVariationCurr["term_inputs_quantity"])
 
-                                                    @php($unique_options    =   "product_".$currProduct["id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
+                                                    @php($unique_options    =   "product_".$productsWithVariationsGroupByCompanyCurrVariationCurr["product_id"]."_age_".$age."_loan_term_".$loan_term."_currency_".$curr_variation_currency."_term_inputs_quantity_".$curr_variation_term_inputs_quantity)
 
                                                     <button data-options="{{$unique_options}}"
                                                             data-belongingid="{{$belonging_id}}"
-                                                            data-product-id='{{$currProduct["id"]}}'
+                                                            data-product-id='{{$productsWithVariationsGroupByCompanyCurrVariationCurr["product_id"]}}'
                                                             data-variation-id='{{$productsWithVariationsGroupByCompanyCurrVariationCurr["id"]}}'
                                                             data-country="{{$country}}"
                                                             data-age="{{$age}}"
@@ -518,8 +547,8 @@
                                                             class="btn btn_compare btn-white @if(in_array($unique_options,$checked_variations)) compare_act_button_checked @endif">
                                                         <i class="icon  icon-add icon-add-mini"></i>
                                                     </button>
-
-                                                    <a href="" class="btn btn-more">
+                                                    <a href="{{url('/travel-insurance-product/'.$currProduct["id"].'/'.$age.'/'.$loan_term.'/'.$curr_variation_currency.'/'.$country)}}"
+                                                       class="btn btn-more">
                                                         <i class="icon icon-arrow-right"></i>
                                                     </a>
                                                 </div>
@@ -541,6 +570,8 @@
 </main>
 
 
+<script src="{{asset('js/products_not_loan.js')}}"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -548,12 +579,12 @@
 
         $(".filter_selectbox").parent().find('.select-selected').bind("DOMSubtreeModified", function () {
 
-            filter_products("{{url('/car-loans-filters/')}}");
+            filter_travel_insurances("{{url('/travel-insurances-filters/')}}");
         });
 
         $(".filter_product").click(function () {
 
-            filter_products("{{url('/car-loans-filters/')}}");
+            filter_travel_insurances("{{url('/travel-insurances-filters/')}}");
         });
     });
 </script>

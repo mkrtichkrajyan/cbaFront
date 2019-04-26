@@ -1,10 +1,20 @@
 @extends('layouts.default')
 
-@include('layouts.head')
+@include('layouts.headCompare')
 
 @include('layouts.headerCompare')
 
 @php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
+
+<div class="displayNone">
+    @include('layouts.parts.head_grouped_by_company_hidden')
+
+    @include('layouts.parts.products_datatable')
+
+    <div class="hide-show addthis_toolbox_part_hidden">
+        @include('layouts.parts.addthis')
+    </div>
+</div>
 
 
 <main>
@@ -56,9 +66,10 @@
                             <label class="label" for="car_cost">Ավտոմեքենայի արժեք</label>
                             <div class="rel">
                                 <input type="number" min="0" name="car_cost"
-                                       class="input no_negative_value" id="cost" value="{{$car_cost}}">
+                                       class="input only_numbers more_than_zero" id="cost" value="{{$car_cost}}">
 
-                                <input type="hidden" name="car_cost_search" id="car_cost_search" value="{{$car_cost}}">
+                                <input type="hidden" name="car_cost_search" class="cost_search" id="car_cost_search"
+                                       value="{{$car_cost}}">
 
                                 <i class="icon icon-right icon-dram"></i>
                             </div>
@@ -73,7 +84,8 @@
                             <label class="label" for="prepayment">Կանխավճար</label>
                             <div class="rel">
                                 <input type="number" id="maximum" name="prepayment"
-                                       class="input no_negative_value prepayment" value="{{$prepayment}}">
+                                       class="input only_numbers prepayment number_not_more_than" max="{{$car_cost}}"
+                                       value="{{$prepayment}}">
 
                                 <input type="hidden" id="prepayment_search" name="prepayment_search"
                                        value="{{$prepayment}}">
@@ -157,9 +169,7 @@
                 <div class="wrapper warning">
                     <i class="icon icon-Info"></i>
                     <span>
-                        ՀՀ տարածքում բանկային հաշվով փոխանցումը կատարվում է առավելագույնը 3 աշխատանքային
-                        օրվա ընթացքում: Արտասահման փոխանցում իրականացնելու ժամկետը կախված է այն բանկերի թվից,
-                            որոնց միջոցով կատարվում է փոխանցումը:
+                        {{$main_loans_inform_msg}}
                     </span>
                     <div class="close-warning">
                         <i class="icon icon-x"></i>
@@ -383,23 +393,31 @@
                         </div>
                         <div class="right">
                             <div class="listing-icon">
+                                <div class="other_suggestions_open_close_global_part">
+                                    <button class="other_suggestions_open_close_global btn btn-red" type="button"
+                                            data-open="0">{{$other_suggestions_open_close_global_open_text}}</button>
+                                </div>
                                 <div class="add-function">
-                                    <a href="" download>
+                                    <a class="export_excel" href="" download>
                                         <i class="icon icon-right  icon-download"></i>
                                     </a>
-                                    <a href="">
+                                    <a class="share_global" href="">
                                         <i class="icon icon-right  icon-more"></i>
                                     </a>
-                                    <a href="">
+                                    <a class="print_results" href="">
                                         <i class="icon icon-right icon-print"></i>
                                     </a>
                                 </div>
                                 <div class="btn-icon-blue">
-                                    <i class="chenge icon icon-right  icon-list"></i>
-                                    <i class="chenge icon icon-right  icon-list-tow"></i>
+                                    <i class="chenge icon icon-right  icon-list-tow change_item_product_variations_grouped_by_company_results_ref "></i>
+                                    <i class="chenge icon icon-right  icon-list change_item_product_variations_results_ref"></i>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="hide-show addthis_toolbox_part">
+                        @include('layouts.parts.addthis')
                     </div>
 
                     <div class="change_item change_item_product_variations_results">
@@ -409,15 +427,20 @@
                                 <div class="listing-title">
                                     <div class="left">
                                         <div class="category-title">
-                                            {{$currProduct["name"]}}
+                                            <a href="" class="prod_name_as_link">{{$currProduct["name"]}}</a>
                                         </div>
                                     </div>
                                     <div class="right">
                                         <a target="_blank"
                                            href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}"
                                            class="category-logo">
-                                            <img style="max-width: 80px;"
-                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                            @if(!is_null($currProduct["companyInfo"]->image) && strlen($currProduct["companyInfo"]->image) > 0)
+                                                <img style="max-width: 80px;"
+                                                     src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                            @else
+                                                <img style="max-width: 80px;"
+                                                     src="{{ backend_asset($baseline_person_img )}}">
+                                            @endif
                                         </a>
                                     </div>
                                 </div>
@@ -445,8 +468,9 @@
 
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Ընդամենը պարտադիր վճարներ
-                                                <i class="icon icon-right  icon-question"></i>
+                                                Ընդամենը վճարներ
+                                                <i title="Այն բոլոր վճարների հանրագումարն է,որը վճարելու եք վարկը ստանալու և մարելու ողջ ընթացքում"
+                                                   class="icon icon-right  icon-question"></i>
                                             </div>
                                             <div class="table-pise-text">
                                                 {{$currProduct["variations"][0]["require_payments"]}}
@@ -457,7 +481,9 @@
                                     <div class="table-pise-wrapper">
                                         <div class="table-pise">
                                             <div class="table-pise-title">
-                                                Ընդամենը հետ վճարվող գումար
+                                                Հետ վճարվող գումար<i
+                                                        title="Մայր գումար+տոկոսագումար+այլ վճարներ"
+                                                        class="icon icon-right  icon-question"></i>
                                             </div>
                                             <div class="table-pise-text">
                                                 {{$currProduct["variations"][0]["sum_payments"]}} <i class="icons "></i>
@@ -469,7 +495,7 @@
                                                 Փաստացի տոկոսադրույք
                                             </div>
                                             <div class="table-pise-text">
-                                                {{round($currProduct["variations"][0]["factual_percentage"], 2) }}
+                                                {{round($currProduct["variations"][0]["factual_percentage"], 1) }}
                                             </div>
                                         </div>
                                     </div>
@@ -527,14 +553,21 @@
                                                 <div class="listing-title">
                                                     <div class="left">
                                                         <div class="category-title">
-                                                            {{$currProduct["name"]}}
+                                                            <a href="" class="prod_name_as_link">{{$currProduct["name"]}}</a>
                                                         </div>
                                                     </div>
 
                                                     <div class="right">
-                                                        <a target="_blank" href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}" class="category-logo">
-                                                            <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                                        <a target="_blank"
+                                                           href="{{url('/company-branches-and-bankomats/'.$currProduct["company_id"])}}"
+                                                           class="category-logo">
+                                                            @if(!is_null($currProduct["companyInfo"]->image) && strlen($currProduct["companyInfo"]->image) > 0)
+                                                                <img style="max-width: 80px;"
+                                                                     src="{{ backend_asset('savedImages/'.$currProduct["companyInfo"]->image )}}">
+                                                            @else
+                                                                <img style="max-width: 80px;"
+                                                                     src="{{ backend_asset($baseline_person_img )}}">
+                                                            @endif
                                                         </a>
                                                     </div>
                                                 </div>
@@ -561,8 +594,9 @@
 
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Ընդամենը պարտադիր վճարներ
-                                                                <i class="icon icon-right  icon-question"></i>
+                                                                Ընդամենը վճարներ
+                                                                <i title="Այն բոլոր վճարների հանրագումարն է,որը վճարելու եք վարկը ստանալու և մարելու ողջ ընթացքում"
+                                                                   class="icon icon-right  icon-question"></i>
                                                             </div>
                                                             <div class="table-pise-text">
                                                                 {{$currProductCurrVariation["require_payments"] }}
@@ -572,7 +606,9 @@
                                                     <div class="table-pise-wrapper">
                                                         <div class="table-pise">
                                                             <div class="table-pise-title">
-                                                                Ընդամենը հետ վճարվող գումար
+                                                                Հետ վճարվող գումար<i
+                                                                        title="Մայր գումար+տոկոսագումար+այլ վճարներ"
+                                                                        class="icon icon-right  icon-question"></i>
                                                             </div>
                                                             <div class="table-pise-text">
                                                                 {{$currProductCurrVariation["sum_payments"] }}
@@ -587,7 +623,7 @@
                                                                 Փաստացի տոկոսադրույք
                                                             </div>
                                                             <div class="table-pise-text">
-                                                                {{round($currProductCurrVariation["factual_percentage"], 2) }}
+                                                                {{round($currProductCurrVariation["factual_percentage"], 1) }}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -666,7 +702,11 @@
                         </div>
                         @foreach($productsWithVariationsGroupByCompany as $productsWithVariationsGroupByCompanyCurr)
 
-                            @php( $currCompanyImg   =  $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image)
+                            @if(!is_null($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) && strlen($productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image) > 0)
+                                @php( $currCompanyImg   =  backend_asset('savedImages/'. $productsWithVariationsGroupByCompanyCurr[0]["companyInfo"]->image ))
+                            @else
+                                @php( $currCompanyImg   =  backend_asset($baseline_person_img ))
+                            @endif
 
                             @php( $currCompanyId   =  $productsWithVariationsGroupByCompanyCurr[0]["company_id"])
 
@@ -675,7 +715,7 @@
                                     <div class="th">
                                         <a target="_blank"
                                            href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
-                                            <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                            <img src="{{$currCompanyImg}}">
                                         </a>
                                     </div>
 
@@ -692,7 +732,7 @@
                                     </div>
 
                                     <div class="th">
-                                        <span>{{round($productsWithVariationsGroupByCompanyCurr[0]["factual_percentage"], 2) }}</span>
+                                        <span>{{round($productsWithVariationsGroupByCompanyCurr[0]["factual_percentage"], 1) }}</span>
                                     </div>
 
                                     <div class="th flex-wrapper">
@@ -741,7 +781,7 @@
                                                 <div class="th">
                                                     <a target="_blank"
                                                        href="{{url('/company-branches-and-bankomats/'.$currCompanyId)}}">
-                                                        <img src="{{backend_asset('savedImages/'.$currCompanyImg )}}">
+                                                        <img src="{{$currCompanyImg}}">
                                                     </a>
                                                 </div>
 
@@ -758,7 +798,7 @@
                                                 </div>
 
                                                 <div class="th">
-                                                    <span>{{round($productsWithVariationsGroupByCompanyCurrVariationCurr["factual_percentage"], 4) }}</span>
+                                                    <span>{{round($productsWithVariationsGroupByCompanyCurrVariationCurr["factual_percentage"], 1) }}</span>
                                                 </div>
 
                                                 <div class="th flex-wrapper ">
@@ -799,7 +839,6 @@
                             {{ $productsWithVariationsGroupByCompany->appends([])->links('pagination::bootstrap-4') }}
                         </div>
                     </div>
-
                 </div>
             @endif
 

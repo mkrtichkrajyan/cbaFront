@@ -116,7 +116,7 @@
                 </div>
                 <div  class="pircent-price">
                     <div class="all-price-title">
-                            Ավել վճարվուղ գումար
+                            Ավել վճարվող գումար
                     </div>
                     <div class="all-total-price">
                         <span>
@@ -129,7 +129,7 @@
             <div  class="end-price">
                 <div>
                     <div class="all-price-title">
-                            Ընդամենը հետ վճարվող գումար
+                            Հետ վճարվող գումար
                     </div>
                     <div class="all-total-price">
                         <span>

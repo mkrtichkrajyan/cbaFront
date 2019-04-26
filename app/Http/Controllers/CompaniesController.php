@@ -2,14 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Belonging;
 use App\Models\Company;
 use App\Models\CompanyBankomat;
 use App\Models\CompanyBranch;
+use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
-class CompaniesController extends Controller
+class CompaniesController extends MainController
 {
+
+    public function __construct()
+    {
+        $getCompareInfo = $this->getCompareInfoGlobal();
+
+        $belongings_all = Belonging::where('id', '>', 0)->with('productsByBelongingInfo')->get();
+
+        $socials = Social::first();
+
+        View::share('getCompareInfo', $getCompareInfo);
+
+        View::share('belongings_all', $belongings_all);
+
+        View::share('socials', $socials);
+    }
+
     /**
      * Show the company Branches and Bankomats.
      *

@@ -10,8 +10,11 @@
     </div>
     <div class="row align-center">
         <div class="columns  large-6 medium-6 small-9">
-            <div class="filter-title">
-                Համեմատեք ֆինանսական առաջարկները
+            {{--<div class="filter-title">--}}
+                {{--Համեմատեք ֆինանսական առաջարկները--}}
+            {{--</div>--}}
+            <div class="filter-title-simvolic">
+
             </div>
         </div>
         <div class="columns  large-12 medium-12 small-12">
@@ -87,9 +90,9 @@
                 </button>
             </form>
         </div>
-        <div class="columns  large-12 medium-12 small-12">
-            <div class="best_offer_title">Լավագույն Առաջարկներ</div>
-        </div>
+        {{--<div class="columns  large-12 medium-12 small-12">--}}
+            {{--<div class="best_offer_title">Լավագույն Առաջարկներ</div>--}}
+        {{--</div>--}}
         <div class="columns  large-4 medium-6 small-12">
             <a href="{{url('loans')}}" class="pading_left offer">
                 <i class="icon  icon-loans"></i>

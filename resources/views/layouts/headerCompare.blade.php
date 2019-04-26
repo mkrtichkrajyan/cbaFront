@@ -46,9 +46,9 @@
             </div>
         </div>
         <div class="inform-link">
-            <a href="{{url('/how-to-use/')}}">
-                <i class="icon icon-left  icon-question"></i><span>Ինչպե՞ս օգտվել</span>
-            </a>
+            {{--<a href="{{url('/how-to-use/')}}">--}}
+                {{--<i class="icon icon-left  icon-question"></i><span>Ինչպե՞ս օգտվել</span>--}}
+            {{--</a>--}}
             <a href="{{url('/about-website/')}}">Կայքի մասին</a>
         </div>
     </div>
@@ -76,7 +76,7 @@
                     @foreach($getCompareInfo as $getCompareInfoCurr)
                         @php($curr_belonging_id =   $getCompareInfoCurr["id"])
 
-                        <a href="{{url($belongings->find($curr_belonging_id)->productsByBelongingInfo->first()->compare_inner_url)}}"
+                        <a data-belonging-id="{{$curr_belonging_id}}" href="{{url($belongings->find($curr_belonging_id)->productsByBelongingInfo->first()->compare_inner_url)}}"
                            class="listing-title" style="display: {{$getCompareInfoCurr['display']}}">
                             <div class="left">
                                 <section>
@@ -95,10 +95,20 @@
 
                 </div>
             </button>
-            <a href="" class="btn btn-blue">
-                <i class="icon icon-user"></i>
-                <span>Մուտք</span>
-            </a>
+            {{--<a href="" class="btn btn-blue">--}}
+                {{--<i class="icon icon-user"></i>--}}
+                {{--<span>Մուտք</span>--}}
+            {{--</a>--}}
         </div>
     </div>
+
 </header>
+
+
+@php($baseline_person_img =  "img/baseline-person.svg")
+
+<input type="hidden" id="default_company_img_url" value="{{backend_asset($baseline_person_img)}}" />
+
+<input type="hidden" id="other_suggestions_open_close_global_open_text" value="{{$other_suggestions_open_close_global_open_text}}" />
+
+<input type="hidden" id="other_suggestions_open_close_global_close_text" value="{{$other_suggestions_open_close_global_close_text}}" />

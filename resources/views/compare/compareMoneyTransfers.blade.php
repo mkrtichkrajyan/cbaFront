@@ -1,8 +1,8 @@
 @extends('layouts.default')
 
-@include('layouts.head')
+@include('layouts.headCompare')
 
-@include('layouts.header')
+@include('layouts.headerCompare')
 
 <main>
     <div class="back-fon" style="background-image: url({{asset('img/blue-fon.png')}});height: 150px;">
@@ -253,8 +253,8 @@
                                     </div>
                                     <div class="right">
                                         <div class="category-logo">
-                                            <img style="max-width: 80px;"
-                                                 src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">
+                                            {{--<img style="max-width: 80px;"--}}
+                                                 {{--src="{{ backend_asset('savedImages/'.$companyProducts->first()->companyInfo->image )}}">--}}
                                         </div>
                                     </div>
                                 </div>
@@ -351,8 +351,8 @@
                                                     </div>
                                                     <div class="right">
                                                         <div class="category-logo">
-                                                            <img style="max-width: 80px;"
-                                                                 src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">
+                                                            {{--<img style="max-width: 80px;"--}}
+                                                                 {{--src="{{ backend_asset('savedImages/'.$companyProductCurr->companyInfo->image )}}">--}}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,8 +464,8 @@
 
                             <div class="wrapper min-pading">
                                 <div class="table-wrapper">
-                                    <div class="th"><img
-                                                src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}">
+                                    {{--<div class="th"><img--}}
+                                                {{--src="{{backend_asset('savedImages/'.$productsGroupByCompanyCurr->first()->companyInfo->image )}}">--}}
                                     </div>
 
                                     <div class="th"><span>98</span></div>
@@ -501,7 +501,7 @@
                                         @foreach($productsGroupByCompanyCurrFiltered as $companyOtherProduct)
                                             <div class="table-wrapper">
                                                 <div class="th">
-                                                    <span><img src="{{backend_asset('savedImages/'.$companyOtherProduct->companyInfo->image )}}"></span>
+                                                    {{--<span><img src="{{backend_asset('savedImages/'.$companyOtherProduct->companyInfo->image )}}"></span>--}}
                                                 </div>
 
                                                 <div class="th"><span> 98 </span></div>

@@ -4,16 +4,19 @@
 // });
 $(document).ready(function () {
     $("header").animate({"top": "0", "height": "90px"}, "slow");
-    $(".animet").animate({"width": "52px", "height": "52px"}, 500);
+    // $(".animet").animate({"width": "52px", "height": "52px"}, 500);
+    $(".animet").animate({"width": "52px", "height": "52px"}, 250);
 
     function Time() {
         $(".animet").removeClass("active");
-        $("main,footer,.add-button,.teleport").animate({"opacity": "1"}, 1000);
+        $("main,footer,.add-button,.teleport").animate({"opacity": "1"}, 500);
+        // $("main,footer,.add-button,.teleport").animate({"opacity": "1"}, 1000);
         $("header").css("box-shadow", "0px 0px 7.6px 0.4px rgba(0, 0, 0, 0.06), 0px 12px 30px 1.45px rgba(0, 0, 0, 0.08)");
         $(".logo-text").fadeIn("slow", "linear")
     }
 
-    setTimeout(Time, 2000);
+    setTimeout(Time, 1000);
+    // setTimeout(Time, 2000);
 
     $(".click-ther").click(function () {
         $(".click-ther>.icon-arrow-down").toggleClass("active");
@@ -168,6 +171,69 @@ $(document).ready(function () {
         $(this).parent().children(".check-drop-down").slideToggle(200);
     });
 
+    if ($("#age").length > 0 && $("#slider-range-insurance-ages").length > 0) {
+
+        age = parseFloat($("#age").val().trim());
+
+        min_age = parseInt($('#min_age').val());
+
+        max_age = parseInt($('#max_age').val());
+
+        if (isNaN(min_age)) {
+            min_age = 0;
+        }
+
+        if (isNaN(max_age)) {
+            max_age = 100;
+        }
+
+        if (age > 0) {
+            console.log(age);
+            $("#slider-range-insurance-ages").slider({
+                range: "min",
+                min: min_age,
+                max: max_age,
+                step: 1,
+                value: age,
+                slide: function (event, ui) {
+                    $("#age").val(ui.value);
+                }
+            });
+        }
+    }
+
+    $("#age").keyup(function (e) {
+
+        age = parseFloat($("#age").val().trim());
+
+        min_age = parseInt($('#min_age').val());
+
+        max_age = parseInt($('#max_age').val());
+
+        if (isNaN(min_age)) {
+            min_age = 0;
+        }
+
+        if (isNaN(max_age)) {
+            max_age = 100;
+        }
+        if (age >= min_age && age <= max_age) {
+            $("#slider-range-insurance-ages").slider("destroy");
+
+            $("#slider-range-insurance-ages").slider({
+                range: "min",
+                min: min_age,
+                max: max_age,
+                step: 1,
+                value: age,
+                slide: function (event, ui) {
+                    $("#age").val(ui.value);
+                }
+            });
+        }
+
+    });
+
     $(function () {
 
         min_age = parseInt($('#min_age').val());
@@ -281,13 +347,28 @@ $(document).ready(function () {
     $(".change_item").not(":first").hide();
 
     $(".chenge").click(function () {
-        //alert($(this).index());
-        // console.log($(".chenge").eq($(this).index())[0]);
+
         $(".chenge").removeClass("active").eq($(this).index()).addClass("active");
-        $(".change_item").hide().eq($(this).index()).show()
+        // console.log($(this).index());
+        // console.log($(".change_item").eq($(this).index())[0]);
+        if ($(this).hasClass('change_item_product_variations_results_ref') || $(this).hasClass('change_item_product_variations_grouped_by_company_results_ref')) {
+            if ($(this).index() == 0) {
+                change_item_product_variations_index = 1;
+            }
+            else {
+                change_item_product_variations_index = 0;
+            }
+// console.log( $(".change_item").eq(change_item_product_variations_index)[0]);
+            $(".change_item").hide().eq(change_item_product_variations_index).show();
+            return false;
+        }
+        else {
+            $(".change_item").hide().eq($(this).index()).show();
+        }
     }).eq(0).addClass("active");
 
     $(".chenge").click(function () {
+
         $(this).parent().find(".chenge").removeClass("active").eq($(this).index()).addClass("active");
 
         $(this).parent().find(".change_item").hide().eq($(this).index()).show()

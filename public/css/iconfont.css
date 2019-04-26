@@ -1,164 +1,263 @@
 @font-face {
-	font-family: "iconfont";
-	src: url("icons/iconfont.eot?35a37ece9662b2ecbc369686ba67ec2d?#iefix") format("embedded-opentype"),
-	url("icons/iconfont.woff2?35a37ece9662b2ecbc369686ba67ec2d") format("woff2"),
-	url("icons/iconfont.woff?35a37ece9662b2ecbc369686ba67ec2d") format("woff");
+    font-family: "iconfont";
+    src: url("icons/iconfont.eot?35a37ece9662b2ecbc369686ba67ec2d?#iefix") format("embedded-opentype"),
+    url("icons/iconfont.woff2?35a37ece9662b2ecbc369686ba67ec2d") format("woff2"),
+    url("icons/iconfont.woff?35a37ece9662b2ecbc369686ba67ec2d") format("woff");
 }
 
 /*@font-face {*/
-	/*font-family: 'cust_tahoma';*/
-	/*src: url('icons/fonts/tahomaa.eot?#iefix') format('embedded-opentype'),*/
-	/*url('icons/tahomaa.woff') format('woff'),*/
-	/*url('icons/tahomaa.ttf') format('truetype'),*/
-	/*url('icons/tahomaa.svg#tahomaa') format('svg');*/
-	/*font-weight: normal;*/
-	/*font-style: normal;*/
+/*font-family: 'cust_tahoma';*/
+/*src: url('icons/fonts/tahomaa.eot?#iefix') format('embedded-opentype'),*/
+/*url('icons/tahomaa.woff') format('woff'),*/
+/*url('icons/tahomaa.ttf') format('truetype'),*/
+/*url('icons/tahomaa.svg#tahomaa') format('svg');*/
+/*font-weight: normal;*/
+/*font-style: normal;*/
 /*}*/
 
 /*@font-face {*/
-	/*font-family: 'cust_tahoma-bold';*/
-	/*src: url('icons/Tahoma-Bold.eot?#iefix') format('embedded-opentype'),*/
-	/*url('icons/Tahoma-Bold.woff') format('woff'),*/
-	/*url('icons/Tahoma-Bold.ttf') format('truetype'),*/
-	/*url('icons/Tahoma-Bold.svg#Tahoma-Bold') format('svg');*/
-	/*font-weight: bold;*/
-	/*font-style: normal;*/
+/*font-family: 'cust_tahoma-bold';*/
+/*src: url('icons/Tahoma-Bold.eot?#iefix') format('embedded-opentype'),*/
+/*url('icons/Tahoma-Bold.woff') format('woff'),*/
+/*url('icons/Tahoma-Bold.ttf') format('truetype'),*/
+/*url('icons/Tahoma-Bold.svg#Tahoma-Bold') format('svg');*/
+/*font-weight: bold;*/
+/*font-style: normal;*/
 /*}*/
 
-
 .icon {
-	line-height: 1;
+    line-height: 1;
 }
 
 .icon:before {
-	font-family: iconfont !important;
-	font-style: normal;
-	font-weight: normal !important;
-	vertical-align: top;
+    font-family: iconfont !important;
+    font-style: normal;
+    font-weight: normal !important;
+    vertical-align: top;
 }
 
 .semantic_dropdown_simple .icon:before {
-	font-family: inherit !important;
-	vertical-align: baseline !important;
+    font-family: inherit !important;
+    vertical-align: baseline !important;
 }
 
 .icon-add:before {
-	content: "\f101";
+    content: "\f101";
 }
+
 .icon-cart:before {
-	content: "\f102";
+    content: "\f102";
 }
+
 .icon-arrow-down:before {
-	content: "\f103";
+    content: "\f103";
 }
+
 .icon-arrow-right:before {
-	content: "\f104";
+    content: "\f104";
 }
+
 .icon-other-loans:before {
-	content: "\f105";
+    content: "\f105";
 }
+
 .icon-back-arrow:before {
-	content: "\f106";
+    content: "\f106";
 }
+
 .icon-airplane:before {
-	content: "\f107";
+    content: "\f107";
 }
+
 .icon-x:before {
-	content: "\f108";
+    content: "\f108";
 }
+
 .icon-download:before {
-	content: "\f109";
+    content: "\f109";
 }
+
 .icon-dram:before {
-	content: "\f10a";
+    content: "\f10a";
 }
+
 .icon-fb:before {
-	content: "\f10b";
+    content: "\f10b";
 }
+
 .icon-filters:before {
-	content: "\f10c";
+    content: "\f10c";
 }
+
 .icon-money:before {
-	content: "\f10d";
+    content: "\f10d";
 }
+
 .icon-deposits:before {
-	content: "\f10e";
+    content: "\f10e";
 }
+
 .icon-insurance:before {
-	content: "\f10f";
+    content: "\f10f";
 }
+
 .icon-tractor:before {
-	content: "\f110";
+    content: "\f110";
 }
+
 .icon-house:before {
-	content: "\f111";
+    content: "\f111";
 }
+
 .icon-info:before {
-	content: "\f112";
+    content: "\f112";
 }
+
 .icon-in:before {
-	content: "\f113";
+    content: "\f113";
 }
+
 .icon-list:before {
-	content: "\f114";
+    content: "\f114";
 }
+
 .icon-list-tow:before {
-	content: "\f115";
+    content: "\f115";
 }
+
 .icon-desktop:before {
-	content: "\f116";
+    content: "\f116";
 }
+
 .icon-phone:before {
-	content: "\f117";
+    content: "\f117";
 }
+
 .icon-location:before {
-	content: "\f118";
+    content: "\f118";
 }
+
 .icon-print:before {
-	content: "\f119";
+    content: "\f119";
 }
+
 .icon-question:before {
-	content: "\f11a";
+    content: "\f11a";
 }
+
 .icon-scales:before {
-	content: "\f11b";
+    content: "\f11b";
 }
+
 .icon-search:before {
-	content: "\f11c";
+    content: "\f11c";
 }
+
 .icon-cards:before {
-	content: "\f11d";
+    content: "\f11d";
 }
+
 .icon-more:before {
-	content: "\f11e";
+    content: "\f11e";
 }
+
 .icon-tick:before {
-	content: "\f11f";
+    content: "\f11f";
 }
+
 .icon-time:before {
-	content: "\f120";
+    content: "\f120";
 }
+
 .icon-tw:before {
-	content: "\f121";
+    content: "\f121";
 }
+
 .icon-straw-hat:before {
-	content: "\f122";
+    content: "\f122";
 }
+
 .icon-user:before {
-	content: "\f123";
+    content: "\f123";
 }
+
 .icon-loan-recrediting:before {
-	content: "\f124";
+    content: "\f124";
 }
+
 .icon-gold:before {
-	content: "\f125";
+    content: "\f125";
 }
+
 .icon-you:before {
-	content: "\f126";
+    content: "\f126";
 }
+
 .icon-loans:before {
-	content: "\f127";
+    content: "\f127";
 }
+
 .icon-car:before {
-	content: "\f128";
+    content: "\f128";
 }
+
+/*custom*/
+/*.icon-usd:before {*/
+    /*content: "$";*/
+    /*font-weight: bold;*/
+    /*font-size: 21px;*/
+    /*font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;*/
+/*}*/
+
+/*.icon-euro:before {*/
+    /*content: "€";*/
+    /*font-weight: bold;*/
+    /*font-size: 21px;*/
+    /*font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;*/
+/*}*/
+
+/*.icon-usd:before {*/
+    /*content: "\f155";*/
+/*}*/
+
+.icon-fb {
+    margin: 0 !important;
+    color: #cccccc;
+    background: white;
+    border-radius: 4px;
+}
+
+.icon-tw {
+    margin: 0 !important;
+    color: #dee2e6;
+}
+
+.icon-you {
+    margin: 0 !important;
+    border-radius: 9px;
+}
+
+.icon-in {
+    margin: 0 !important;
+    color: #cccccc;
+}
+
+.icon-fb:hover {
+    color: white;
+    background: #337ab7;
+}
+
+.icon-tw:hover {
+    color: #337ab7;
+}
+
+.icon-you:hover {
+    /*background-color: white;*/
+    background-color: red;
+}
+
+.icon-in:hover {
+    color: #337ab7;
+}
+
+/*custom*/

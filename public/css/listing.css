@@ -1,0 +1,29 @@
+.category-title {
+    font-size: 15px;
+    padding: 11px;
+}
+
+.category-logo {
+    padding: 11px;
+}
+
+.table-pise-text {
+    font-size: 15.5px;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+th .btn_compare, .left .btn_compare {
+    margin: 8px;
+}
+.btn-pink{
+    margin: 12px;
+}
+.table-pise {
+    padding: 6px 0;
+}
+.icon-question{
+    cursor: pointer;
+}

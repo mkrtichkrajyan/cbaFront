@@ -13,6 +13,16 @@ class TravelInsurance extends Model
         return 12;
     }
 
+    public function mainDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId());
+    }
+
+    public function customDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsCustomDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId())->orderBy('id', 'asc');
+    }
+
     public function ProductStatus()
     {
         return $this->hasOne('App\Models\Status', 'id', 'status');

@@ -6,6 +6,12 @@
 
 @include('layouts.headerCompare')
 
+<input type="hidden" id="more_payment_amount_piece" name="more_payment_amount_piece"
+       value="{{$more_payment_amount_piece}}">
+
+<input type="hidden" id="loan_amount_piece" name="loan_amount_piece"
+       value="{{$loan_amount_piece}}">
+
 <input type="hidden" value="{{backend_asset_path()}}" id="backend_asset_path" name="backend_asset_path">
 
 @php($checked_variations =  $getCompareInfo[$belonging_id]["checked_variations"] )
@@ -29,11 +35,11 @@
         <div class="columns large-12 medium-12 small-12">
             <div class="listing-title product-listing">
                 <div class="left">
-                    <a href="" class="come-back title-map">
+                    <a href="" class="come-back product-come-back title-map">
                         <div class="come-back-icon">
                             <i class="icon icon-back-arrow"></i>
                         </div>
-                        <span>Պրոդուկտ</span>
+                        {{--<span>Պրոդուկտ</span>--}}
                     </a>
                 </div>
                 <div class="right">
@@ -87,7 +93,7 @@
                             <i class="icon icon-left  icon-add"></i>
                             <span>համեմատել</span>
                         </button>
-                        <a href="?p=bank_list" class="btn btn-more">
+                        <a href="{{url('/company-branches-and-bankomats/'.$product->company_id)}}" class="btn btn-more">
                             <section class="right-border">
                                 <i class="icon icon-location">
                                 </i>
@@ -141,7 +147,7 @@
                         </div>
                     </div>
                     <div class="pircent-price">
-                        <div class="all-price-title">Ավել վճարվուղ գումար</div>
+                        <div class="all-price-title">Ավել վճարվող գումար</div>
                         <div class="all-total-price">
                             <span>{{$more_payment_amount}}</span>
                             <i class=" icon icon-dram"></i>
@@ -150,7 +156,7 @@
                 </div>
                 <div class="end-price">
                     <div>
-                        <div class="all-price-title">Ընդամենը հետ վճարվող գումար</div>
+                        <div class="all-price-title">Հետ վճարվող գումար</div>
                         <div class="all-total-price">
                             <span>{{$sum_payments}}</span>
                             <i class=" icon icon-dram"></i>
@@ -799,81 +805,23 @@
                 </div>
                 <div class="document-wrapper">
 
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
+                    @if($product->mainDocuments->count()>0)
+                        @foreach($product->mainDocuments as $productMainDocument)
+                            <div class="document">
+                                <i class="icon  icon-doc"></i>
+                                <span>{{$documents_list->find($productMainDocument->document_id)->name}}</span>
+                            </div>
+                        @endforeach
+                    @endif
 
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-                    <div class="document">
-                        <i class="icon  icon-doc"></i>
-                        <span>
-                           Դիմումի ձեւ
-                       </span>
-                    </div>
-
+                    @if($product->customDocuments->count()>0)
+                        @foreach($product->customDocuments as $productCustomDocument)
+                            <div class="document">
+                                <i class="icon  icon-doc"></i>
+                                <span>{{ $productCustomDocument->document_name}}</span>
+                            </div>
+                        @endforeach
+                    @endif
                     <div class="blurring"></div>
                 </div>
                 <div class="more-info">

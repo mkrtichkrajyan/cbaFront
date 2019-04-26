@@ -12,18 +12,19 @@
     <div class="row">
         <form id="branchesOrAtmsExporting" data-bankomat-action="{{ url('/export-bankomats-list/'.$company->id) }}"
               data-branch-action="{{ url('/export-branches-list/'.$company->id) }}" action="" method="post">
+            {!! csrf_field() !!}
 
             <input type="hidden" id="branches_or_bankomats_for_user" value="branches">
 
             <input type="hidden" id="branch_or_bankomat_concret_one" value="0" data-type="" data-name="" data-address="">
-            {!! csrf_field() !!}
+
         </form>
         <div class="columns large-12 medium-12 small-12">
             <div class="listing-title bank-listing">
                 <div class="left">
-                    <a href="" class="come-back title-map">
+                    <a href="" class="come-back come-back-from-company title-map">
                         <div class="come-back-icon">
-                            <i class="icon icon-back-arrrow"></i>
+                            <i class="icon icon-back-arrow"></i>
                         </div>
                         <span>{{$company->name}}</span>
                     </a>
@@ -258,7 +259,8 @@
                 <div id="changeItemMapBranchesAtms" class="change_item change_item_map">
                     <div class="map">
                         <div class="map" id="map">
-                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5H-WvokqQ1ISSvnlMDT200DJcXTNSO7o&callback=initMap" async defer></script>
+                            {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5H-WvokqQ1ISSvnlMDT200DJcXTNSO7o&callback=initMap" async defer></script>--}}
+                            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhD9iQdql7V51GX7K_qZdn8J9FAFozFbI&callback=initMap" async defer></script>
 
                             <script>
                                 var map;

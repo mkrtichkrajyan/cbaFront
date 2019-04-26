@@ -1,48 +1,110 @@
-<html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="UTF-8">
+<body>
+<header>
+    <div class="popup-over">
+        <div class="close-warning">
+            <i class="icon icon-x"></i>
+        </div>
+        <div class="all-conditions">
+            Այլ պայմաններ
+        </div>
+    </div>
+    <div class="popup-over-menu">
+        <div class="close-warning">
+            <i class="icon icon-x"></i>
+        </div>
+        <div class="menu-header">
+            <i class="icon icon-left icon-scales"></i>
+            Համեմատել
+        </div>
+    </div>
+    <div class="colum-flex teleport">
+        <div class="hamburger-wrap">
+            <a id="hamburger-icon" href="#" title="Menu">
+                <span class="line line-1"></span>
+                <span class="line line-2"></span>
+                <span class="lin line-3"></span>
+            </a>
+            <div class="mob-menu" style="display: none;">
+                <div class="listing-title">
+                    <div class="left">
 
-    <title>Հայաստանի Հանրապետության Կենտրոնական Բանկ</title>
+                    </div>
+                    <div class="right">
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    </div>
+                </div>
+                <div class="open-menu-icon">
+                    <div class="zoom-icon">
+                        <a href="">
+                            <img src="{{asset('/img/zoom1.svg')}}" alt="">
+                        </a>
+                        <a href="">
+                            <img style="width: 60px;" src="{{asset('img/zoom2.svg')}}" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="inform-link">
+            {{--<a href="{{url('/how-to-use/')}}">--}}
+            {{--<i class="icon icon-left  icon-question"></i><span>Ինչպե՞ս օգտվել</span>--}}
+            {{--</a>--}}
+            <a href="{{url('/about-website/')}}">Կայքի մասին</a>
+        </div>
+    </div>
+    <div class="colum-flex">
+        <a class="logo" href="{{url('/home')}}">
+            <div class="animet active">
+            </div>
+            <div class="logo-text">
+                <img src="{{asset('img/logo-text.png')}} ">
+            </div>
+        </a>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    </div>
+    <div class="colum-flex">
+        <div class="add-button">
+            <button class="btn btn-white">
+                <i class="icon icon-left icon-scales"></i>
+                <span>Համեմատել</span>
+                <div class="messeng-indicator self-messeng-indicator">
+                    {{$getCompareInfo[$belonging_id]["count"]}}
+                </div>
+                <div class="wrapper popup-menu compare-info-popup-menu">
+                    <div class="piramid"></div>
 
-    <link rel="stylesheet" type="text/css" href="{{asset('/css/plugins/foundation.min.css')}}"/>
+                    @foreach($getCompareInfo as $getCompareInfoCurr)
+                        @php($curr_belonging_id =   $getCompareInfoCurr["id"])
 
-    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.2/semantic.min.css" rel="stylesheet">--}}
+                        <a data-belonging-id="{{$curr_belonging_id}}" href="{{url($belongings->find($curr_belonging_id)->productsByBelongingInfo->first()->compare_inner_url)}}"
+                           class="listing-title" style="display: {{$getCompareInfoCurr['display']}}">
+                            <div class="left">
+                                <section>
+                                    {{$getCompareInfoCurr["name"]}}
+                                </section>
+                            </div>
+                            <div class="right">
+                                <section>
+                                    <div class="messeng-indicator @if($getCompareInfoCurr["id"] == $belonging_id) self-messeng-indicator @endif">
+                                        {{$getCompareInfoCurr["count"]}}
+                                    </div>
+                                </section>
+                            </div>
+                        </a>
+                    @endforeach
 
-    <link rel="stylesheet" href="{{asset('/css/anime_style.css')}}">
+                </div>
+            </button>
+            {{--<a href="" class="btn btn-blue">--}}
+            {{--<i class="icon icon-user"></i>--}}
+            {{--<span>Մուտք</span>--}}
+            {{--</a>--}}
+        </div>
+    </div>
 
-    <link rel="stylesheet" href="{{asset('/css/plugins/owl.carousel.min.css')}}">
+</header>
 
-    <link rel="stylesheet" href="{{asset('/css/plugins/jquery-ui.min.css')}}" type="text/css"/>
 
-    <link rel="stylesheet" href="{{asset('/css/style.css')}}">
+@php($baseline_person_img =  "img/baseline-person.svg")
 
-    <link rel="stylesheet" href="{{asset('/css/custom.css')}}">
-
-    <link rel="stylesheet" href="{{asset('/css/media.css')}}">
-
-    <link rel="stylesheet" href="{{asset('/css/iconfont.css')}}" >
-
-    {{--<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" >--}}
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-
-    <script src="{{asset('js/jquery.ui.touch-punch.min.js')}}"></script>
-
-    <script src="{{asset('js/owl.carousel.min.js')}}"></script>
-
-    <script src="{{asset('js/main.js')}}"></script>
-
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-
-    <script src="{{asset('js/chart.js')}}"></script>
-
-    <script src="{{asset('js/index.js')}}"></script>
-
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.2/semantic.min.js"></script>--}}
-</head>
+<input type="hidden" id="default_company_img_url" value="{{backend_asset($baseline_person_img)}}" />

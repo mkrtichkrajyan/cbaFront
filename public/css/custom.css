@@ -3,14 +3,75 @@ body {
     line-height: 1.5;
 }
 
+header .add-button .btn-white {
+    margin-right: 38px;
+}
+.come-back-from-company:hover{
+    text-decoration: none;
+    color: #333c84 !important;
+}
+.other_suggestions_open_close_global_part{
+    border-right: 1px solid #d6d8e6;
+    padding-right: 8px;
+}
+.other_suggestions_open_close_global{
+    margin: 0;
+    padding: 7px 20px;
+}
+.address_text {
+    float: left;
+    font-family: 'Tahoma';
+    font-size: 14px;
+    line-height: 31px;
+    color: #F6F6F6;
+}
+
+.address_icon {
+    float: left;
+    margin-top: 9px;
+    margin-right: 13px;
+}
+
+.address_text .email:before {
+    content: attr(data-website) "\0040" attr(data-user);
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+
+.clearfix:before, .clearfix:after{
+    content: " ";
+    display: table;
+}
+
+.btn-white .popup-menu {
+    /*margin-right: 38px;*/
+}
+
+.filter-title-simvolic {
+    margin: 5px 0;
+}
+
 .displayNone {
     display: none;
+}
+
+.print_company_name {
+    max-width: 165px;
+    white-space: normal;
+}
+
+.print_product_name {
+    max-width: 165px;
+    white-space: normal;
 }
 
 .service_on_company_website {
     overflow-wrap: break-word;
 }
-
+.compare-info-popup-menu .listing-title{
+    max-width: 231px;
+    overflow-y: auto;
+}
 .compare-info-popup-menu {
     left: 50% !important;
     transform: translateX(-50%);
@@ -20,9 +81,18 @@ body {
     -o-transform: translateX(-50%);
 }
 
+.prod_name_as_link {
+    color: #dc2341;
+}
+
+.prod_name_as_link:hover {
+    color: #dc2341;
+}
+
 /* compare-inner-page */
 .compare_name_title {
     min-height: 147px;
+    height: 147px;
     padding: 12px;
 }
 
@@ -72,7 +142,7 @@ body {
     height: 101px;
 }
 
-.other_payments_podtitle, .car_salons_podtitle {
+.other_payments_podtitle, .sell_salons_podtitle, .car_salons_podtitle, .assessment_assays_podtitle, .gold_assay_types_podtitle {
     height: 138px;
 }
 
@@ -80,7 +150,7 @@ body {
     height: 162px;
 }
 
-.servis_name_other_payments, .servis_name_car_salons {
+.servis_name_other_payments, .servis_name_car_salons, .servis_name_assessment_assays, .servis_name_gold_assay_types {
     height: 138px;
     overflow: auto;
     display: inline-block;
@@ -98,7 +168,7 @@ body {
     padding-top: 5px;
 }
 
-.other_payments_info_sexion, .car_salons_info_sexion, .more_information_info_sexion {
+.other_payments_info_sexion, .car_salons_info_sexion, .assessment_assays_info_sexion, .more_information_info_sexion {
     height: 100%;
 }
 
@@ -131,6 +201,15 @@ body {
     background-color: #fce9ec;
     border-radius: 50px;
     padding: 13px 20px;
+}
+
+.add-functions > .btn-more {
+    padding: 15px;
+    margin-top: 6px;
+}
+
+.add-functions .icon-location {
+    width: 1.18em;
 }
 
 /*product page*/
@@ -244,7 +323,7 @@ main {
 .deposit_type_selectbox, .currency_type_selectbox {
     line-height: 50px !important;
     height: 50px;
-    margin: 0;
+    margin: 0 !important;
 }
 
 .prodCompanyImg img {

@@ -42,6 +42,7 @@ if (!function_exists('backend_asset')) {
      */
     function backend_asset($path = null)
     {
-        return env('BACKEND_URL') . '/'. $path ;
+        return config('app.BACKEND_URL') . '/' . $path;
+//        return env('BACKEND_URL') . '/'. $path ;
     }
 }

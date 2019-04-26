@@ -31,6 +31,9 @@
                     <div class="compare_name_podtitle">
                         Վարկի ժամկետ
                     </div>
+                    <div class="compare_name_podtitle">
+                        Փաստացի տոկոսադրույք
+                    </div>
                     <div class="compare_name_podtitle privileged_term_podtitle">
                         Արտոնյալ ժամկետ
                     </div>
@@ -38,7 +41,7 @@
                         Ապահովվածություն
                     </div>
                     <div class="compare_name_podtitle repayment_podtitle">
-                        ՄԱՐՄԱՆ ԵՂԱՆԱԿ
+                        Մարման եղանակ
                     </div>
                     <div class="compare_name_podtitle">
                         Տրամադրման եղանակ
@@ -105,7 +108,7 @@
 
                             <div class="slider-item">
                                 <div class="compare_name">
-                                    <div class="compare_name_title">
+                                    <div class="compare_name_title servis_name_scroll">
                                         <div class="close">
                                             <i class="icon icon-x"></i>
                                         </div>
@@ -122,6 +125,9 @@
                                     </div>
                                     <div class="servis_name">
                                         {{$compareVariationsDataCurr["term"]}} Օր
+                                    </div>
+                                    <div class="servis_name">
+                                        {{round($compareVariationsDataCurr["factual_percentage"],2)}}
                                     </div>
                                     <div class="servis_name servis_name_privileged_term">
                                         @if($product->privileged_term == 1)
@@ -299,7 +305,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="servis_name servis_name_mid">
+                                    <div class="servis_name servis_name_mid servis_name_scroll">
                                         @if(strlen($product->service_on_company_website) > 0)
                                             <a class="service_on_company_website" target="_blank"
                                                href="{{$product->service_on_company_website}}">{{$product->service_on_company_website}}</a>

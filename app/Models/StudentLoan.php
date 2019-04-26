@@ -8,14 +8,24 @@ class StudentLoan extends Model
 {
     protected $table = 'student_loans';
 
+    public function ProductStatus()
+    {
+        return $this->hasOne('App\Models\Status', 'id', 'status');
+    }
+
     public function belongingId()
     {
         return 4;
     }
 
-    public function ProductStatus()
+    public function mainDocuments()
     {
-        return $this->hasOne('App\Models\Status', 'id', 'status');
+        return $this->hasMany('App\Models\ProductsDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId());
+    }
+
+    public function customDocuments()
+    {
+        return $this->hasMany('App\Models\ProductsCustomDocument', 'product_id', 'id')->where('belonging_id', $this->belongingId())->orderBy('id', 'asc');
     }
 
     public function providingTypeInfo()
